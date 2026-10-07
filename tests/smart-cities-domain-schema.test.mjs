@@ -48,12 +48,6 @@ test("Smart Cities schema compiles with the ten canonical PR 2 record types", ()
     [...compiled.recordTypesById.keys()].sort(),
     expectedRecordTypes,
   );
-
-  // Relationships intentionally begin in PR 3.
-  assert.equal(
-    compiled.relationshipTypesById.size,
-    0,
-  );
 });
 
 test("each canonical record type has a required searchable title field", () => {
