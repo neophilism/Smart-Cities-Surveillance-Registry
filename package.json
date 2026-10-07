@@ -1,0 +1,30 @@
+{
+  "name": "smart-cities-surveillance-registry",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Public transparency and accountability registry for smart-city surveillance systems.",
+  "packageManager": "pnpm@12.7.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @smart-cities-surveillance-registry/web dev",
+    "build": "pnpm -r --if-present run build",
+    "lint": "pnpm -r --if-present run lint",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "test": "node --test tests/*.test.mjs",
+    "test:db": "node --test --test-concurrency=1 tests/*.integration.mjs",
+    "db:migrate": "node packages/database/src/cli.ts migrate",
+    "db:seed": "node packages/database/src/cli.ts seed",
+    "db:seed-generic": "node packages/database/src/cli.ts seed examples/generic-registry/registry.yaml examples/generic-registry/seed.json",
+    "db:ingest-generic-demo": "node packages/database/src/cli.ts ingest public-document-catalog examples/generic-registry/import-profile.yaml examples/generic-registry/import.csv csv",
+    "ci": "pnpm lint && pnpm typecheck && pnpm test && pnpm db:migrate && pnpm test:db && pnpm build",
+    "db:reindex": "node packages/database/src/cli.ts reindex",
+    "db:publish-due": "node packages/database/src/cli.ts publish-due",
+    "db:deadlines-reconcile": "node packages/database/src/cli.ts reconcile-deadlines",
+    "db:ingest": "node packages/database/src/cli.ts ingest",
+    "db:notifications-run": "node packages/database/src/cli.ts notifications-run",
+    "db:integrity-verify": "node packages/database/src/cli.ts integrity-verify",
+    "db:integrity-checkpoint": "node packages/database/src/cli.ts integrity-checkpoint"
+  }
+}
