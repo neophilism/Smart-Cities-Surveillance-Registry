@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-smart_cities_registry}
+      POSTGRES_USER: ${POSTGRES_USER:-smart_cities_registry}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-smart_cities_registry}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-smart_cities_registry} -d ${POSTGRES_DB:-smart_cities_registry}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - smart_cities_registry_postgres:/var/lib/postgresql/data
+
+volumes:
+  smart_cities_registry_postgres:

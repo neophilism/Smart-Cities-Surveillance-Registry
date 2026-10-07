@@ -1,0 +1,33 @@
+{
+  "name": "@smart-cities-surveillance-registry/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@civic-registry/api": "workspace:*",
+    "@civic-registry/config": "workspace:*",
+    "@civic-registry/core": "workspace:*",
+    "@civic-registry/database": "workspace:*",
+    "@civic-registry/registry": "workspace:*",
+    "@civic-registry/search": "workspace:*",
+    "@civic-registry/deadlines": "workspace:*",
+    "next": "16.3.8",
+    "pg": "^8.16.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.3.8",
+    "typescript": "^5.9.0"
+  }
+}
