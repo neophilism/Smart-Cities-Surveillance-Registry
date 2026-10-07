@@ -1,24 +1,31 @@
 # Smart Cities Surveillance Registry
 
-A public transparency and accountability application for documenting smart-city surveillance deployments, technologies, agencies, vendors, governing policies, audits, and related public records.
+A public transparency and accountability application for documenting smart-city surveillance deployments, technologies, agencies, vendors, governing policies, authorizations, procurements, audits, incidents, data-sharing arrangements, and related public records.
 
 This repository is a **downstream application** of the [Civic Registry & Transparency Engine](https://github.com/neophilism/Civic-Registry-Transparency-Engine). The reusable engine remains domain-neutral in its own repository; Smart-Cities-specific schemas, adapters, presentation, and integrations live here.
 
 ## Current milestone
 
-**PR 1 — Bootstrap from the clean Civic Registry & Transparency Engine**
+**PR 2 — Surveillance registry domain schema**
 
-PR 1 establishes:
+PR 2 defines the canonical application vocabulary in `config/registry.yaml`:
 
-- the reusable engine packages and database foundation;
-- the Next.js public/admin application shell;
-- PostgreSQL migrations and local Docker development;
-- lint, typecheck, unit, integration, migration, and build CI;
-- Smart Cities application identity;
-- exact upstream-engine provenance; and
-- bootstrap regression coverage.
+- surveillance deployments;
+- surveillance technologies;
+- public agencies;
+- vendors;
+- policies and laws;
+- approvals and authorizations;
+- procurements and contracts;
+- audits and assessments;
+- violations and incidents; and
+- data-sharing arrangements.
 
-The Smart Cities domain schema is intentionally **not** introduced in PR 1. That begins in PR 2 so the application boundary is reviewable and incremental.
+The schema includes typed public-accountability fields for jurisdiction, status, purpose, capabilities, data categories, retention, sharing, legal process, approvals, procurements, oversight findings, remediation, and public source links.
+
+Relationships are intentionally deferred to PR 3. Publication workflow, deadlines, evidence, and demonstration records remain separate later milestones.
+
+See [Smart Cities domain schema](docs/DOMAIN-SCHEMA.md).
 
 ## Upstream provenance
 

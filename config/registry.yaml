@@ -1,0 +1,1192 @@
+schemaVersion: 1
+
+registry:
+  id: smart-cities-surveillance-registry
+  name: Smart Cities Surveillance Registry
+  description: Public transparency registry for smart-city surveillance systems, governance, procurement, oversight, and accountability.
+  defaultRecordTypeId: deployment
+  publicByDefault: true
+
+  recordTypes:
+    - id: deployment
+      name: Surveillance deployment
+      pluralName: Surveillance deployments
+      description: Public, non-operational description of a surveillance deployment or program.
+      titleFieldId: name
+      summaryFieldId: public_summary
+      fields:
+        - id: name
+          label: Deployment name
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: jurisdiction
+          label: Jurisdiction
+          type: text
+          required: true
+          searchable: true
+          filterable: true
+          sortable: true
+        - id: jurisdiction_type
+          label: Jurisdiction type
+          type: enum
+          filterable: true
+          options:
+            - value: city
+              label: City
+            - value: county
+              label: County
+            - value: state
+              label: State
+            - value: transit_authority
+              label: Transit authority
+            - value: special_district
+              label: Special district
+            - value: multi_jurisdiction
+              label: Multi-jurisdiction
+            - value: other
+              label: Other
+        - id: deployment_status
+          label: Deployment status
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: proposed
+              label: Proposed
+            - value: approved
+              label: Approved
+            - value: pilot
+              label: Pilot
+            - value: active
+              label: Active
+            - value: suspended
+              label: Suspended
+            - value: retired
+              label: Retired
+            - value: cancelled
+              label: Cancelled
+            - value: unknown
+              label: Unknown
+        - id: public_summary
+          label: Public summary
+          type: longText
+          required: true
+          searchable: true
+        - id: approved_purpose
+          label: Approved purpose
+          type: longText
+          searchable: true
+        - id: public_location_scope
+          label: Public location scope
+          description: General public-facing area description only. Do not store precise device coordinates or covert operational positioning.
+          type: text
+          searchable: true
+        - id: capability_categories
+          label: Capability categories
+          type: multiEnum
+          filterable: true
+          options:
+            - value: video_observation
+              label: Video observation
+            - value: license_plate_recognition
+              label: License plate recognition
+            - value: biometric_identification
+              label: Biometric identification
+            - value: acoustic_detection
+              label: Acoustic detection
+            - value: aerial_observation
+              label: Aerial observation
+            - value: geolocation
+              label: Geolocation
+            - value: device_or_network_detection
+              label: Device or network detection
+            - value: social_media_monitoring
+              label: Social media monitoring
+            - value: analytics_or_decision_support
+              label: Analytics or decision support
+            - value: other
+              label: Other
+        - id: data_categories
+          label: Data categories
+          type: multiEnum
+          filterable: true
+          options:
+            - value: video
+              label: Video
+            - value: still_images
+              label: Still images
+            - value: license_plate_data
+              label: License plate data
+            - value: biometric_data
+              label: Biometric data
+            - value: audio
+              label: Audio
+            - value: location_data
+              label: Location data
+            - value: device_identifiers
+              label: Device identifiers
+            - value: communications_metadata
+              label: Communications metadata
+            - value: public_social_media
+              label: Public social media
+            - value: derived_analytics
+              label: Derived analytics
+            - value: other
+              label: Other
+        - id: collection_mode
+          label: Collection mode
+          type: enum
+          filterable: true
+          options:
+            - value: continuous
+              label: Continuous
+            - value: event_triggered
+              label: Event-triggered
+            - value: operator_initiated
+              label: Operator-initiated
+            - value: query_based
+              label: Query-based
+            - value: mixed
+              label: Mixed
+            - value: not_specified
+              label: Not specified
+        - id: retention_days
+          label: Maximum retention period in days
+          type: integer
+          filterable: true
+          sortable: true
+        - id: retention_basis
+          label: Retention basis
+          type: longText
+          searchable: true
+        - id: sharing_categories
+          label: Sharing categories
+          type: multiEnum
+          filterable: true
+          options:
+            - value: same_agency
+              label: Same agency
+            - value: local_government
+              label: Other local government
+            - value: state_government
+              label: State government
+            - value: federal_government
+              label: Federal government
+            - value: law_enforcement_partner
+              label: Law enforcement partner
+            - value: fusion_center
+              label: Fusion center
+            - value: contractor_or_vendor
+              label: Contractor or vendor
+            - value: research_partner
+              label: Research partner
+            - value: public_release
+              label: Public release
+            - value: other
+              label: Other
+            - value: none_disclosed
+              label: None disclosed
+        - id: legal_process_requirement
+          label: Warrant or legal-process requirement
+          type: enum
+          filterable: true
+          options:
+            - value: warrant_required
+              label: Warrant required
+            - value: court_order_required
+              label: Court order required
+            - value: subpoena_or_equivalent
+              label: Subpoena or equivalent
+            - value: policy_authorization
+              label: Policy authorization
+            - value: emergency_exception
+              label: Emergency exception
+            - value: not_applicable
+              label: Not applicable
+            - value: not_specified
+              label: Not specified
+        - id: approved_on
+          label: Approved on
+          type: date
+          filterable: true
+          sortable: true
+        - id: operational_on
+          label: Operational on
+          type: date
+          filterable: true
+          sortable: true
+        - id: retired_on
+          label: Retired on
+          type: date
+          filterable: true
+          sortable: true
+        - id: public_information_url
+          label: Public information URL
+          type: url
+
+    - id: technology
+      name: Surveillance technology
+      pluralName: Surveillance technologies
+      description: Technology, product, or capability used for public surveillance or monitoring.
+      titleFieldId: name
+      summaryFieldId: description
+      fields:
+        - id: name
+          label: Technology name
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: category
+          label: Technology category
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: fixed_camera
+              label: Fixed camera
+            - value: mobile_camera
+              label: Mobile camera
+            - value: automated_license_plate_reader
+              label: Automated license plate reader
+            - value: facial_recognition
+              label: Facial recognition
+            - value: other_biometric
+              label: Other biometric
+            - value: acoustic_sensor
+              label: Acoustic sensor
+            - value: drone_or_aerial
+              label: Drone or aerial system
+            - value: geolocation_system
+              label: Geolocation system
+            - value: device_or_network_sensor
+              label: Device or network sensor
+            - value: social_media_monitoring
+              label: Social media monitoring
+            - value: analytics_platform
+              label: Analytics platform
+            - value: integrated_sensor_platform
+              label: Integrated sensor platform
+            - value: other
+              label: Other
+        - id: description
+          label: Description
+          type: longText
+          searchable: true
+        - id: manufacturer
+          label: Manufacturer
+          type: text
+          searchable: true
+          filterable: true
+        - id: model
+          label: Model
+          type: text
+          searchable: true
+        - id: version
+          label: Version
+          type: text
+          searchable: true
+        - id: capability_categories
+          label: Capability categories
+          type: multiEnum
+          filterable: true
+          options:
+            - value: capture
+              label: Capture
+            - value: identification
+              label: Identification
+            - value: matching
+              label: Matching
+            - value: tracking
+              label: Tracking
+            - value: alerting
+              label: Alerting
+            - value: prediction
+              label: Prediction
+            - value: classification
+              label: Classification
+            - value: data_fusion
+              label: Data fusion
+            - value: other
+              label: Other
+        - id: data_categories
+          label: Data categories
+          type: multiEnum
+          filterable: true
+          options:
+            - value: video
+              label: Video
+            - value: images
+              label: Images
+            - value: license_plate_data
+              label: License plate data
+            - value: biometric_data
+              label: Biometric data
+            - value: audio
+              label: Audio
+            - value: location_data
+              label: Location data
+            - value: device_identifiers
+              label: Device identifiers
+            - value: communications_metadata
+              label: Communications metadata
+            - value: public_social_media
+              label: Public social media
+            - value: derived_analytics
+              label: Derived analytics
+            - value: other
+              label: Other
+        - id: real_time_capable
+          label: Real-time capable
+          type: boolean
+          filterable: true
+        - id: biometric_capable
+          label: Biometric capable
+          type: boolean
+          filterable: true
+        - id: automated_decision_support
+          label: Automated decision support
+          type: boolean
+          filterable: true
+        - id: product_url
+          label: Product URL
+          type: url
+
+    - id: agency
+      name: Public agency
+      pluralName: Public agencies
+      description: Government agency, department, office, authority, or public body responsible for a surveillance activity.
+      titleFieldId: name
+      summaryFieldId: description
+      fields:
+        - id: name
+          label: Agency name
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: jurisdiction
+          label: Jurisdiction
+          type: text
+          required: true
+          searchable: true
+          filterable: true
+          sortable: true
+        - id: agency_type
+          label: Agency type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: police
+              label: Police
+            - value: sheriff
+              label: Sheriff
+            - value: transportation
+              label: Transportation
+            - value: emergency_management
+              label: Emergency management
+            - value: public_safety
+              label: Public safety
+            - value: information_technology
+              label: Information technology
+            - value: school_or_university
+              label: School or university
+            - value: housing
+              label: Housing
+            - value: utilities
+              label: Utilities
+            - value: city_or_county_administration
+              label: City or county administration
+            - value: other
+              label: Other
+        - id: description
+          label: Description
+          type: longText
+          searchable: true
+        - id: website
+          label: Website
+          type: url
+        - id: public_records_url
+          label: Public records URL
+          type: url
+        - id: privacy_contact_email
+          label: Privacy or public-information contact email
+          type: email
+
+    - id: vendor
+      name: Vendor
+      pluralName: Vendors
+      description: Company, nonprofit, contractor, or other non-government supplier of technology or services.
+      titleFieldId: name
+      summaryFieldId: description
+      fields:
+        - id: name
+          label: Vendor name
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: legal_name
+          label: Legal name
+          type: text
+          searchable: true
+        - id: vendor_type
+          label: Vendor type
+          type: enum
+          filterable: true
+          options:
+            - value: manufacturer
+              label: Manufacturer
+            - value: software_provider
+              label: Software provider
+            - value: systems_integrator
+              label: Systems integrator
+            - value: data_provider
+              label: Data provider
+            - value: consultant
+              label: Consultant
+            - value: service_provider
+              label: Service provider
+            - value: nonprofit
+              label: Nonprofit
+            - value: other
+              label: Other
+        - id: description
+          label: Description
+          type: longText
+          searchable: true
+        - id: website
+          label: Website
+          type: url
+        - id: headquarters
+          label: Headquarters
+          type: text
+          searchable: true
+
+    - id: policy
+      name: Policy or law
+      pluralName: Policies and laws
+      description: Law, ordinance, regulation, policy, rule, or public standard governing surveillance.
+      titleFieldId: title
+      summaryFieldId: summary
+      fields:
+        - id: title
+          label: Title
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: policy_type
+          label: Policy type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: statute
+              label: Statute
+            - value: ordinance
+              label: Ordinance
+            - value: regulation
+              label: Regulation
+            - value: agency_policy
+              label: Agency policy
+            - value: privacy_policy
+              label: Privacy policy
+            - value: retention_policy
+              label: Retention policy
+            - value: data_sharing_policy
+              label: Data-sharing policy
+            - value: acceptable_use_policy
+              label: Acceptable-use policy
+            - value: warrant_or_legal_process_policy
+              label: Warrant or legal-process policy
+            - value: oversight_standard
+              label: Oversight standard
+            - value: other
+              label: Other
+        - id: authority_level
+          label: Authority level
+          type: enum
+          filterable: true
+          options:
+            - value: federal
+              label: Federal
+            - value: state
+              label: State
+            - value: county
+              label: County
+            - value: municipal
+              label: Municipal
+            - value: agency
+              label: Agency
+            - value: other
+              label: Other
+        - id: citation_or_number
+          label: Citation or policy number
+          type: text
+          searchable: true
+        - id: summary
+          label: Summary
+          type: longText
+          searchable: true
+        - id: policy_status
+          label: Policy status
+          type: enum
+          filterable: true
+          options:
+            - value: proposed
+              label: Proposed
+            - value: current
+              label: Current
+            - value: superseded
+              label: Superseded
+            - value: repealed
+              label: Repealed
+            - value: expired
+              label: Expired
+            - value: unknown
+              label: Unknown
+        - id: adopted_on
+          label: Adopted on
+          type: date
+          filterable: true
+          sortable: true
+        - id: effective_on
+          label: Effective on
+          type: date
+          filterable: true
+          sortable: true
+        - id: expires_on
+          label: Expires on
+          type: date
+          filterable: true
+          sortable: true
+        - id: review_due_on
+          label: Review due on
+          type: date
+          filterable: true
+          sortable: true
+        - id: canonical_url
+          label: Public source URL
+          type: url
+
+    - id: authorization
+      name: Approval or authorization
+      pluralName: Approvals and authorizations
+      description: Formal approval, authorization, permit, council action, waiver, or other public decision authorizing surveillance activity.
+      titleFieldId: title
+      summaryFieldId: summary
+      fields:
+        - id: title
+          label: Title
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: authorization_type
+          label: Authorization type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: legislative_approval
+              label: Legislative approval
+            - value: executive_approval
+              label: Executive approval
+            - value: agency_authorization
+              label: Agency authorization
+            - value: permit
+              label: Permit
+            - value: waiver
+              label: Waiver
+            - value: emergency_authorization
+              label: Emergency authorization
+            - value: pilot_authorization
+              label: Pilot authorization
+            - value: other
+              label: Other
+        - id: approving_body
+          label: Approving body
+          type: text
+          required: true
+          searchable: true
+          filterable: true
+        - id: reference_number
+          label: Reference number
+          type: text
+          searchable: true
+        - id: summary
+          label: Summary
+          type: longText
+          searchable: true
+        - id: conditions
+          label: Conditions or limitations
+          type: longText
+          searchable: true
+        - id: authorization_status
+          label: Authorization status
+          type: enum
+          filterable: true
+          options:
+            - value: pending
+              label: Pending
+            - value: approved
+              label: Approved
+            - value: denied
+              label: Denied
+            - value: expired
+              label: Expired
+            - value: revoked
+              label: Revoked
+            - value: superseded
+              label: Superseded
+        - id: approved_on
+          label: Approved on
+          type: date
+          filterable: true
+          sortable: true
+        - id: effective_on
+          label: Effective on
+          type: date
+          filterable: true
+          sortable: true
+        - id: expires_on
+          label: Expires on
+          type: date
+          filterable: true
+          sortable: true
+        - id: public_url
+          label: Public source URL
+          type: url
+
+    - id: procurement
+      name: Procurement or contract
+      pluralName: Procurements and contracts
+      description: Contract, purchase, solicitation, grant, lease, or other procurement associated with surveillance technology or services.
+      titleFieldId: title
+      summaryFieldId: summary
+      fields:
+        - id: title
+          label: Title
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: procurement_type
+          label: Procurement type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: contract
+              label: Contract
+            - value: purchase_order
+              label: Purchase order
+            - value: solicitation
+              label: Solicitation
+            - value: grant
+              label: Grant
+            - value: lease
+              label: Lease
+            - value: cooperative_agreement
+              label: Cooperative agreement
+            - value: intergovernmental_agreement
+              label: Intergovernmental agreement
+            - value: other
+              label: Other
+        - id: procurement_status
+          label: Procurement status
+          type: enum
+          filterable: true
+          options:
+            - value: planned
+              label: Planned
+            - value: soliciting
+              label: Soliciting
+            - value: awarded
+              label: Awarded
+            - value: active
+              label: Active
+            - value: expired
+              label: Expired
+            - value: terminated
+              label: Terminated
+            - value: cancelled
+              label: Cancelled
+        - id: reference_number
+          label: Reference number
+          type: text
+          searchable: true
+        - id: summary
+          label: Summary
+          type: longText
+          searchable: true
+        - id: amount
+          label: Amount
+          type: decimal
+          sortable: true
+        - id: currency
+          label: Currency
+          type: enum
+          filterable: true
+          options:
+            - value: usd
+              label: USD
+            - value: other
+              label: Other
+        - id: awarded_on
+          label: Awarded on
+          type: date
+          filterable: true
+          sortable: true
+        - id: starts_on
+          label: Starts on
+          type: date
+          filterable: true
+          sortable: true
+        - id: ends_on
+          label: Ends on
+          type: date
+          filterable: true
+          sortable: true
+        - id: renewal_due_on
+          label: Renewal due on
+          type: date
+          filterable: true
+          sortable: true
+        - id: public_url
+          label: Public procurement URL
+          type: url
+
+    - id: audit
+      name: Audit or assessment
+      pluralName: Audits and assessments
+      description: Audit, privacy assessment, civil-rights review, security review, impact assessment, or other formal oversight evaluation.
+      titleFieldId: title
+      summaryFieldId: summary
+      fields:
+        - id: title
+          label: Title
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: assessment_type
+          label: Assessment type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: compliance_audit
+              label: Compliance audit
+            - value: privacy_impact_assessment
+              label: Privacy impact assessment
+            - value: civil_rights_assessment
+              label: Civil-rights assessment
+            - value: security_assessment
+              label: Security assessment
+            - value: algorithmic_impact_assessment
+              label: Algorithmic impact assessment
+            - value: retention_audit
+              label: Retention audit
+            - value: access_audit
+              label: Access audit
+            - value: incident_review
+              label: Incident review
+            - value: post_implementation_review
+              label: Post-implementation review
+            - value: other
+              label: Other
+        - id: assessor
+          label: Assessor
+          type: text
+          searchable: true
+          filterable: true
+        - id: period_start
+          label: Period start
+          type: date
+          sortable: true
+        - id: period_end
+          label: Period end
+          type: date
+          sortable: true
+        - id: completed_on
+          label: Completed on
+          type: date
+          filterable: true
+          sortable: true
+        - id: overall_status
+          label: Overall status
+          type: enum
+          filterable: true
+          options:
+            - value: satisfactory
+              label: Satisfactory
+            - value: satisfactory_with_findings
+              label: Satisfactory with findings
+            - value: deficient
+              label: Deficient
+            - value: noncompliant
+              label: Noncompliant
+            - value: inconclusive
+              label: Inconclusive
+            - value: not_applicable
+              label: Not applicable
+        - id: summary
+          label: Public findings summary
+          type: longText
+          searchable: true
+        - id: recommendations
+          label: Recommendations
+          type: longText
+          searchable: true
+        - id: next_review_due_on
+          label: Next review due on
+          type: date
+          filterable: true
+          sortable: true
+        - id: public_url
+          label: Public report URL
+          type: url
+
+    - id: violation
+      name: Violation or incident
+      pluralName: Violations and incidents
+      description: Publicly reportable misuse allegation, substantiated violation, data incident, policy failure, or related accountability event.
+      titleFieldId: title
+      summaryFieldId: summary
+      fields:
+        - id: title
+          label: Title
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: incident_type
+          label: Incident type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: unauthorized_access
+              label: Unauthorized access
+            - value: unauthorized_use
+              label: Unauthorized use
+            - value: excessive_retention
+              label: Excessive retention
+            - value: improper_sharing
+              label: Improper sharing
+            - value: security_breach
+              label: Security breach
+            - value: policy_violation
+              label: Policy violation
+            - value: civil_liberties_complaint
+              label: Civil-liberties complaint
+            - value: accuracy_or_bias_issue
+              label: Accuracy or bias issue
+            - value: procurement_or_contract_issue
+              label: Procurement or contract issue
+            - value: other
+              label: Other
+        - id: incident_status
+          label: Incident status
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: allegation
+              label: Allegation
+            - value: reported
+              label: Reported
+            - value: investigating
+              label: Investigating
+            - value: substantiated
+              label: Substantiated
+            - value: unsubstantiated
+              label: Unsubstantiated
+            - value: remediating
+              label: Remediating
+            - value: remediated
+              label: Remediated
+            - value: closed
+              label: Closed
+        - id: severity
+          label: Severity
+          type: enum
+          filterable: true
+          options:
+            - value: low
+              label: Low
+            - value: moderate
+              label: Moderate
+            - value: high
+              label: High
+            - value: critical
+              label: Critical
+            - value: not_assessed
+              label: Not assessed
+        - id: occurred_on
+          label: Occurred on
+          type: date
+          filterable: true
+          sortable: true
+        - id: reported_on
+          label: Reported on
+          type: date
+          filterable: true
+          sortable: true
+        - id: summary
+          label: Public summary
+          type: longText
+          required: true
+          searchable: true
+        - id: remediation
+          label: Remediation
+          type: longText
+          searchable: true
+        - id: remediation_due_on
+          label: Remediation due on
+          type: date
+          filterable: true
+          sortable: true
+        - id: resolved_on
+          label: Resolved on
+          type: date
+          filterable: true
+          sortable: true
+        - id: public_url
+          label: Public source URL
+          type: url
+
+    - id: data_sharing
+      name: Data-sharing arrangement
+      pluralName: Data-sharing arrangements
+      description: Publicly documented arrangement governing disclosure, transfer, access, or processing of surveillance-derived data.
+      titleFieldId: title
+      summaryFieldId: purpose
+      fields:
+        - id: title
+          label: Title
+          type: text
+          required: true
+          searchable: true
+          sortable: true
+        - id: sharing_type
+          label: Sharing type
+          type: enum
+          required: true
+          filterable: true
+          options:
+            - value: routine_interagency
+              label: Routine interagency
+            - value: case_by_case
+              label: Case-by-case
+            - value: emergency
+              label: Emergency
+            - value: mutual_aid
+              label: Mutual aid
+            - value: fusion_center
+              label: Fusion center
+            - value: contractor_processing
+              label: Contractor processing
+            - value: federal_access
+              label: Federal access
+            - value: research
+              label: Research
+            - value: public_release
+              label: Public release
+            - value: other
+              label: Other
+        - id: recipient_category
+          label: Recipient category
+          type: multiEnum
+          filterable: true
+          options:
+            - value: local_agency
+              label: Local agency
+            - value: state_agency
+              label: State agency
+            - value: federal_agency
+              label: Federal agency
+            - value: law_enforcement_partner
+              label: Law enforcement partner
+            - value: fusion_center
+              label: Fusion center
+            - value: contractor_or_vendor
+              label: Contractor or vendor
+            - value: research_institution
+              label: Research institution
+            - value: public
+              label: Public
+            - value: other
+              label: Other
+        - id: data_categories
+          label: Data categories
+          type: multiEnum
+          filterable: true
+          options:
+            - value: video
+              label: Video
+            - value: images
+              label: Images
+            - value: license_plate_data
+              label: License plate data
+            - value: biometric_data
+              label: Biometric data
+            - value: audio
+              label: Audio
+            - value: location_data
+              label: Location data
+            - value: device_identifiers
+              label: Device identifiers
+            - value: communications_metadata
+              label: Communications metadata
+            - value: public_social_media
+              label: Public social media
+            - value: derived_analytics
+              label: Derived analytics
+            - value: other
+              label: Other
+        - id: purpose
+          label: Purpose
+          type: longText
+          required: true
+          searchable: true
+        - id: legal_basis
+          label: Legal or policy basis
+          type: longText
+          searchable: true
+        - id: access_conditions
+          label: Access conditions
+          type: longText
+          searchable: true
+        - id: retention_rules
+          label: Recipient retention rules
+          type: longText
+          searchable: true
+        - id: arrangement_status
+          label: Arrangement status
+          type: enum
+          filterable: true
+          options:
+            - value: proposed
+              label: Proposed
+            - value: active
+              label: Active
+            - value: suspended
+              label: Suspended
+            - value: expired
+              label: Expired
+            - value: terminated
+              label: Terminated
+        - id: effective_on
+          label: Effective on
+          type: date
+          filterable: true
+          sortable: true
+        - id: expires_on
+          label: Expires on
+          type: date
+          filterable: true
+          sortable: true
+        - id: public_url
+          label: Public source URL
+          type: url
+
+presentation:
+  recordTypes:
+    deployment:
+      listFields:
+        - name
+        - jurisdiction
+        - deployment_status
+        - approved_on
+        - retention_days
+        - legal_process_requirement
+      defaultSort:
+        fieldId: approved_on
+        direction: desc
+    technology:
+      listFields:
+        - name
+        - category
+        - manufacturer
+        - model
+      defaultSort:
+        fieldId: name
+        direction: asc
+    agency:
+      listFields:
+        - name
+        - jurisdiction
+        - agency_type
+      defaultSort:
+        fieldId: name
+        direction: asc
+    vendor:
+      listFields:
+        - name
+        - vendor_type
+      defaultSort:
+        fieldId: name
+        direction: asc
+    policy:
+      listFields:
+        - title
+        - policy_type
+        - policy_status
+        - effective_on
+      defaultSort:
+        fieldId: effective_on
+        direction: desc
+    authorization:
+      listFields:
+        - title
+        - authorization_type
+        - approving_body
+        - authorization_status
+        - approved_on
+      defaultSort:
+        fieldId: approved_on
+        direction: desc
+    procurement:
+      listFields:
+        - title
+        - procurement_type
+        - procurement_status
+        - amount
+        - awarded_on
+      defaultSort:
+        fieldId: awarded_on
+        direction: desc
+    audit:
+      listFields:
+        - title
+        - assessment_type
+        - completed_on
+        - overall_status
+      defaultSort:
+        fieldId: completed_on
+        direction: desc
+    violation:
+      listFields:
+        - title
+        - incident_type
+        - incident_status
+        - severity
+        - reported_on
+      defaultSort:
+        fieldId: reported_on
+        direction: desc
+    data_sharing:
+      listFields:
+        - title
+        - sharing_type
+        - arrangement_status
+        - effective_on
+      defaultSort:
+        fieldId: effective_on
+        direction: desc
