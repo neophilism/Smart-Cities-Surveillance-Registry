@@ -1096,6 +1096,197 @@ registry:
           label: Public source URL
           type: url
 
+  relationshipTypes:
+    - id: uses-technology
+      label: Uses technology
+      inverseLabel: Used by deployment
+      description: Connects a surveillance deployment to a technology or product used by that deployment.
+      directed: true
+      fromRecordTypeIds:
+        - deployment
+      toRecordTypeIds:
+        - technology
+
+    - id: operated-by
+      label: Operated by
+      inverseLabel: Operates deployment
+      description: Connects a surveillance deployment to the public agency responsible for operating it.
+      directed: true
+      fromRecordTypeIds:
+        - deployment
+      toRecordTypeIds:
+        - agency
+
+    - id: supplied-by
+      label: Supplied by
+      inverseLabel: Supplies technology
+      description: Connects a technology to a vendor that supplies or maintains it.
+      directed: true
+      fromRecordTypeIds:
+        - technology
+      toRecordTypeIds:
+        - vendor
+
+    - id: authorized-by
+      label: Authorized by
+      inverseLabel: Authorizes deployment
+      description: Connects a deployment to the formal approval or authorization permitting it.
+      directed: true
+      fromRecordTypeIds:
+        - deployment
+      toRecordTypeIds:
+        - authorization
+
+    - id: authorization-issued-by
+      label: Issued by
+      inverseLabel: Issued authorization
+      description: Connects an authorization to a public agency or body represented in the agency registry.
+      directed: true
+      fromRecordTypeIds:
+        - authorization
+      toRecordTypeIds:
+        - agency
+
+    - id: governed-by
+      label: Governed by
+      inverseLabel: Governs deployment
+      description: Connects a deployment to a law, ordinance, regulation, policy, or oversight standard that governs it.
+      directed: true
+      fromRecordTypeIds:
+        - deployment
+      toRecordTypeIds:
+        - policy
+
+    - id: policy-issued-by
+      label: Issued by
+      inverseLabel: Issued policy
+      description: Connects a policy or law record to the public agency responsible for issuing or administering it when applicable.
+      directed: true
+      fromRecordTypeIds:
+        - policy
+      toRecordTypeIds:
+        - agency
+
+    - id: procured-through
+      label: Procured through
+      inverseLabel: Procures for deployment
+      description: Connects a deployment to a procurement instrument that funded or acquired it.
+      directed: true
+      fromRecordTypeIds:
+        - deployment
+      toRecordTypeIds:
+        - procurement
+
+    - id: procurement-by
+      label: Procured by
+      inverseLabel: Conducted procurement
+      description: Connects a procurement to the public agency responsible for it.
+      directed: true
+      fromRecordTypeIds:
+        - procurement
+      toRecordTypeIds:
+        - agency
+
+    - id: procurement-with
+      label: Contracted with
+      inverseLabel: Party to procurement
+      description: Connects a procurement to a vendor or contractor receiving or competing for the award.
+      directed: true
+      fromRecordTypeIds:
+        - procurement
+      toRecordTypeIds:
+        - vendor
+
+    - id: procures-technology
+      label: Procures technology
+      inverseLabel: Procured through
+      description: Connects a procurement instrument to the technology it acquires or supports.
+      directed: true
+      fromRecordTypeIds:
+        - procurement
+      toRecordTypeIds:
+        - technology
+
+    - id: audits-deployment
+      label: Audits deployment
+      inverseLabel: Audited by
+      description: Connects an audit or assessment to the deployment it evaluates.
+      directed: true
+      fromRecordTypeIds:
+        - audit
+      toRecordTypeIds:
+        - deployment
+
+    - id: audit-by-agency
+      label: Conducted by
+      inverseLabel: Conducted audit
+      description: Connects an audit or assessment to a public agency that conducted or commissioned it.
+      directed: true
+      fromRecordTypeIds:
+        - audit
+      toRecordTypeIds:
+        - agency
+
+    - id: concerns-deployment
+      label: Concerns deployment
+      inverseLabel: Has reported incident
+      description: Connects a violation or incident to the deployment it concerns.
+      directed: true
+      fromRecordTypeIds:
+        - violation
+      toRecordTypeIds:
+        - deployment
+
+    - id: identified-by-audit
+      label: Identified by audit
+      inverseLabel: Identified incident
+      description: Connects a violation or incident to an audit or assessment that identified or documented it.
+      directed: true
+      fromRecordTypeIds:
+        - violation
+      toRecordTypeIds:
+        - audit
+
+    - id: data-sharing-for-deployment
+      label: Applies to deployment
+      inverseLabel: Has data-sharing arrangement
+      description: Connects a data-sharing arrangement to the deployment whose data it governs.
+      directed: true
+      fromRecordTypeIds:
+        - data_sharing
+      toRecordTypeIds:
+        - deployment
+
+    - id: data-sharing-source
+      label: Shared by
+      inverseLabel: Shares data under arrangement
+      description: Connects a data-sharing arrangement to the originating public agency.
+      directed: true
+      fromRecordTypeIds:
+        - data_sharing
+      toRecordTypeIds:
+        - agency
+
+    - id: data-sharing-recipient
+      label: Shared with
+      inverseLabel: Receives data under arrangement
+      description: Connects a data-sharing arrangement to a public-agency recipient when that recipient is represented in the registry.
+      directed: true
+      fromRecordTypeIds:
+        - data_sharing
+      toRecordTypeIds:
+        - agency
+
+    - id: data-sharing-governed-by
+      label: Governed by
+      inverseLabel: Governs data sharing
+      description: Connects a data-sharing arrangement to the law or policy governing the sharing.
+      directed: true
+      fromRecordTypeIds:
+        - data_sharing
+      toRecordTypeIds:
+        - policy
+
 presentation:
   recordTypes:
     deployment:
