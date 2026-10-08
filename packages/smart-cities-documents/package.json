@@ -1,0 +1,26 @@
+{
+  "name": "@smart-cities-surveillance-registry/documents",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Smart Cities orchestration for official public document ingestion, extraction, association, and search.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@civic-registry/config": "workspace:*",
+    "@civic-registry/core": "workspace:*",
+    "@civic-registry/database": "workspace:*",
+    "@civic-registry/documents": "workspace:*",
+    "@civic-registry/source-adapters": "workspace:*",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.15.5",
+    "typescript": "^5.9.0"
+  }
+}
