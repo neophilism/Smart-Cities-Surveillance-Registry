@@ -1287,6 +1287,136 @@ registry:
       toRecordTypeIds:
         - policy
 
+
+publicationLifecycle:
+  initialStatusId: draft
+
+  statuses:
+    - id: draft
+      label: Draft
+      description: Working record that is not yet public.
+
+    - id: under_review
+      label: Under review
+      description: Record submitted for editorial or disclosure review.
+
+    - id: approved
+      label: Approved for publication
+      description: Record approved and ready for immediate or scheduled publication.
+
+    - id: published
+      label: Published
+      description: Current public record.
+      publiclyVisible: true
+      marksPublished: true
+
+    - id: withdrawn
+      label: Withdrawn
+      description: Previously published record withdrawn from current use but retained publicly for accountability.
+      publiclyVisible: true
+
+    - id: superseded
+      label: Superseded
+      description: Previously published record replaced by a newer public record while retained as public history.
+      publiclyVisible: true
+
+    - id: archived
+      label: Archived
+      description: Historical public record no longer in active workflow.
+      publiclyVisible: true
+      terminal: true
+
+  transitions:
+    - fromStatusId: draft
+      toStatusId: under_review
+      label: Submit for review
+      allowedRoles:
+        - editor
+
+    - fromStatusId: under_review
+      toStatusId: draft
+      label: Return to draft
+      allowedRoles:
+        - reviewer
+
+    - fromStatusId: under_review
+      toStatusId: approved
+      label: Approve for publication
+      allowedRoles:
+        - reviewer
+      approval:
+        approverRoles:
+          - reviewer
+          - publisher
+        minApprovals: 1
+        requesterCannotApprove: true
+
+    - fromStatusId: approved
+      toStatusId: published
+      label: Publish
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: published
+      toStatusId: withdrawn
+      label: Withdraw
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: withdrawn
+      toStatusId: published
+      label: Republish
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: published
+      toStatusId: superseded
+      label: Mark superseded
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: withdrawn
+      toStatusId: superseded
+      label: Mark superseded
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: published
+      toStatusId: archived
+      label: Archive
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: withdrawn
+      toStatusId: archived
+      label: Archive
+      allowedRoles:
+        - publisher
+
+    - fromStatusId: superseded
+      toStatusId: archived
+      label: Archive
+      allowedRoles:
+        - publisher
+
+  scheduledPublication:
+    enabled: true
+    fromStatusIds:
+      - approved
+    targetStatusId: published
+    allowedRoles:
+      - publisher
+
+disclosure:
+  withheldRecordBehavior: placeholder
+  defaultRedactionText: "[REDACTED]"
+  defaultWithheldFieldText: "[WITHHELD]"
+  withheldRecordTitle: "Surveillance registry record withheld"
+  withheldRecordSummary: "Public contents of this registry record are withheld."
+  withheldDocumentTitle: "Surveillance registry document withheld"
+  showReasons: true
+  showAuthorities: true
+
 presentation:
   recordTypes:
     deployment:
