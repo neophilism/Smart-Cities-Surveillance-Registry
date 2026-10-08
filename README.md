@@ -6,26 +6,22 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 3 — Relationship and accountability graph**
+**PR 4 — Publication lifecycle and disclosure model**
 
-PR 3 connects the canonical Smart Cities records into a typed accountability
-graph. It defines 19 directed relationship types covering:
+PR 4 adds the Smart Cities publication/disclosure policy on top of the generic
+engine:
 
-- deployment → technology → vendor;
-- deployment → operating agency;
-- deployment → authorization → issuing agency;
-- deployment → governing policy → issuing agency;
-- deployment → procurement → agency/vendor/technology;
-- audit → deployment and conducting agency;
-- violation/incident → deployment and identifying audit; and
-- data-sharing arrangement → deployment, source agency, recipient agency, and
-  governing policy.
+- controlled `draft → under_review → approved → published` workflow;
+- independent approval before publication;
+- public `withdrawn`, `superseded`, and `archived` historical states;
+- publisher-only final publication and supersession;
+- scheduled publication from approved records;
+- immutable correction history with actor/reason context;
+- field-level redaction and withholding;
+- public-safe search projection; and
+- whole-record placeholder withholding with visible reason/authority support.
 
-The engine's existing bounded, visibility-aware graph traversal is reused
-unchanged. Application-specific tests verify endpoint enforcement and real
-multi-hop traversal in PostgreSQL.
-
-See [Smart Cities accountability graph](docs/ACCOUNTABILITY-GRAPH.md).
+See [Smart Cities publication and disclosure](docs/PUBLICATION-DISCLOSURE.md).
 
 ## Upstream provenance
 
