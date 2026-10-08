@@ -33,6 +33,7 @@ export interface SearchRequest {
   projection?: SearchProjection;
   text?: string;
   recordTypeId?: string;
+  recordIds?: string[];
   statuses?: string[];
   tags?: string[];
   fieldFilters?: SearchFieldFilter[];
@@ -46,9 +47,10 @@ export interface SearchRequest {
 export interface NormalizedSearchRequest
   extends Omit<
     SearchRequest,
-    "page" | "pageSize" | "text" | "statuses" | "tags" | "fieldFilters" | "rangeFilters"
+    "page" | "pageSize" | "text" | "recordIds" | "statuses" | "tags" | "fieldFilters" | "rangeFilters"
   > {
   text?: string;
+  recordIds?: string[];
   statuses: string[];
   tags: string[];
   fieldFilters: SearchFieldFilter[];
