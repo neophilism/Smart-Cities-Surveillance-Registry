@@ -6,21 +6,23 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 16 — Official-source adapter framework**
+**PR 17 — Document/PDF ingestion and extraction**
 
-PR 16 adds downstream provider adapters for:
+PR 17 connects PR 16 attachment discovery to the generic document engine:
 
-- Socrata/open-data JSON feeds;
-- ArcGIS FeatureServer datasets;
-- CKAN catalogs;
-- structured procurement exports; and
-- official HTML/document catalogs.
+- stable official-source record matching;
+- hardened PDF retrieval;
+- SHA-256 content-addressed storage;
+- immutable document versions when source bytes change;
+- page-by-page PDF text extraction;
+- Source + Document + Citation evidence materialization;
+- page/source provenance; and
+- disclosure-safe full-text search over extracted public documents.
 
-The reusable engine remains provider-neutral. It gains only hardened JSON
-retrieval alongside its existing safe HTTP primitives; all provider-specific
-mapping and semantics live in the downstream Smart Cities adapter package.
+Public document search returns matching page numbers rather than raw snippets,
+preventing the search layer from becoming a disclosure side channel.
 
-See [Smart Cities official-source adapters](docs/SMART-CITIES-SOURCE-ADAPTERS.md).
+See [Smart Cities document and PDF ingestion](docs/SMART-CITIES-DOCUMENTS.md).
 
 ## Upstream provenance
 
