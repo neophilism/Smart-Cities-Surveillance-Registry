@@ -6,29 +6,18 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 10 — Deployment and technology pages**
+**PR 11 — Agency, vendor, and procurement pages**
 
-PR 10 adds purpose-built public accountability summaries for the two core
-surveillance record types.
+PR 11 adds purpose-built accountability summaries for:
 
-Deployment pages now foreground:
+- public agencies, including deployments operated, procurements, policies,
+  authorizations, audits, and data sharing;
+- vendors, including technologies supplied, contracts, connected deployments,
+  and connected agencies; and
+- procurements, including public amount, term, agency, vendor, technology,
+  deployment links, evidence, and renewal/expiration deadlines.
 
-- approved purpose and public location scope;
-- data collection, retention, sharing, and legal-process rules;
-- operating agency and deployed technology;
-- vendors reached through the public accountability graph;
-- authorizations, policies, procurement, audits, incidents, and data sharing;
-- public evidence count; and
-- public deadline count.
-
-Technology pages now foreground capabilities, data categories, real-time /
-biometric / automated-decision features, suppliers, deployments, and
-procurements.
-
-The generic details, evidence, history, deadlines, relationship browser, and
-relationship map remain available underneath.
-
-See [Deployment and technology pages](docs/DEPLOYMENT-TECHNOLOGY-PAGES.md).
+See [Agency, vendor, and procurement pages](docs/AGENCY-VENDOR-PROCUREMENT-PAGES.md).
 
 ## Upstream provenance
 
