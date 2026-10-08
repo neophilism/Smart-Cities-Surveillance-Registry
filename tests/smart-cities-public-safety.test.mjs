@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   applySmartCitiesPublicSafetyFallback,
   assertSmartCitiesPublicRecordSafe,
+  scanSmartCitiesPublicPayload,
   scanSmartCitiesPublicRecord,
   SmartCitiesPublicSafetyError,
 } from "../apps/web/lib/smart-cities-public-safety.ts";
@@ -252,5 +253,36 @@ test("fail-safe projection replaces unsafe legacy content with a public-safety p
   assert.deepEqual(
     projected.record.tags,
     [],
+  );
+});
+
+
+test("dynamic evidence/history payload scanning catches unsafe metadata", () => {
+  const issues =
+    scanSmartCitiesPublicPayload(
+      {
+        note:
+          "Controller password=abcdefgh12345678",
+        source: {
+          canonicalUrl:
+            "http://10.0.4.8/internal",
+        },
+      },
+      "citation",
+    );
+
+  assert.ok(
+    issues.some(
+      (issue) =>
+        issue.code ===
+        "credential_material",
+    ),
+  );
+  assert.ok(
+    issues.some(
+      (issue) =>
+        issue.code ===
+        "private_network_address",
+    ),
   );
 });
