@@ -2550,3 +2550,143 @@ h3 {
     border-bottom: 0;
   }
 }
+
+
+/* Deployment and technology accountability summaries */
+
+.smart-record {
+  padding: 2.2rem 0 0;
+}
+
+.smart-record__signal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.smart-record__signal span {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.smart-record__grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.smart-record__card {
+  min-width: 0;
+  min-height: 165px;
+  padding: 1.05rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+}
+
+.smart-record__card--wide {
+  grid-column: span 2;
+}
+
+.smart-record__label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.smart-record__card > strong {
+  display: block;
+  font-size: 1.08rem;
+  line-height: 1.45;
+}
+
+.smart-record__card > p {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+.smart-record__links {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.smart-record__links a {
+  width: fit-content;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.smart-record__facts,
+.smart-record__mini-facts {
+  margin: 0;
+}
+
+.smart-record__facts {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.smart-record__facts dt,
+.smart-record__mini-facts dt {
+  margin-bottom: 0.25rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 750;
+}
+
+.smart-record__facts dd,
+.smart-record__mini-facts dd {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.smart-record__mini-facts {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.smart-record__mini-facts > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.8rem;
+  align-items: baseline;
+}
+
+@media (max-width: 900px) {
+  .smart-record__grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .smart-record__facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .smart-record__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .smart-record__card--wide {
+    grid-column: auto;
+  }
+
+  .smart-record__signal {
+    justify-content: flex-start;
+  }
+}
