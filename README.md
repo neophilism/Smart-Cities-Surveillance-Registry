@@ -6,18 +6,20 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 11 — Agency, vendor, and procurement pages**
+**PR 12 — Policy, authorization, audit, and violation pages**
 
-PR 11 adds purpose-built accountability summaries for:
+PR 12 adds purpose-built public accountability summaries for:
 
-- public agencies, including deployments operated, procurements, policies,
-  authorizations, audits, and data sharing;
-- vendors, including technologies supplied, contracts, connected deployments,
-  and connected agencies; and
-- procurements, including public amount, term, agency, vendor, technology,
-  deployment links, evidence, and renewal/expiration deadlines.
+- policies and laws, including authority, status, review dates, issuing bodies,
+  governed deployments, and governed data sharing;
+- authorizations, including approving body, conditions, term, issuer, and
+  authorized deployments;
+- audits and assessments, including assessor, findings, recommendations,
+  affected deployments, identified incidents, and follow-up dates; and
+- violations/incidents, including severity, status, remediation, affected
+  deployments, identifying audits, evidence, and remediation deadlines.
 
-See [Agency, vendor, and procurement pages](docs/AGENCY-VENDOR-PROCUREMENT-PAGES.md).
+See [Governance and oversight pages](docs/GOVERNANCE-OVERSIGHT-PAGES.md).
 
 ## Upstream provenance
 
