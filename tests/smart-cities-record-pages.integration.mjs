@@ -295,3 +295,199 @@ test("technology page backing graph exposes supplier, deployments, and procureme
     await pool.end();
   }
 });
+
+
+test("agency page backing graph exposes deployments, procurement, policy, authorization, audit, and sharing", async () => {
+  const {
+    pool,
+    graph,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-agency-public-safety";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 1,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const types = new Set(
+      result.edges.map(
+        (edge) =>
+          edge.relationshipTypeId,
+      ),
+    );
+
+    for (const type of [
+      "operated-by",
+      "procurement-by",
+      "policy-issued-by",
+      "authorization-issued-by",
+      "audit-by-agency",
+      "data-sharing-source",
+    ]) {
+      assert.ok(
+        types.has(type),
+        type,
+      );
+    }
+  } finally {
+    await pool.end();
+  }
+});
+
+test("vendor page backing graph exposes supplied technology, contract, connected deployment, and agency", async () => {
+  const {
+    pool,
+    graph,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-vendor-civic-vision";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 2,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const directTypes = new Set(
+      result.edges
+        .filter(
+          (edge) =>
+            edge.fromRecordId ===
+              recordId ||
+            edge.toRecordId ===
+              recordId,
+        )
+        .map(
+          (edge) =>
+            edge.relationshipTypeId,
+        ),
+    );
+
+    assert.ok(
+      directTypes.has("supplied-by"),
+    );
+    assert.ok(
+      directTypes.has(
+        "procurement-with",
+      ),
+    );
+
+    const ids = new Set(
+      result.nodes.map(
+        (node) => node.record.id,
+      ),
+    );
+
+    assert.ok(
+      ids.has(
+        "demo-deployment-downtown",
+      ),
+    );
+    assert.ok(
+      ids.has(
+        "demo-agency-public-safety",
+      ),
+    );
+  } finally {
+    await pool.end();
+  }
+});
+
+test("procurement page backing graph exposes spending parties, technology, deployment, evidence, and deadlines", async () => {
+  const {
+    pool,
+    graph,
+    citations,
+    deadlines,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-procurement-camera";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 1,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const types = new Set(
+      result.edges.map(
+        (edge) =>
+          edge.relationshipTypeId,
+      ),
+    );
+
+    for (const type of [
+      "procurement-by",
+      "procurement-with",
+      "procures-technology",
+      "procured-through",
+    ]) {
+      assert.ok(
+        types.has(type),
+        type,
+      );
+    }
+
+    const evidence =
+      await citations.listEvidenceForRecord(
+        registryId,
+        recordId,
+        {
+          visibility: "public",
+          limit: 100,
+        },
+      );
+    assert.ok(
+      evidence.length >= 3,
+    );
+
+    const deadlineInstances =
+      await deadlines.listForRecord(
+        registryId,
+        recordId,
+      );
+
+    const deadlineTypes = new Set(
+      deadlineInstances.map(
+        (deadline) =>
+          deadline.deadlineTypeId,
+      ),
+    );
+
+    assert.ok(
+      deadlineTypes.has(
+        "procurement_renewal_due",
+      ),
+    );
+    assert.ok(
+      deadlineTypes.has(
+        "procurement_expires",
+      ),
+    );
+  } finally {
+    await pool.end();
+  }
+});
