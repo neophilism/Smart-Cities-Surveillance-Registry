@@ -210,13 +210,23 @@ test("homepage omits whole-record-withheld records and their deadlines", async (
       );
 
     assert.ok(data);
+    // Placeholder-mode withholding keeps the record in public counts
+    // but removes its contents and accountability dates from homepage
+    // detail surfaces.
     assert.equal(
       data.incidents,
-      0,
+      1,
     );
     assert.equal(
       data.totalRecords,
-      14,
+      15,
+    );
+    assert.ok(
+      !data.recentRecords.some(
+        (record) =>
+          record.id ===
+          "demo-violation-retention",
+      ),
     );
     assert.ok(
       !data.upcomingDeadlines.some(
