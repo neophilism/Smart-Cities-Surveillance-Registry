@@ -11,6 +11,7 @@ import { EvidenceGroups } from "../../../../../components/evidence-groups";
 import { HistoryTimeline } from "../../../../../components/history-timeline";
 import { RecordFieldValue } from "../../../../../components/record-field";
 import { RelationshipGroups } from "../../../../../components/relationship-groups";
+import { SmartCitiesRecordOverview } from "../../../../../components/smart-cities-record-overview";
 import { formatDateTime } from "../../../../../lib/format";
 import {
   getPublicDeadlines,
@@ -18,6 +19,7 @@ import {
   getPublicHistory,
   getPublicRecordView,
   getPublicRegistry,
+  getPublicRelationshipGraph,
   listPublicRelationships,
 } from "../../../../../lib/public-registry";
 
@@ -80,6 +82,7 @@ export default async function RecordPage({
     deadlines,
     evidence,
     history,
+    graphResult,
   ] = await Promise.all([
     listPublicRelationships(
       registry.config,
@@ -100,6 +103,16 @@ export default async function RecordPage({
       registry.config,
       record,
     ),
+    record.recordTypeId === "deployment"
+      ? getPublicRelationshipGraph(
+          registry.config,
+          record.id,
+          {
+            depth: 2,
+            maxNodes: 100,
+          },
+        )
+      : Promise.resolve(null),
   ]);
 
   return (
@@ -179,6 +192,22 @@ export default async function RecordPage({
           </div>
         </section>
       ) : null}
+
+      <SmartCitiesRecordOverview
+        registryId={registryId}
+        recordTypeId={record.recordTypeId}
+        fields={presented.fields}
+        relationships={
+          relationshipResult.relationships
+        }
+        graph={graphResult?.graph}
+        evidenceCount={
+          evidence.citations.length
+        }
+        deadlineCount={
+          deadlines.length
+        }
+      />
 
       <div className="record-layout">
         <section
