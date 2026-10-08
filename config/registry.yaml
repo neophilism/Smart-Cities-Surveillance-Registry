@@ -217,6 +217,12 @@ registry:
           type: date
           filterable: true
           sortable: true
+        - id: next_audit_due_on
+          label: Next audit due on
+          description: Next publicly scheduled audit or oversight review date for this deployment.
+          type: date
+          filterable: true
+          sortable: true
         - id: retired_on
           label: Retired on
           type: date
@@ -1416,6 +1422,145 @@ disclosure:
   withheldDocumentTitle: "Surveillance registry document withheld"
   showReasons: true
   showAuthorities: true
+
+
+deadlines:
+  definitions:
+    - id: deployment_audit_due
+      label: Deployment audit due
+      description: Next publicly scheduled audit or oversight review for a surveillance deployment.
+      recordTypeIds:
+        - deployment
+      anchor:
+        kind: field
+        fieldId: next_audit_due_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 30
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: policy_review_due
+      label: Policy review due
+      description: Public review date stated for a surveillance policy or law.
+      recordTypeIds:
+        - policy
+      anchor:
+        kind: field
+        fieldId: review_due_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 30
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: authorization_expires
+      label: Authorization expires
+      description: Public expiration date for an approval, permit, waiver, pilot, or other authorization.
+      recordTypeIds:
+        - authorization
+      anchor:
+        kind: field
+        fieldId: expires_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 30
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: procurement_renewal_due
+      label: Procurement renewal due
+      description: Publicly stated renewal or extension decision date for a surveillance procurement.
+      recordTypeIds:
+        - procurement
+      anchor:
+        kind: field
+        fieldId: renewal_due_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 60
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: procurement_expires
+      label: Procurement expires
+      description: Public end date for a surveillance contract or other procurement instrument.
+      recordTypeIds:
+        - procurement
+      anchor:
+        kind: field
+        fieldId: ends_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 60
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: audit_followup_due
+      label: Audit follow-up due
+      description: Next scheduled review date recorded on an audit or assessment.
+      recordTypeIds:
+        - audit
+      anchor:
+        kind: field
+        fieldId: next_review_due_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 30
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: violation_remediation_due
+      label: Violation remediation due
+      description: Public remediation due date for a reported violation or incident when one is stated.
+      recordTypeIds:
+        - violation
+      anchor:
+        kind: field
+        fieldId: remediation_due_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 14
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
+
+    - id: data_sharing_expires
+      label: Data-sharing arrangement expires
+      description: Public expiration date for a surveillance data-sharing arrangement.
+      recordTypeIds:
+        - data_sharing
+      anchor:
+        kind: field
+        fieldId: expires_on
+      offset:
+        value: 0
+        unit: calendarDays
+      warningOffset:
+        value: 30
+        unit: calendarDays
+      dateOnlyAnchorTime: end
+      publiclyVisible: true
 
 presentation:
   recordTypes:
