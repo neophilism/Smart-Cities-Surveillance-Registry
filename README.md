@@ -6,27 +6,34 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 7 — Public-safe data and operational-security boundary**
+**PR 8 — Initial demonstration dataset**
 
-PR 7 adds a Smart Cities-specific safety boundary that prevents obvious
-operational or person-level surveillance data from reaching public surfaces.
+PR 8 adds the fully synthetic **Harborview** demonstration jurisdiction so a
+fresh install has coherent data spanning the architecture built in PRs 2-7.
 
-It includes:
+The dataset includes:
 
-- administrator pre-publication scanning;
-- a database publication guard scoped to this registry;
-- disclosure-aware redaction/withholding behavior;
-- blocked removal of disclosure protection when unsafe canonical data remains;
-- fail-safe public placeholders for unsafe legacy records;
-- suppression of unsafe evidence/history metadata; and
-- regression coverage for precise coordinates, private network topology, MAC
-  addresses, credentials/private keys, individual target IDs, raw plate or
-  biometric identifiers, and sensitive external identifiers.
+- all 10 canonical record types;
+- all 19 relationship types;
+- two surveillance deployments;
+- 4 synthetic primary sources;
+- 6 archived-style evidence documents;
+- 17 record/field citations;
+- 24 typed relationships;
+- anchors for all 8 public accountability deadline types; and
+- complete field-level evidence coverage for the principal deployment.
 
-High-level accountability categories remain publishable; raw operational detail
-does not.
+Every URL uses the reserved `.example` namespace and automated tests verify
+that no exact device locations, credentials, target identifiers, raw plate
+values, network topology, or other PR 7-prohibited data reaches the public demo.
 
-See [Smart Cities public-safety boundary](docs/PUBLIC-SAFETY-BOUNDARY.md).
+Seed it with:
+
+```bash
+pnpm db:seed-demo
+```
+
+See [Smart Cities demonstration dataset](docs/DEMONSTRATION-DATASET.md).
 
 ## Upstream provenance
 
