@@ -201,7 +201,14 @@ async function setup() {
   ];
 
   for (const item of fixtures) {
-    await records.create(item);
+    await records.create(item, {
+      bootstrapLifecycle: true,
+      context: {
+        actorId: "system:accountability-graph-fixture",
+        reason:
+          "Create synthetic published graph fixture for integration testing.",
+      },
+    });
   }
 
   const edges = [
