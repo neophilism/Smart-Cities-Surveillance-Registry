@@ -169,3 +169,75 @@ test("adapter NDJSON serialization is deterministic across object key order", ()
 
   assert.equal(left, right);
 });
+
+
+test("public source HTTP client safely retrieves JSON content", async () => {
+  const client = createPublicSourceClient({
+    dnsLookup: async () => [
+      {
+        address: "8.8.8.8",
+        family: 4,
+      },
+    ],
+    fetchImpl: async () =>
+      new Response(
+        JSON.stringify({
+          ok: true,
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type":
+              "application/json; charset=utf-8",
+          },
+        },
+      ),
+  });
+
+  const result =
+    await client.fetchJson(
+      "https://example.gov/data.json",
+      ["example.gov"],
+    );
+
+  assert.deepEqual(
+    JSON.parse(result.body),
+    {
+      ok: true,
+    },
+  );
+  assert.equal(
+    result.contentType,
+    "application/json",
+  );
+});
+
+test("public source JSON retrieval rejects non-JSON responses", async () => {
+  const client = createPublicSourceClient({
+    dnsLookup: async () => [
+      {
+        address: "8.8.8.8",
+        family: 4,
+      },
+    ],
+    fetchImpl: async () =>
+      new Response(
+        "<html>not json</html>",
+        {
+          status: 200,
+          headers: {
+            "content-type":
+              "text/html",
+          },
+        },
+      ),
+  });
+
+  await assert.rejects(
+    client.fetchJson(
+      "https://example.gov/data.json",
+      ["example.gov"],
+    ),
+    /Unsupported JSON source content type/i,
+  );
+});

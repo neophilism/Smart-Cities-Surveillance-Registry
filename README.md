@@ -6,17 +6,21 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 15 — Structured ingestion pipelines**
+**PR 16 — Official-source adapter framework**
 
-PR 15 adds downstream ingestion profiles for deployments, policies,
-procurements/contracts, and audits.
+PR 16 adds downstream provider adapters for:
 
-The example profiles cover CSV, JSON, and NDJSON while preserving source
-fingerprints, row-level provenance, durable outcomes, and immutable update
-history. Imported records begin in `draft`, so external feeds cannot bypass the
-review/publication lifecycle.
+- Socrata/open-data JSON feeds;
+- ArcGIS FeatureServer datasets;
+- CKAN catalogs;
+- structured procurement exports; and
+- official HTML/document catalogs.
 
-See [Smart Cities structured ingestion](docs/STRUCTURED-INGESTION.md).
+The reusable engine remains provider-neutral. It gains only hardened JSON
+retrieval alongside its existing safe HTTP primitives; all provider-specific
+mapping and semantics live in the downstream Smart Cities adapter package.
+
+See [Smart Cities official-source adapters](docs/SMART-CITIES-SOURCE-ADAPTERS.md).
 
 ## Upstream provenance
 

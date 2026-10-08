@@ -81,6 +81,11 @@ export interface PublicSourceClient {
     allowedHosts: readonly string[],
   ): Promise<PublicSourceFetchResult>;
 
+  fetchJson(
+    url: string,
+    allowedHosts: readonly string[],
+  ): Promise<PublicSourceFetchResult>;
+
   fetchBytes(
     url: string,
     allowedHosts: readonly string[],
