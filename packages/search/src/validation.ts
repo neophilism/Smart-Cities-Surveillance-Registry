@@ -137,6 +137,24 @@ export function normalizeSearchRequest(
     issues,
   );
 
+  const recordIds =
+    request.recordIds === undefined
+      ? undefined
+      : unique(request.recordIds);
+
+  if (
+    recordIds &&
+    recordIds.length > 5000
+  ) {
+    issues.push({
+      path: "recordIds",
+      code: "too_many_record_ids",
+      message:
+        "recordIds may contain at most 5000 unique IDs.",
+    });
+  }
+
+
   const fieldFilters = (request.fieldFilters ?? [])
     .map((filter) => ({
       fieldId: filter.fieldId,
@@ -240,6 +258,7 @@ export function normalizeSearchRequest(
     registryId: request.registryId,
     text: request.text?.trim() || undefined,
     recordTypeId: request.recordTypeId,
+    recordIds,
     statuses: unique(request.statuses),
     tags: unique(request.tags),
     fieldFilters,
