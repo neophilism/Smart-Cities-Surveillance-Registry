@@ -1,0 +1,16 @@
+[
+  {
+    "record_id": "import-policy-1",
+    "source_key": "POL-2001",
+    "title": "Example Surveillance Technology Policy",
+    "policy_type": "agency_policy",
+    "authority_level": "municipal",
+    "citation_or_number": "EX-POL-2001",
+    "summary": "Synthetic JSON import for a surveillance governance policy.",
+    "policy_status": "current",
+    "adopted_on": "2026-03-01",
+    "effective_on": "2026-04-01",
+    "review_due_on": "2027-03-01",
+    "canonical_url": "https://example.gov/policies/surveillance-technology"
+  }
+]
