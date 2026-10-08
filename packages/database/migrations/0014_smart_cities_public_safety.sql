@@ -234,7 +234,7 @@ BEGIN
 
   RETURN NEW;
 END;
-$;
+$$;
 
 CREATE OR REPLACE FUNCTION smart_cities_guard_field_disclosure_release()
 RETURNS trigger
@@ -345,7 +345,7 @@ BEGIN
   END IF;
   RETURN NEW;
 END;
-$;
+$$;
 
 DROP TRIGGER IF EXISTS smart_cities_public_safety_guard
   ON civic_registry_records;
