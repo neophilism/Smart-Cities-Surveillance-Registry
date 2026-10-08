@@ -1,0 +1,71 @@
+id: smart-cities-procurement-import
+recordTypeId: procurement
+mode: upsert
+
+recordId:
+  path: record_id
+  required: true
+  trim: true
+
+sourceKey:
+  path: source_key
+  required: true
+  trim: true
+
+fields:
+  title:
+    path: title
+    required: true
+    trim: true
+  procurement_type:
+    path: procurement_type
+    required: true
+    trim: true
+  procurement_status:
+    path: procurement_status
+    trim: true
+  reference_number:
+    path: reference_number
+    trim: true
+  summary:
+    path: summary
+    trim: true
+  amount:
+    path: amount
+  currency:
+    path: currency
+    trim: true
+  awarded_on:
+    path: awarded_on
+    trim: true
+  starts_on:
+    path: starts_on
+    trim: true
+  ends_on:
+    path: ends_on
+    trim: true
+  renewal_due_on:
+    path: renewal_due_on
+    trim: true
+  public_url:
+    path: public_url
+    trim: true
+
+status:
+  literal: draft
+
+visibility:
+  literal: public
+
+staticTags:
+  - imported
+  - procurement
+
+externalIdentifiers:
+  - scheme: official-record
+    value:
+      path: source_key
+      required: true
+      trim: true
+
+replaceFields: false
