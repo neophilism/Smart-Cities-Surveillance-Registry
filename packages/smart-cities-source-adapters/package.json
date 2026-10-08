@@ -1,0 +1,21 @@
+{
+  "name": "@smart-cities-surveillance-registry/source-adapters",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Provider-specific public source adapters for the Smart Cities Surveillance Registry.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@civic-registry/ingestion": "workspace:*",
+    "@civic-registry/source-adapters": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
