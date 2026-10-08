@@ -222,6 +222,41 @@ test("database guard blocks unsafe records from entering a public lifecycle stat
   }
 });
 
+test("database guard blocks sensitive external identifiers from public records", async () => {
+  const {
+    pool,
+    records,
+  } = await setup();
+
+  try {
+    const record = deployment(
+      "unsafe-external-identifier",
+      "Public-facing summary.",
+      {
+        status: "published",
+      },
+    );
+    record.externalIdentifiers = [
+      {
+        scheme: "device_id",
+        value: "CAMERA-883",
+      },
+    ];
+
+    await assert.rejects(
+      records.create(
+        record,
+        {
+          bootstrapLifecycle: true,
+        },
+      ),
+      /external identifier scheme|public-safety boundary/i,
+    );
+  } finally {
+    await pool.end();
+  }
+});
+
 test("field redaction permits canonical sensitive content while preventing its public release", async () => {
   const {
     pool,
