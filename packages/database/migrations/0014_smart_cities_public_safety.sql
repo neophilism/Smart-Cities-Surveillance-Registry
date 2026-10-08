@@ -291,7 +291,7 @@ $$;
 CREATE OR REPLACE FUNCTION smart_cities_guard_record_disclosure_release()
 RETURNS trigger
 LANGUAGE plpgsql
-AS $
+AS $guard$
 DECLARE
   target record;
   issue text;
@@ -345,7 +345,7 @@ BEGIN
   END IF;
   RETURN NEW;
 END;
-$$;
+$guard$;
 
 DROP TRIGGER IF EXISTS smart_cities_public_safety_guard
   ON civic_registry_records;
