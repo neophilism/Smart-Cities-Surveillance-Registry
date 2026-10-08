@@ -491,3 +491,260 @@ test("procurement page backing graph exposes spending parties, technology, deplo
     await pool.end();
   }
 });
+
+
+test("policy page exposes issuing agency, governed deployments, data sharing, and review deadline", async () => {
+  const {
+    pool,
+    graph,
+    deadlines,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-policy-surveillance-use";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 1,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const types = new Set(
+      result.edges.map(
+        (edge) =>
+          edge.relationshipTypeId,
+      ),
+    );
+
+    assert.ok(
+      types.has("policy-issued-by"),
+    );
+    assert.ok(
+      types.has("governed-by"),
+    );
+
+    const deadlineInstances =
+      await deadlines.listForRecord(
+        registryId,
+        recordId,
+      );
+
+    assert.ok(
+      deadlineInstances.some(
+        (deadline) =>
+          deadline.deadlineTypeId ===
+          "policy_review_due",
+      ),
+    );
+  } finally {
+    await pool.end();
+  }
+});
+
+test("authorization page exposes issuer, authorized deployments, and expiration", async () => {
+  const {
+    pool,
+    graph,
+    deadlines,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-authorization-council";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 1,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const types = new Set(
+      result.edges.map(
+        (edge) =>
+          edge.relationshipTypeId,
+      ),
+    );
+
+    assert.ok(
+      types.has(
+        "authorization-issued-by",
+      ),
+    );
+    assert.ok(
+      types.has("authorized-by"),
+    );
+
+    const deadlineInstances =
+      await deadlines.listForRecord(
+        registryId,
+        recordId,
+      );
+
+    assert.ok(
+      deadlineInstances.some(
+        (deadline) =>
+          deadline.deadlineTypeId ===
+          "authorization_expires",
+      ),
+    );
+  } finally {
+    await pool.end();
+  }
+});
+
+test("audit page exposes deployment, agency, incident findings, and follow-up deadline", async () => {
+  const {
+    pool,
+    graph,
+    deadlines,
+    citations,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-audit-privacy";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 1,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const types = new Set(
+      result.edges.map(
+        (edge) =>
+          edge.relationshipTypeId,
+      ),
+    );
+
+    for (const type of [
+      "audits-deployment",
+      "audit-by-agency",
+      "identified-by-audit",
+    ]) {
+      assert.ok(
+        types.has(type),
+        type,
+      );
+    }
+
+    const deadlineInstances =
+      await deadlines.listForRecord(
+        registryId,
+        recordId,
+      );
+
+    assert.ok(
+      deadlineInstances.some(
+        (deadline) =>
+          deadline.deadlineTypeId ===
+          "audit_followup_due",
+      ),
+    );
+
+    const evidence =
+      await citations.listEvidenceForRecord(
+        registryId,
+        recordId,
+        {
+          visibility: "public",
+          limit: 100,
+        },
+      );
+
+    assert.ok(
+      evidence.length >= 2,
+    );
+  } finally {
+    await pool.end();
+  }
+});
+
+test("violation page exposes affected deployment, identifying audit, remediation evidence, and deadline", async () => {
+  const {
+    pool,
+    graph,
+    deadlines,
+    citations,
+  } = await setup();
+
+  try {
+    const recordId =
+      "demo-violation-retention";
+    const result =
+      await graph.getGraph({
+        registryId,
+        rootRecordId: recordId,
+        depth: 1,
+        visibility: "public",
+        statusIds: ["published"],
+        maxNodes: 100,
+      });
+
+    assert.ok(result);
+
+    const types = new Set(
+      result.edges.map(
+        (edge) =>
+          edge.relationshipTypeId,
+      ),
+    );
+
+    assert.ok(
+      types.has(
+        "concerns-deployment",
+      ),
+    );
+    assert.ok(
+      types.has(
+        "identified-by-audit",
+      ),
+    );
+
+    const deadlineInstances =
+      await deadlines.listForRecord(
+        registryId,
+        recordId,
+      );
+
+    assert.ok(
+      deadlineInstances.some(
+        (deadline) =>
+          deadline.deadlineTypeId ===
+          "violation_remediation_due",
+      ),
+    );
+
+    const evidence =
+      await citations.listEvidenceForRecord(
+        registryId,
+        recordId,
+        {
+          visibility: "public",
+          limit: 100,
+        },
+      );
+
+    assert.ok(
+      evidence.length >= 2,
+    );
+  } finally {
+    await pool.end();
+  }
+});
