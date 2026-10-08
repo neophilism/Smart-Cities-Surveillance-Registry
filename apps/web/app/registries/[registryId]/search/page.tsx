@@ -6,10 +6,20 @@ import { Breadcrumbs } from "../../../../components/breadcrumbs";
 import { Pagination } from "../../../../components/pagination";
 import { RecordCard } from "../../../../components/record-card";
 import { SearchControls } from "../../../../components/search-controls";
+import { SmartCitiesAdvancedFilterFields } from "../../../../components/smart-cities-advanced-filter-fields";
 import {
   getPublicRegistry,
   searchPublicRecords,
 } from "../../../../lib/public-registry";
+import { getDatabasePool } from "../../../../lib/database";
+import {
+  loadSmartCitiesAdvancedFilterOptions,
+  parseSmartCitiesAdvancedFilters,
+  resolveSmartCitiesCandidateRecordIds,
+} from "../../../../lib/smart-cities-search";
+import {
+  SMART_CITIES_REGISTRY_ID,
+} from "../../../../lib/smart-cities-public-safety";
 import {
   firstSearchValue,
   parsePublicSearchRequest,
@@ -63,6 +73,36 @@ export default async function RegistrySearchPage({
     registry.config,
     query,
   );
+  const advancedFilters =
+    parseSmartCitiesAdvancedFilters(
+      query,
+    );
+  const smartCities =
+    registry.config.definition.id ===
+    SMART_CITIES_REGISTRY_ID;
+  const pool = getDatabasePool();
+  const [
+    candidateRecordIds,
+    advancedFilterOptions,
+  ] = smartCities
+    ? await Promise.all([
+        resolveSmartCitiesCandidateRecordIds(
+          pool,
+          registry.config,
+          advancedFilters,
+        ),
+        loadSmartCitiesAdvancedFilterOptions(
+          pool,
+          registry.config,
+        ),
+      ])
+    : [undefined, undefined];
+
+  if (candidateRecordIds !== undefined) {
+    request.recordIds =
+      candidateRecordIds;
+  }
+
   const result = await searchPublicRecords(
     registry.config,
     request,
@@ -117,6 +157,17 @@ export default async function RegistrySearchPage({
           params={query}
           action={basePath}
           includeRecordType
+          extraFilters={
+            advancedFilterOptions ? (
+              <SmartCitiesAdvancedFilterFields
+                registry={registry.config}
+                params={query}
+                options={
+                  advancedFilterOptions
+                }
+              />
+            ) : undefined
+          }
         />
       </section>
 

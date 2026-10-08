@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type {
   CompiledRecordTypeConfig,
   CompiledRegistryConfig,
@@ -72,6 +73,7 @@ export function SearchControls({
   params,
   action,
   includeRecordType = false,
+  extraFilters,
 }: {
   registry: CompiledRegistryConfig;
   recordType?: CompiledRecordTypeConfig;
@@ -79,6 +81,7 @@ export function SearchControls({
   params: PublicSearchParams;
   action: string;
   includeRecordType?: boolean;
+  extraFilters?: ReactNode;
 }) {
   const query = firstSearchValue(params.q) ?? "";
   const selectedStatus =
@@ -153,7 +156,8 @@ export function SearchControls({
               (key) =>
                 key.startsWith("f_") ||
                 key.startsWith("from_") ||
-                key.startsWith("to_"),
+                key.startsWith("to_") ||
+                key.startsWith("sc_"),
             ),
         )}
       >
@@ -180,6 +184,8 @@ export function SearchControls({
               )}
             />
           ) : null}
+
+          {extraFilters}
 
           <SearchSelect
             label="Status"

@@ -6,20 +6,17 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 12 — Policy, authorization, audit, and violation pages**
+**PR 13 — Advanced search and filtering**
 
-PR 12 adds purpose-built public accountability summaries for:
+PR 13 extends registry-wide public search with graph-aware Smart Cities filters
+for jurisdiction, agency, vendor, technology type, deployment status, data
+category, retention range, legal process, policy status, audit status, and
+incident status.
 
-- policies and laws, including authority, status, review dates, issuing bodies,
-  governed deployments, and governed data sharing;
-- authorizations, including approving body, conditions, term, issuer, and
-  authorized deployments;
-- audits and assessments, including assessor, findings, recommendations,
-  affected deployments, identified incidents, and follow-up dates; and
-- violations/incidents, including severity, status, remediation, affected
-  deployments, identifying audits, evidence, and remediation deadlines.
+The generic search engine gains only a reusable candidate-record-ID filter;
+Smart Cities relationship traversal remains application-specific.
 
-See [Governance and oversight pages](docs/GOVERNANCE-OVERSIGHT-PAGES.md).
+See [Advanced Smart Cities search](docs/ADVANCED-SEARCH.md).
 
 ## Upstream provenance
 

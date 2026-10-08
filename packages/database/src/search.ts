@@ -174,6 +174,19 @@ function buildWhere(
     clauses.push(`record_type_id = ${parameter}`);
   }
 
+  if (request.recordIds !== undefined) {
+    if (request.recordIds.length === 0) {
+      clauses.push("FALSE");
+    } else {
+      const parameter = parameters.add(
+        request.recordIds,
+      );
+      clauses.push(
+        `id = ANY(${parameter}::text[])`,
+      );
+    }
+  }
+
   let textQueryParameter: string | undefined;
 
   if (request.text) {
