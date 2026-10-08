@@ -1,0 +1,69 @@
+id: smart-cities-policy-import
+recordTypeId: policy
+mode: upsert
+
+recordId:
+  path: record_id
+  required: true
+  trim: true
+
+sourceKey:
+  path: source_key
+  required: true
+  trim: true
+
+fields:
+  title:
+    path: title
+    required: true
+    trim: true
+  policy_type:
+    path: policy_type
+    required: true
+    trim: true
+  authority_level:
+    path: authority_level
+    trim: true
+  citation_or_number:
+    path: citation_or_number
+    trim: true
+  summary:
+    path: summary
+    trim: true
+  policy_status:
+    path: policy_status
+    trim: true
+  adopted_on:
+    path: adopted_on
+    trim: true
+  effective_on:
+    path: effective_on
+    trim: true
+  expires_on:
+    path: expires_on
+    trim: true
+  review_due_on:
+    path: review_due_on
+    trim: true
+  canonical_url:
+    path: canonical_url
+    trim: true
+
+status:
+  literal: draft
+
+visibility:
+  literal: public
+
+staticTags:
+  - imported
+  - policy
+
+externalIdentifiers:
+  - scheme: official-record
+    value:
+      path: source_key
+      required: true
+      trim: true
+
+replaceFields: false

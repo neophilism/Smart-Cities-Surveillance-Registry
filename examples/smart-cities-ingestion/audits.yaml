@@ -1,0 +1,69 @@
+id: smart-cities-audit-import
+recordTypeId: audit
+mode: upsert
+
+recordId:
+  path: record_id
+  required: true
+  trim: true
+
+sourceKey:
+  path: source_key
+  required: true
+  trim: true
+
+fields:
+  title:
+    path: title
+    required: true
+    trim: true
+  assessment_type:
+    path: assessment_type
+    required: true
+    trim: true
+  assessor:
+    path: assessor
+    trim: true
+  period_start:
+    path: period_start
+    trim: true
+  period_end:
+    path: period_end
+    trim: true
+  completed_on:
+    path: completed_on
+    trim: true
+  overall_status:
+    path: overall_status
+    trim: true
+  summary:
+    path: summary
+    trim: true
+  recommendations:
+    path: recommendations
+    trim: true
+  next_review_due_on:
+    path: next_review_due_on
+    trim: true
+  public_url:
+    path: public_url
+    trim: true
+
+status:
+  literal: draft
+
+visibility:
+  literal: public
+
+staticTags:
+  - imported
+  - audit
+
+externalIdentifiers:
+  - scheme: official-record
+    value:
+      path: source_key
+      required: true
+      trim: true
+
+replaceFields: false

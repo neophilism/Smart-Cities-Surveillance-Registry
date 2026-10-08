@@ -1,0 +1,95 @@
+id: smart-cities-deployment-import
+recordTypeId: deployment
+mode: upsert
+
+recordId:
+  path: record_id
+  required: true
+  trim: true
+
+sourceKey:
+  path: source_key
+  required: true
+  trim: true
+
+fields:
+  name:
+    path: name
+    required: true
+    trim: true
+  jurisdiction:
+    path: jurisdiction
+    required: true
+    trim: true
+  jurisdiction_type:
+    path: jurisdiction_type
+    trim: true
+  deployment_status:
+    path: deployment_status
+    required: true
+    trim: true
+  public_summary:
+    path: public_summary
+    required: true
+    trim: true
+  approved_purpose:
+    path: approved_purpose
+    trim: true
+  public_location_scope:
+    path: public_location_scope
+    trim: true
+  capability_categories:
+    path: capability_categories
+    split: "|"
+    trim: true
+  data_categories:
+    path: data_categories
+    split: "|"
+    trim: true
+  collection_mode:
+    path: collection_mode
+    trim: true
+  retention_days:
+    path: retention_days
+    trim: true
+  retention_basis:
+    path: retention_basis
+    trim: true
+  sharing_categories:
+    path: sharing_categories
+    split: "|"
+    trim: true
+  legal_process_requirement:
+    path: legal_process_requirement
+    trim: true
+  approved_on:
+    path: approved_on
+    trim: true
+  operational_on:
+    path: operational_on
+    trim: true
+  next_audit_due_on:
+    path: next_audit_due_on
+    trim: true
+  public_information_url:
+    path: public_information_url
+    trim: true
+
+status:
+  literal: draft
+
+visibility:
+  literal: public
+
+staticTags:
+  - imported
+  - deployment
+
+externalIdentifiers:
+  - scheme: official-record
+    value:
+      path: source_key
+      required: true
+      trim: true
+
+replaceFields: false
