@@ -6,26 +6,26 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 2 — Surveillance registry domain schema**
+**PR 3 — Relationship and accountability graph**
 
-PR 2 defines the canonical application vocabulary in `config/registry.yaml`:
+PR 3 connects the canonical Smart Cities records into a typed accountability
+graph. It defines 19 directed relationship types covering:
 
-- surveillance deployments;
-- surveillance technologies;
-- public agencies;
-- vendors;
-- policies and laws;
-- approvals and authorizations;
-- procurements and contracts;
-- audits and assessments;
-- violations and incidents; and
-- data-sharing arrangements.
+- deployment → technology → vendor;
+- deployment → operating agency;
+- deployment → authorization → issuing agency;
+- deployment → governing policy → issuing agency;
+- deployment → procurement → agency/vendor/technology;
+- audit → deployment and conducting agency;
+- violation/incident → deployment and identifying audit; and
+- data-sharing arrangement → deployment, source agency, recipient agency, and
+  governing policy.
 
-The schema includes typed public-accountability fields for jurisdiction, status, purpose, capabilities, data categories, retention, sharing, legal process, approvals, procurements, oversight findings, remediation, and public source links.
+The engine's existing bounded, visibility-aware graph traversal is reused
+unchanged. Application-specific tests verify endpoint enforcement and real
+multi-hop traversal in PostgreSQL.
 
-Relationships are intentionally deferred to PR 3. Publication workflow, deadlines, evidence, and demonstration records remain separate later milestones.
-
-See [Smart Cities domain schema](docs/DOMAIN-SCHEMA.md).
+See [Smart Cities accountability graph](docs/ACCOUNTABILITY-GRAPH.md).
 
 ## Upstream provenance
 
