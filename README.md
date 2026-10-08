@@ -6,24 +6,27 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 6 — Primary-source evidence model**
+**PR 7 — Public-safe data and operational-security boundary**
 
-PR 6 specializes the generic Civic Registry evidence system for Smart Cities:
+PR 7 adds a Smart Cities-specific safety boundary that prevents obvious
+operational or person-level surveillance data from reaching public surfaces.
 
-- source → document → citation provenance chains;
-- canonical public URLs and retrieval timestamps;
-- archived-document SHA-256 metadata;
-- page/section/paragraph/line/fragment locators;
-- field-level citations for material public claims;
-- a Smart Cities evidence-coverage policy for all ten record types; and
-- provenance-quality checks that distinguish a merely attached document from
-  evidence that actually supports the populated critical fields.
+It includes:
 
-Representative integration tests cover both a fully sourced deployment and a
-procurement whose single attached contract does **not** automatically prove
-every populated field.
+- administrator pre-publication scanning;
+- a database publication guard scoped to this registry;
+- disclosure-aware redaction/withholding behavior;
+- blocked removal of disclosure protection when unsafe canonical data remains;
+- fail-safe public placeholders for unsafe legacy records;
+- suppression of unsafe evidence/history metadata; and
+- regression coverage for precise coordinates, private network topology, MAC
+  addresses, credentials/private keys, individual target IDs, raw plate or
+  biometric identifiers, and sensitive external identifiers.
 
-See [Smart Cities primary-source evidence](docs/PRIMARY-SOURCE-EVIDENCE.md).
+High-level accountability categories remain publishable; raw operational detail
+does not.
+
+See [Smart Cities public-safety boundary](docs/PUBLIC-SAFETY-BOUNDARY.md).
 
 ## Upstream provenance
 

@@ -28,6 +28,7 @@ import {
   verifyAdminAccessToken,
 } from "../../lib/admin-auth";
 import { parseAdminRecordFields } from "../../lib/admin-record";
+import { assertSmartCitiesPublicRecordSafe } from "../../lib/smart-cities-public-safety";
 import {
   getDatabasePool,
   getRepositories,
@@ -345,16 +346,71 @@ export async function requestAdminTransition(
   let notice = "Lifecycle transition completed.";
 
   try {
+    const repositories = getRepositories();
+    const recordId = text(
+      formData,
+      "recordId",
+    );
+    const toStatusId = text(
+      formData,
+      "toStatusId",
+    );
+    const [configFile, record] =
+      await Promise.all([
+        repositories.configs.get(
+          registryId,
+        ),
+        repositories.records.get(
+          registryId,
+          recordId,
+        ),
+      ]);
+
+    if (configFile && record) {
+      const config =
+        compileRegistryConfig(
+          configFile,
+        );
+
+      if (
+        config.publicationLifecycle?.isPublicStatus(
+          toStatusId,
+        )
+      ) {
+        const disclosure =
+          await repositories.disclosure.getRecordBundle(
+            registryId,
+            recordId,
+          );
+
+        if (
+          disclosure.record?.disposition !==
+          "withheld"
+        ) {
+          assertSmartCitiesPublicRecordSafe(
+            record,
+            {
+              protectedFieldIds:
+                disclosure.fields.map(
+                  (field) =>
+                    field.fieldId,
+                ),
+            },
+          );
+        }
+      }
+    }
+
     const service =
       new PostgresPublicationLifecycleService(
         getDatabasePool(),
-        getRepositories().deadlines,
+        repositories.deadlines,
       );
     const result =
       await service.requestTransition({
         registryId,
-        recordId: text(formData, "recordId"),
-        toStatusId: text(formData, "toStatusId"),
+        recordId,
+        toStatusId,
         context: {
           actorId: session.actorId,
           roles: session.roles,
