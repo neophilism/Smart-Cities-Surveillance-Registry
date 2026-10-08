@@ -6,23 +6,17 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 14 — Jurisdiction explorer and public-safe mapping**
+**PR 15 — Structured ingestion pipelines**
 
-PR 14 adds:
+PR 15 adds downstream ingestion profiles for deployments, policies,
+procurements/contracts, and audits.
 
-- a public jurisdiction index;
-- jurisdiction-level deployment and agency counts;
-- connected accountability-record counts;
-- public deployment lists;
-- upcoming accountability deadlines;
-- jurisdiction-constrained browse links; and
-- a schematic public-area map built only from broad `public_location_scope`
-  descriptions.
+The example profiles cover CSV, JSON, and NDJSON while preserving source
+fingerprints, row-level provenance, durable outcomes, and immutable update
+history. Imported records begin in `draft`, so external feeds cannot bypass the
+review/publication lifecycle.
 
-The map deliberately contains no device pins, inferred coordinates, or live
-topology.
-
-See [Jurisdiction explorer and public-safe mapping](docs/JURISDICTION-EXPLORER.md).
+See [Smart Cities structured ingestion](docs/STRUCTURED-INGESTION.md).
 
 ## Upstream provenance
 
