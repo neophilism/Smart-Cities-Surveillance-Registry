@@ -378,6 +378,59 @@ export function createPublicSourceClient(
       };
     },
 
+    async fetchJson(
+      rawUrl: string,
+      allowedHosts: readonly string[],
+    ): Promise<PublicSourceFetchResult> {
+      const {
+        response,
+        requestedUrl,
+        current,
+      } = await request(
+        rawUrl,
+        allowedHosts,
+        "application/json,application/geo+json;q=0.9,application/*+json;q=0.8,*/*;q=0.1",
+      );
+      const meta = metadata(
+        response,
+        requestedUrl,
+        current,
+      );
+
+      if (
+        meta.contentType &&
+        !(
+          meta.contentType ===
+            "application/json" ||
+          meta.contentType ===
+            "application/geo+json" ||
+          meta.contentType.endsWith(
+            "+json",
+          ) ||
+          meta.contentType ===
+            "text/json"
+        )
+      ) {
+        throw new Error(
+          `Unsupported JSON source content type ${meta.contentType || "(missing)"} for ${current.toString()}.`,
+        );
+      }
+
+      const bytes =
+        await readLimitedBytes(
+          response,
+          maxResponseBytes,
+        );
+
+      return {
+        ...meta,
+        body:
+          new TextDecoder("utf-8", {
+            fatal: false,
+          }).decode(bytes),
+      };
+    },
+
     async fetchBytes(
       rawUrl: string,
       allowedHosts: readonly string[],
