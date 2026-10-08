@@ -148,6 +148,10 @@ AS $$
 DECLARE
   issue text;
   whole_record_withheld boolean;
+  identifier jsonb;
+  identifier_scheme text;
+  identifier_value text;
+  tag_value text;
 BEGIN
   IF NEW.registry_id <> 'smart-cities-surveillance-registry'
      OR NEW.visibility <> 'public'
@@ -177,14 +181,56 @@ BEGIN
 
   IF issue IS NOT NULL THEN
     RAISE EXCEPTION
-      'Smart Cities public-safety boundary rejected % . Redact/withhold the field or withhold the whole record before publication.',
+      'Smart Cities public-safety boundary rejected %. Redact/withhold the field or withhold the whole record before publication.',
       issue
       USING ERRCODE = '23514';
   END IF;
 
+  FOR identifier IN
+    SELECT value
+    FROM jsonb_array_elements(
+      COALESCE(NEW.external_identifiers, '[]'::jsonb)
+    )
+  LOOP
+    identifier_scheme := lower(
+      COALESCE(identifier ->> 'scheme', '')
+    );
+    identifier_value := COALESCE(
+      identifier ->> 'value',
+      ''
+    );
+
+    IF identifier_scheme ~ '(target|subject|person|device|mac|ip|credential|secret|token)'
+       OR smart_cities_public_safety_issue(
+            identifier_scheme,
+            to_jsonb(identifier_value)
+          ) IS NOT NULL
+    THEN
+      RAISE EXCEPTION
+        'Smart Cities public-safety boundary rejected external identifier scheme %.',
+        identifier_scheme
+        USING ERRCODE = '23514';
+    END IF;
+  END LOOP;
+
+  FOREACH tag_value IN ARRAY COALESCE(NEW.tags, ARRAY[]::text[])
+  LOOP
+    issue := smart_cities_public_safety_issue(
+      'tag',
+      to_jsonb(tag_value)
+    );
+
+    IF issue IS NOT NULL THEN
+      RAISE EXCEPTION
+        'Smart Cities public-safety boundary rejected tag metadata (%).',
+        issue
+        USING ERRCODE = '23514';
+    END IF;
+  END LOOP;
+
   RETURN NEW;
 END;
-$$;
+$;
 
 CREATE OR REPLACE FUNCTION smart_cities_guard_field_disclosure_release()
 RETURNS trigger
@@ -195,6 +241,16 @@ DECLARE
   issue text;
 BEGIN
   IF OLD.registry_id <> 'smart-cities-surveillance-registry' THEN
+    RETURN OLD;
+  END IF;
+
+  IF EXISTS (
+    SELECT 1
+    FROM civic_registry_record_disclosures disclosure
+    WHERE disclosure.registry_id = OLD.registry_id
+      AND disclosure.record_id = OLD.record_id
+      AND disclosure.disposition = 'withheld'
+  ) THEN
     RETURN OLD;
   END IF;
 
@@ -231,7 +287,7 @@ $$;
 CREATE OR REPLACE FUNCTION smart_cities_guard_record_disclosure_release()
 RETURNS trigger
 LANGUAGE plpgsql
-AS $$
+AS $
 DECLARE
   target record;
   issue text;
@@ -239,7 +295,13 @@ BEGIN
   IF OLD.registry_id <> 'smart-cities-surveillance-registry'
      OR OLD.disposition <> 'withheld'
   THEN
-    RETURN OLD;
+    RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
+  END IF;
+
+  IF TG_OP = 'UPDATE'
+     AND NEW.disposition = 'withheld'
+  THEN
+    RETURN NEW;
   END IF;
 
   SELECT status, visibility, fields
@@ -252,7 +314,7 @@ BEGIN
      OR target.visibility <> 'public'
      OR target.status NOT IN ('published', 'withdrawn', 'superseded', 'archived')
   THEN
-    RETURN OLD;
+    RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
   END IF;
 
   issue := smart_cities_first_unsafe_public_field(
@@ -268,15 +330,15 @@ BEGIN
       USING ERRCODE = '23514';
   END IF;
 
-  RETURN OLD;
+  RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
 END;
-$$;
+$;
 
 DROP TRIGGER IF EXISTS smart_cities_public_safety_guard
   ON civic_registry_records;
 
 CREATE TRIGGER smart_cities_public_safety_guard
-BEFORE INSERT OR UPDATE OF fields, status, visibility
+BEFORE INSERT OR UPDATE OF fields, status, visibility, external_identifiers, tags
 ON civic_registry_records
 FOR EACH ROW
 EXECUTE FUNCTION smart_cities_enforce_public_safety();
@@ -294,7 +356,7 @@ DROP TRIGGER IF EXISTS smart_cities_record_disclosure_release_guard
   ON civic_registry_record_disclosures;
 
 CREATE TRIGGER smart_cities_record_disclosure_release_guard
-BEFORE DELETE
+BEFORE DELETE OR UPDATE OF disposition
 ON civic_registry_record_disclosures
 FOR EACH ROW
 EXECUTE FUNCTION smart_cities_guard_record_disclosure_release();
