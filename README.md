@@ -6,17 +6,23 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 13 — Advanced search and filtering**
+**PR 14 — Jurisdiction explorer and public-safe mapping**
 
-PR 13 extends registry-wide public search with graph-aware Smart Cities filters
-for jurisdiction, agency, vendor, technology type, deployment status, data
-category, retention range, legal process, policy status, audit status, and
-incident status.
+PR 14 adds:
 
-The generic search engine gains only a reusable candidate-record-ID filter;
-Smart Cities relationship traversal remains application-specific.
+- a public jurisdiction index;
+- jurisdiction-level deployment and agency counts;
+- connected accountability-record counts;
+- public deployment lists;
+- upcoming accountability deadlines;
+- jurisdiction-constrained browse links; and
+- a schematic public-area map built only from broad `public_location_scope`
+  descriptions.
 
-See [Advanced Smart Cities search](docs/ADVANCED-SEARCH.md).
+The map deliberately contains no device pins, inferred coordinates, or live
+topology.
+
+See [Jurisdiction explorer and public-safe mapping](docs/JURISDICTION-EXPLORER.md).
 
 ## Upstream provenance
 
