@@ -92,3 +92,6 @@ export class SmartCitiesOfficialRelationshipMatcher {
     return results;
   }
 }
+
+export * from "./mapping.ts";
+export * from "./integration.ts";
