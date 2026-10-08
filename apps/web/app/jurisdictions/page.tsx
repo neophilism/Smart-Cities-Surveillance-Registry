@@ -78,7 +78,7 @@ export default async function JurisdictionsPage() {
       </header>
 
       <section
-        className="smart-home__metrics"
+        className="smart-home__metrics jurisdiction-metrics"
         aria-label="Jurisdiction totals"
       >
         <div>
