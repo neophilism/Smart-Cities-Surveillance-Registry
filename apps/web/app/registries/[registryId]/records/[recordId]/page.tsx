@@ -12,6 +12,7 @@ import { HistoryTimeline } from "../../../../../components/history-timeline";
 import { RecordFieldValue } from "../../../../../components/record-field";
 import { RelationshipGroups } from "../../../../../components/relationship-groups";
 import { SmartCitiesRecordOverview } from "../../../../../components/smart-cities-record-overview";
+import { SmartCitiesOrganizationCommerceOverview } from "../../../../../components/smart-cities-organization-commerce-overview";
 import { formatDateTime } from "../../../../../lib/format";
 import {
   getPublicDeadlines,
@@ -103,7 +104,8 @@ export default async function RecordPage({
       registry.config,
       record,
     ),
-    record.recordTypeId === "deployment"
+    record.recordTypeId === "deployment" ||
+    record.recordTypeId === "vendor"
       ? getPublicRelationshipGraph(
           registry.config,
           record.id,
@@ -194,6 +196,22 @@ export default async function RecordPage({
       ) : null}
 
       <SmartCitiesRecordOverview
+        registryId={registryId}
+        recordTypeId={record.recordTypeId}
+        fields={presented.fields}
+        relationships={
+          relationshipResult.relationships
+        }
+        graph={graphResult?.graph}
+        evidenceCount={
+          evidence.citations.length
+        }
+        deadlineCount={
+          deadlines.length
+        }
+      />
+
+      <SmartCitiesOrganizationCommerceOverview
         registryId={registryId}
         recordTypeId={record.recordTypeId}
         fields={presented.fields}
