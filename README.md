@@ -6,25 +6,24 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 5 — Statutory and accountability deadlines**
+**PR 6 — Primary-source evidence model**
 
-PR 5 adds public accountability clocks for:
+PR 6 specializes the generic Civic Registry evidence system for Smart Cities:
 
-- deployment audit dates;
-- policy reviews;
-- authorization expirations;
-- procurement renewals;
-- procurement expirations;
-- audit follow-up reviews;
-- violation remediation; and
-- data-sharing arrangement expirations.
+- source → document → citation provenance chains;
+- canonical public URLs and retrieval timestamps;
+- archived-document SHA-256 metadata;
+- page/section/paragraph/line/fragment locators;
+- field-level citations for material public claims;
+- a Smart Cities evidence-coverage policy for all ten record types; and
+- provenance-quality checks that distinguish a merely attached document from
+  evidence that actually supports the populated critical fields.
 
-The clocks are derived from dates actually stored in public registry records.
-They use zero-day offsets, public warning windows, automatic reconciliation when
-source dates change, and no tolling merely because a registry record is
-withdrawn from current editorial use.
+Representative integration tests cover both a fully sourced deployment and a
+procurement whose single attached contract does **not** automatically prove
+every populated field.
 
-See [Smart Cities accountability deadlines](docs/ACCOUNTABILITY-DEADLINES.md).
+See [Smart Cities primary-source evidence](docs/PRIMARY-SOURCE-EVIDENCE.md).
 
 ## Upstream provenance
 
