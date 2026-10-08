@@ -13,6 +13,7 @@ import { RecordFieldValue } from "../../../../../components/record-field";
 import { RelationshipGroups } from "../../../../../components/relationship-groups";
 import { SmartCitiesRecordOverview } from "../../../../../components/smart-cities-record-overview";
 import { SmartCitiesOrganizationCommerceOverview } from "../../../../../components/smart-cities-organization-commerce-overview";
+import { SmartCitiesGovernanceOversightOverview } from "../../../../../components/smart-cities-governance-oversight-overview";
 import { formatDateTime } from "../../../../../lib/format";
 import {
   getPublicDeadlines,
@@ -219,6 +220,21 @@ export default async function RecordPage({
           relationshipResult.relationships
         }
         graph={graphResult?.graph}
+        evidenceCount={
+          evidence.citations.length
+        }
+        deadlineCount={
+          deadlines.length
+        }
+      />
+
+      <SmartCitiesGovernanceOversightOverview
+        registryId={registryId}
+        recordTypeId={record.recordTypeId}
+        fields={presented.fields}
+        relationships={
+          relationshipResult.relationships
+        }
         evidenceCount={
           evidence.citations.length
         }
