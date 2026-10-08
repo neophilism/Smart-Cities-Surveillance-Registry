@@ -6,34 +6,25 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 8 — Initial demonstration dataset**
+**PR 9 — Public homepage and registry navigation**
 
-PR 8 adds the fully synthetic **Harborview** demonstration jurisdiction so a
-fresh install has coherent data spanning the architecture built in PRs 2-7.
+PR 9 turns the application root into a live public front page for the Smart
+Cities Surveillance Registry.
 
-The dataset includes:
+The homepage now includes:
 
-- all 10 canonical record types;
-- all 19 relationship types;
-- two surveillance deployments;
-- 4 synthetic primary sources;
-- 6 archived-style evidence documents;
-- 17 record/field citations;
-- 24 typed relationships;
-- anchors for all 8 public accountability deadline types; and
-- complete field-level evidence coverage for the principal deployment.
+- registry-wide search;
+- live counts for deployments, technologies, agencies, vendors, audits, and
+  incidents;
+- an accountability pulse showing upcoming public deadlines;
+- recently published public records;
+- schema-driven browse navigation for all 10 record types; and
+- responsive layouts for desktop, tablet, and mobile.
 
-Every URL uses the reserved `.example` namespace and automated tests verify
-that no exact device locations, credentials, target identifiers, raw plate
-values, network topology, or other PR 7-prohibited data reaches the public demo.
+All counts and cards come from the current public registry projection rather
+than hard-coded demo values.
 
-Seed it with:
-
-```bash
-pnpm db:seed-demo
-```
-
-See [Smart Cities demonstration dataset](docs/DEMONSTRATION-DATASET.md).
+See [Public homepage and registry navigation](docs/PUBLIC-HOMEPAGE.md).
 
 ## Upstream provenance
 
