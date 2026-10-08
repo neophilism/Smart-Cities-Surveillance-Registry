@@ -15,6 +15,9 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Primary navigation">
           <Link href="/">Registry</Link>
+          <Link href="/jurisdictions">
+            Jurisdictions
+          </Link>
         </nav>
       </div>
     </header>
