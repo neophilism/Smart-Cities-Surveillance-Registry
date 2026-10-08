@@ -219,6 +219,19 @@ function scanString(
     });
   }
 
+  if (
+    /:\/\/[^\s/@:]+:[^\s/@]+@/.test(
+      value,
+    )
+  ) {
+    issues.push({
+      path,
+      code: "credential_material",
+      message:
+        "URLs containing embedded credentials must not be published.",
+    });
+  }
+
   if (CREDENTIAL_ASSIGNMENT.test(value)) {
     issues.push({
       path,
@@ -309,6 +322,17 @@ function scanValue(
   }
 
   return [];
+}
+
+export function scanSmartCitiesPublicPayload(
+  value: unknown,
+  path = "payload",
+): SmartCitiesPublicSafetyIssue[] {
+  return scanValue(
+    value,
+    path,
+    "payload",
+  );
 }
 
 export function scanSmartCitiesPublicRecord(
