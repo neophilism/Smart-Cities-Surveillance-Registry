@@ -6,25 +6,29 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 9 — Public homepage and registry navigation**
+**PR 10 — Deployment and technology pages**
 
-PR 9 turns the application root into a live public front page for the Smart
-Cities Surveillance Registry.
+PR 10 adds purpose-built public accountability summaries for the two core
+surveillance record types.
 
-The homepage now includes:
+Deployment pages now foreground:
 
-- registry-wide search;
-- live counts for deployments, technologies, agencies, vendors, audits, and
-  incidents;
-- an accountability pulse showing upcoming public deadlines;
-- recently published public records;
-- schema-driven browse navigation for all 10 record types; and
-- responsive layouts for desktop, tablet, and mobile.
+- approved purpose and public location scope;
+- data collection, retention, sharing, and legal-process rules;
+- operating agency and deployed technology;
+- vendors reached through the public accountability graph;
+- authorizations, policies, procurement, audits, incidents, and data sharing;
+- public evidence count; and
+- public deadline count.
 
-All counts and cards come from the current public registry projection rather
-than hard-coded demo values.
+Technology pages now foreground capabilities, data categories, real-time /
+biometric / automated-decision features, suppliers, deployments, and
+procurements.
 
-See [Public homepage and registry navigation](docs/PUBLIC-HOMEPAGE.md).
+The generic details, evidence, history, deadlines, relationship browser, and
+relationship map remain available underneath.
+
+See [Deployment and technology pages](docs/DEPLOYMENT-TECHNOLOGY-PAGES.md).
 
 ## Upstream provenance
 
