@@ -205,6 +205,7 @@ async function expandPublicGraph(
   registry: CompiledRegistryConfig,
   anchors: string[],
   depth = 2,
+  anchorRecordTypeIds: string[] = [],
 ): Promise<Set<string>> {
   if (anchors.length === 0) {
     return new Set();
@@ -290,15 +291,28 @@ async function expandPublicGraph(
            END = ANY(reachable.path)
          )
      )
-     SELECT DISTINCT id
+     SELECT DISTINCT reachable.id
      FROM reachable
-     ORDER BY id
+     INNER JOIN civic_registry_records
+       AS final_record
+       ON final_record.registry_id = $1
+      AND final_record.id = reachable.id
+     WHERE NOT (
+       final_record.record_type_id =
+         ANY($5::text[])
+       AND NOT (
+         reachable.id =
+           ANY($3::text[])
+       )
+     )
+     ORDER BY reachable.id
      LIMIT 5001`,
     [
       SMART_CITIES_REGISTRY_ID,
       statuses ?? null,
       anchors,
       depth,
+      anchorRecordTypeIds,
     ],
   );
 
@@ -336,6 +350,7 @@ async function expandedFieldFilter(
   whereSql: string,
   values: unknown[],
   depth = 2,
+  anchorRecordTypeIds: string[] = [],
 ): Promise<Set<string>> {
   const anchors = await anchorIds(
     pool,
@@ -349,6 +364,7 @@ async function expandedFieldFilter(
     registry,
     anchors,
     depth,
+    anchorRecordTypeIds,
   );
 }
 
@@ -382,6 +398,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
          AND record.public_fields
            ->> 'jurisdiction' = $1`,
         [filters.jurisdiction],
+        2,
+        ["deployment", "agency"],
       ),
     );
   }
@@ -393,6 +411,7 @@ export async function resolveSmartCitiesCandidateRecordIds(
         registry,
         [filters.agencyId],
         2,
+        ["agency"],
       ),
     );
   }
@@ -404,6 +423,7 @@ export async function resolveSmartCitiesCandidateRecordIds(
         registry,
         [filters.vendorId],
         2,
+        ["vendor"],
       ),
     );
   }
@@ -418,6 +438,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
          AND record.public_fields
            ->> 'category' = $1`,
         [filters.technologyCategory],
+        2,
+        ["technology"],
       ),
     );
   }
@@ -432,6 +454,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
          AND record.public_fields
            ->> 'deployment_status' = $1`,
         [filters.deploymentStatus],
+        2,
+        ["deployment"],
       ),
     );
   }
@@ -462,6 +486,12 @@ export async function resolveSmartCitiesCandidateRecordIds(
            WHERE item.value = $1
          )`,
         [filters.dataCategory],
+        2,
+        [
+          "deployment",
+          "technology",
+          "data_sharing",
+        ],
       ),
     );
   }
@@ -511,6 +541,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
         registry,
         clauses.join(" AND "),
         values,
+        2,
+        ["deployment"],
       ),
     );
   }
@@ -526,6 +558,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
            ->> 'legal_process_requirement'
              = $1`,
         [filters.legalProcess],
+        2,
+        ["deployment"],
       ),
     );
   }
@@ -540,6 +574,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
          AND record.public_fields
            ->> 'policy_status' = $1`,
         [filters.policyStatus],
+        2,
+        ["policy"],
       ),
     );
   }
@@ -554,6 +590,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
          AND record.public_fields
            ->> 'overall_status' = $1`,
         [filters.auditStatus],
+        2,
+        ["audit"],
       ),
     );
   }
@@ -568,6 +606,8 @@ export async function resolveSmartCitiesCandidateRecordIds(
          AND record.public_fields
            ->> 'incident_status' = $1`,
         [filters.incidentStatus],
+        2,
+        ["violation"],
       ),
     );
   }
