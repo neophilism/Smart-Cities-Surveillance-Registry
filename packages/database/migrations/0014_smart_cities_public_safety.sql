@@ -75,6 +75,10 @@ BEGIN
     RETURN 'private_key_material';
   END IF;
 
+  IF value_text ~* '://[^[:space:]/@:]+:[^[:space:]/@]+@' THEN
+    RETURN 'credential_material';
+  END IF;
+
   IF value_text ~* '(password|passwd|api[ _-]?key|access[ _-]?token|client[ _-]?secret|bearer)[[:space:]]*[:=][[:space:]]*[^[:space:],;]{8,}' THEN
     RETURN 'credential_material';
   END IF;
@@ -295,7 +299,10 @@ BEGIN
   IF OLD.registry_id <> 'smart-cities-surveillance-registry'
      OR OLD.disposition <> 'withheld'
   THEN
-    RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
+    IF TG_OP = 'DELETE' THEN
+      RETURN OLD;
+    END IF;
+    RETURN NEW;
   END IF;
 
   IF TG_OP = 'UPDATE'
@@ -314,7 +321,10 @@ BEGIN
      OR target.visibility <> 'public'
      OR target.status NOT IN ('published', 'withdrawn', 'superseded', 'archived')
   THEN
-    RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
+    IF TG_OP = 'DELETE' THEN
+      RETURN OLD;
+    END IF;
+    RETURN NEW;
   END IF;
 
   issue := smart_cities_first_unsafe_public_field(
@@ -330,7 +340,10 @@ BEGIN
       USING ERRCODE = '23514';
   END IF;
 
-  RETURN CASE WHEN TG_OP = 'DELETE' THEN OLD ELSE NEW END;
+  IF TG_OP = 'DELETE' THEN
+    RETURN OLD;
+  END IF;
+  RETURN NEW;
 END;
 $;
 
