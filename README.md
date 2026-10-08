@@ -6,22 +6,25 @@ This repository is a **downstream application** of the [Civic Registry & Transpa
 
 ## Current milestone
 
-**PR 4 — Publication lifecycle and disclosure model**
+**PR 5 — Statutory and accountability deadlines**
 
-PR 4 adds the Smart Cities publication/disclosure policy on top of the generic
-engine:
+PR 5 adds public accountability clocks for:
 
-- controlled `draft → under_review → approved → published` workflow;
-- independent approval before publication;
-- public `withdrawn`, `superseded`, and `archived` historical states;
-- publisher-only final publication and supersession;
-- scheduled publication from approved records;
-- immutable correction history with actor/reason context;
-- field-level redaction and withholding;
-- public-safe search projection; and
-- whole-record placeholder withholding with visible reason/authority support.
+- deployment audit dates;
+- policy reviews;
+- authorization expirations;
+- procurement renewals;
+- procurement expirations;
+- audit follow-up reviews;
+- violation remediation; and
+- data-sharing arrangement expirations.
 
-See [Smart Cities publication and disclosure](docs/PUBLICATION-DISCLOSURE.md).
+The clocks are derived from dates actually stored in public registry records.
+They use zero-day offsets, public warning windows, automatic reconciliation when
+source dates change, and no tolling merely because a registry record is
+withdrawn from current editorial use.
+
+See [Smart Cities accountability deadlines](docs/ACCOUNTABILITY-DEADLINES.md).
 
 ## Upstream provenance
 
