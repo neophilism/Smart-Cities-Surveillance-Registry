@@ -1,0 +1,1078 @@
+{
+  "sources": [
+    {
+      "id": "demo-governance-source",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Civic Technology Governance Portal",
+      "sourceType": "webpage",
+      "visibility": "public",
+      "canonicalUrl": "https://harborview.example/governance/surveillance",
+      "publishedAt": "2026-08-15T12:00:00.000Z",
+      "retrievedAt": "2026-09-01T10:00:00.000Z",
+      "description": "Synthetic official-style portal for the fictional Harborview demonstration jurisdiction.",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-procurement-source",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Procurement Portal",
+      "sourceType": "webpage",
+      "visibility": "public",
+      "canonicalUrl": "https://harborview.example/procurement/surveillance",
+      "publishedAt": "2026-08-15T12:00:00.000Z",
+      "retrievedAt": "2026-09-01T10:00:00.000Z",
+      "description": "Synthetic procurement portal for demonstration contracts and awards.",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-oversight-source",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Oversight Reports",
+      "sourceType": "webpage",
+      "visibility": "public",
+      "canonicalUrl": "https://harborview.example/oversight/surveillance",
+      "publishedAt": "2026-08-15T12:00:00.000Z",
+      "retrievedAt": "2026-09-01T10:00:00.000Z",
+      "description": "Synthetic oversight publication page for privacy assessments and remediation reports.",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-sharing-source",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Interagency Agreements",
+      "sourceType": "webpage",
+      "visibility": "public",
+      "canonicalUrl": "https://harborview.example/agreements/data-sharing",
+      "publishedAt": "2026-08-15T12:00:00.000Z",
+      "retrievedAt": "2026-09-01T10:00:00.000Z",
+      "description": "Synthetic public catalog of interagency agreements.",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": "demo-governance-policy-pdf",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Surveillance Technology Use Policy",
+      "visibility": "public",
+      "sourceId": "demo-governance-source",
+      "fileName": "surveillance-technology-use-policy.pdf",
+      "mimeType": "application/pdf",
+      "canonicalUrl": "https://harborview.example/governance/surveillance/use-policy.pdf",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "pageCount": 24,
+      "language": "en",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-council-authorization-pdf",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Council Authorization 2026-04",
+      "visibility": "public",
+      "sourceId": "demo-governance-source",
+      "fileName": "council-authorization-2026-04.pdf",
+      "mimeType": "application/pdf",
+      "canonicalUrl": "https://harborview.example/governance/surveillance/authorization-2026-04.pdf",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "pageCount": 12,
+      "language": "en",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-camera-contract-pdf",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Camera Systems Contract HV-2026-17",
+      "visibility": "public",
+      "sourceId": "demo-procurement-source",
+      "fileName": "contract-hv-2026-17.pdf",
+      "mimeType": "application/pdf",
+      "canonicalUrl": "https://harborview.example/procurement/HV-2026-17/contract.pdf",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "pageCount": 48,
+      "language": "en",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-privacy-assessment-pdf",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Downtown Camera Privacy Assessment",
+      "visibility": "public",
+      "sourceId": "demo-oversight-source",
+      "fileName": "downtown-camera-privacy-assessment.pdf",
+      "mimeType": "application/pdf",
+      "canonicalUrl": "https://harborview.example/oversight/surveillance/downtown-camera-assessment.pdf",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "pageCount": 31,
+      "language": "en",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-remediation-report-pdf",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Retention Configuration Remediation Report",
+      "visibility": "public",
+      "sourceId": "demo-oversight-source",
+      "fileName": "retention-remediation-report.pdf",
+      "mimeType": "application/pdf",
+      "canonicalUrl": "https://harborview.example/oversight/surveillance/retention-remediation.pdf",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "pageCount": 9,
+      "language": "en",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    },
+    {
+      "id": "demo-data-sharing-agreement-pdf",
+      "registryId": "smart-cities-surveillance-registry",
+      "title": "Harborview Public Safety and Transportation Data-Sharing Agreement",
+      "visibility": "public",
+      "sourceId": "demo-sharing-source",
+      "fileName": "public-safety-transportation-data-sharing.pdf",
+      "mimeType": "application/pdf",
+      "canonicalUrl": "https://harborview.example/agreements/data-sharing/public-safety-transportation.pdf",
+      "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+      "pageCount": 17,
+      "language": "en",
+      "createdAt": "2026-09-01T12:00:00.000Z"
+    }
+  ],
+  "records": [
+    {
+      "id": "demo-agency-public-safety",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "agency",
+      "fields": {
+        "name": "Harborview Public Safety Department",
+        "jurisdiction": "Harborview",
+        "agency_type": "public_safety",
+        "description": "Fictional municipal department operating the demonstration surveillance programs.",
+        "website": "https://harborview.example/public-safety",
+        "public_records_url": "https://harborview.example/public-records"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "agency"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-agency-transportation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "agency",
+      "fields": {
+        "name": "Harborview Transportation Department",
+        "jurisdiction": "Harborview",
+        "agency_type": "transportation",
+        "description": "Fictional municipal transportation department participating in the demonstration data-sharing arrangement.",
+        "website": "https://harborview.example/transportation"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "agency"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-vendor-civic-vision",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "vendor",
+      "fields": {
+        "name": "Civic Vision Systems",
+        "legal_name": "Civic Vision Systems Demo LLC",
+        "vendor_type": "manufacturer",
+        "description": "Fictional camera equipment vendor used only in the demonstration dataset.",
+        "website": "https://civicvision.example",
+        "headquarters": "Example State"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "vendor"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-vendor-civic-analytics",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "vendor",
+      "fields": {
+        "name": "Civic Analytics Cooperative",
+        "legal_name": "Civic Analytics Cooperative Demo Inc.",
+        "vendor_type": "software_provider",
+        "description": "Fictional analytics provider used only in the demonstration dataset.",
+        "website": "https://civicanalytics.example",
+        "headquarters": "Example State"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "vendor"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-tech-fixed-camera",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "technology",
+      "fields": {
+        "name": "CivicVision Fixed Camera CV-200",
+        "category": "fixed_camera",
+        "description": "Synthetic fixed-camera technology record for public registry demonstrations.",
+        "manufacturer": "Civic Vision Systems",
+        "model": "CV-200",
+        "version": "2.1",
+        "capability_categories": [
+          "capture",
+          "alerting"
+        ],
+        "data_categories": [
+          "video",
+          "images"
+        ],
+        "real_time_capable": true,
+        "biometric_capable": false,
+        "automated_decision_support": false,
+        "product_url": "https://civicvision.example/products/cv-200"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "technology"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-tech-plate-reader",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "technology",
+      "fields": {
+        "name": "CivicAnalytics Plate Reading Service",
+        "category": "automated_license_plate_reader",
+        "description": "Synthetic plate-reading service record demonstrating category-level transparency without raw plate data.",
+        "manufacturer": "Civic Analytics Cooperative",
+        "model": "RoadSight",
+        "version": "1.4",
+        "capability_categories": [
+          "capture",
+          "matching",
+          "alerting"
+        ],
+        "data_categories": [
+          "license_plate_data",
+          "derived_analytics"
+        ],
+        "real_time_capable": true,
+        "biometric_capable": false,
+        "automated_decision_support": true,
+        "product_url": "https://civicanalytics.example/products/roadsight"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "technology"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-policy-surveillance-use",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "policy",
+      "fields": {
+        "title": "Harborview Surveillance Technology Use Policy",
+        "policy_type": "agency_policy",
+        "authority_level": "municipal",
+        "citation_or_number": "HV-POL-2026-01",
+        "summary": "Synthetic policy establishing approved purposes, retention limits, legal-process rules, audit requirements, and public reporting.",
+        "policy_status": "current",
+        "adopted_on": "2026-01-15",
+        "effective_on": "2026-02-01",
+        "review_due_on": "2027-01-15",
+        "canonical_url": "https://harborview.example/governance/surveillance/use-policy"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "policy"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-policy-data-sharing",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "policy",
+      "fields": {
+        "title": "Harborview Surveillance Data-Sharing Policy",
+        "policy_type": "data_sharing_policy",
+        "authority_level": "municipal",
+        "citation_or_number": "HV-POL-2026-02",
+        "summary": "Synthetic policy governing interagency access, purpose limitation, retention, audit logging, and public review.",
+        "policy_status": "current",
+        "adopted_on": "2026-02-10",
+        "effective_on": "2026-03-01",
+        "review_due_on": "2027-02-10",
+        "canonical_url": "https://harborview.example/governance/surveillance/data-sharing-policy"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "policy"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-authorization-council",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "authorization",
+      "fields": {
+        "title": "Harborview Council Authorization 2026-04",
+        "authorization_type": "legislative_approval",
+        "approving_body": "Harborview City Council",
+        "reference_number": "HV-2026-04",
+        "summary": "Synthetic council authorization for a bounded downtown camera program and a limited transit-area plate-reader pilot.",
+        "conditions": "Requires published retention rules, annual oversight review, and compliance with the municipal surveillance-use policy.",
+        "authorization_status": "approved",
+        "approved_on": "2026-01-20",
+        "effective_on": "2026-02-01",
+        "expires_on": "2027-01-31",
+        "public_url": "https://harborview.example/governance/surveillance/authorization-2026-04"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "authorization"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-procurement-camera",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "procurement",
+      "fields": {
+        "title": "Harborview Camera Systems Contract HV-2026-17",
+        "procurement_type": "contract",
+        "procurement_status": "active",
+        "reference_number": "HV-2026-17",
+        "summary": "Synthetic procurement covering fixed-camera hardware, installation, maintenance, and support.",
+        "amount": 425000,
+        "currency": "usd",
+        "awarded_on": "2026-01-25",
+        "starts_on": "2026-02-01",
+        "ends_on": "2027-02-28",
+        "renewal_due_on": "2026-12-15",
+        "public_url": "https://harborview.example/procurement/HV-2026-17"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "procurement"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-downtown",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "deployment",
+      "fields": {
+        "name": "Harborview Downtown Camera Safety Program",
+        "jurisdiction": "Harborview",
+        "jurisdiction_type": "city",
+        "deployment_status": "active",
+        "public_summary": "Synthetic city-center camera program used to demonstrate public accountability records, evidence, oversight, and deadlines.",
+        "approved_purpose": "Traffic safety, incident response, and investigation of reported public-safety events.",
+        "public_location_scope": "Downtown commercial district and selected public intersections.",
+        "capability_categories": [
+          "video_observation",
+          "analytics_or_decision_support"
+        ],
+        "data_categories": [
+          "video",
+          "still_images",
+          "derived_analytics"
+        ],
+        "collection_mode": "event_triggered",
+        "retention_days": 30,
+        "retention_basis": "Thirty-day standard retention under the synthetic municipal surveillance-use policy, subject to documented case-preservation exceptions.",
+        "sharing_categories": [
+          "same_agency",
+          "local_government"
+        ],
+        "legal_process_requirement": "policy_authorization",
+        "approved_on": "2026-01-20",
+        "operational_on": "2026-02-15",
+        "next_audit_due_on": "2027-01-15",
+        "public_information_url": "https://harborview.example/public-safety/downtown-camera-program"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "deployment",
+        "camera"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-transit-pilot",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "deployment",
+      "fields": {
+        "name": "Harborview Transit Access Plate-Reader Pilot",
+        "jurisdiction": "Harborview",
+        "jurisdiction_type": "city",
+        "deployment_status": "pilot",
+        "public_summary": "Synthetic limited pilot demonstrating registry treatment of plate-reading technology without publishing raw plate observations.",
+        "approved_purpose": "Stolen-vehicle alerts and investigation of reported vehicle-related incidents under defined legal-process rules.",
+        "public_location_scope": "Municipal parking facilities and arterial approaches serving major transit facilities.",
+        "capability_categories": [
+          "license_plate_recognition",
+          "analytics_or_decision_support"
+        ],
+        "data_categories": [
+          "license_plate_data",
+          "derived_analytics"
+        ],
+        "collection_mode": "event_triggered",
+        "retention_days": 14,
+        "retention_basis": "Fourteen-day standard retention for unmatched observations in the synthetic pilot policy.",
+        "sharing_categories": [
+          "same_agency"
+        ],
+        "legal_process_requirement": "warrant_required",
+        "approved_on": "2026-03-01",
+        "operational_on": "2026-04-01",
+        "next_audit_due_on": "2026-12-01",
+        "public_information_url": "https://harborview.example/public-safety/transit-plate-reader-pilot"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "deployment",
+        "pilot"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-audit-privacy",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "audit",
+      "fields": {
+        "title": "Harborview Downtown Camera Privacy Assessment",
+        "assessment_type": "privacy_impact_assessment",
+        "assessor": "Harborview Office of Civic Technology Oversight",
+        "period_start": "2026-02-15",
+        "period_end": "2026-07-31",
+        "completed_on": "2026-08-15",
+        "overall_status": "satisfactory_with_findings",
+        "summary": "Synthetic assessment found the program generally aligned with published policy while identifying one retention-configuration discrepancy for remediation.",
+        "recommendations": "Verify automated deletion configuration, document the correction, and recheck retention controls during the next oversight review.",
+        "next_review_due_on": "2027-01-15",
+        "public_url": "https://harborview.example/oversight/surveillance/downtown-camera-assessment"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "audit"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-violation-retention",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "violation",
+      "fields": {
+        "title": "Harborview Camera Retention Configuration Finding",
+        "incident_type": "excessive_retention",
+        "incident_status": "remediating",
+        "severity": "moderate",
+        "occurred_on": "2026-07-15",
+        "reported_on": "2026-08-15",
+        "summary": "Synthetic oversight finding that one system configuration retained routine footage longer than the published thirty-day standard.",
+        "remediation": "Correct the configuration, verify deletion behavior, and publish completion evidence.",
+        "remediation_due_on": "2026-10-31",
+        "public_url": "https://harborview.example/oversight/surveillance/retention-remediation"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "incident",
+        "remediation"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    },
+    {
+      "id": "demo-data-sharing-transportation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordTypeId": "data_sharing",
+      "fields": {
+        "title": "Harborview Public Safety and Transportation Data-Sharing Agreement",
+        "sharing_type": "routine_interagency",
+        "recipient_category": [
+          "local_agency"
+        ],
+        "data_categories": [
+          "video",
+          "derived_analytics"
+        ],
+        "purpose": "Limited sharing of incident-related imagery and aggregate safety analytics for coordinated transportation safety response.",
+        "legal_basis": "Synthetic municipal data-sharing policy HV-POL-2026-02 and the published interagency agreement.",
+        "access_conditions": "Role-limited access, logged queries, purpose limitation, and periodic oversight review.",
+        "retention_rules": "Recipient retention may not exceed the originating program's published retention rule unless separately authorized.",
+        "arrangement_status": "active",
+        "effective_on": "2026-03-01",
+        "expires_on": "2027-06-30",
+        "public_url": "https://harborview.example/agreements/data-sharing/public-safety-transportation"
+      },
+      "status": "published",
+      "visibility": "public",
+      "externalIdentifiers": [],
+      "tags": [
+        "synthetic-demo",
+        "data-sharing"
+      ],
+      "createdAt": "2026-09-01T12:00:00.000Z",
+      "updatedAt": "2026-09-02T12:00:00.000Z",
+      "publishedAt": "2026-09-02T12:00:00.000Z"
+    }
+  ],
+  "citations": [
+    {
+      "id": "demo-deployment-record-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "documentId": "demo-council-authorization-pdf",
+      "locator": {
+        "page": 1,
+        "section": "Authorization"
+      },
+      "note": "Synthetic primary-source-style evidence for the overall deployment record.",
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-status-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "fieldId": "deployment_status",
+      "documentId": "demo-council-authorization-pdf",
+      "locator": {
+        "page": 2,
+        "section": "Program status"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-purpose-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "fieldId": "approved_purpose",
+      "documentId": "demo-council-authorization-pdf",
+      "locator": {
+        "page": 4,
+        "section": "Authorized purposes"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-retention-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "fieldId": "retention_days",
+      "documentId": "demo-governance-policy-pdf",
+      "locator": {
+        "page": 9,
+        "section": "Retention"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-process-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "fieldId": "legal_process_requirement",
+      "documentId": "demo-governance-policy-pdf",
+      "locator": {
+        "page": 11,
+        "section": "Access and legal process"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-approved-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "fieldId": "approved_on",
+      "documentId": "demo-council-authorization-pdf",
+      "locator": {
+        "page": 1,
+        "section": "Approval date"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-deployment-audit-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-deployment-downtown",
+      "fieldId": "next_audit_due_on",
+      "documentId": "demo-governance-policy-pdf",
+      "locator": {
+        "page": 18,
+        "section": "Oversight schedule"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-procurement-record-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-procurement-camera",
+      "documentId": "demo-camera-contract-pdf",
+      "locator": {
+        "page": 1,
+        "section": "Contract"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-procurement-amount-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-procurement-camera",
+      "fieldId": "amount",
+      "documentId": "demo-camera-contract-pdf",
+      "locator": {
+        "page": 7,
+        "section": "Contract value"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-procurement-end-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-procurement-camera",
+      "fieldId": "ends_on",
+      "documentId": "demo-camera-contract-pdf",
+      "locator": {
+        "page": 5,
+        "section": "Term"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-audit-record-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-audit-privacy",
+      "documentId": "demo-privacy-assessment-pdf",
+      "locator": {
+        "page": 1,
+        "section": "Assessment"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-audit-summary-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-audit-privacy",
+      "fieldId": "summary",
+      "documentId": "demo-privacy-assessment-pdf",
+      "locator": {
+        "page": 4,
+        "section": "Executive summary"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-violation-record-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-violation-retention",
+      "documentId": "demo-remediation-report-pdf",
+      "locator": {
+        "page": 1,
+        "section": "Finding"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-violation-remediation-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-violation-retention",
+      "fieldId": "remediation_due_on",
+      "documentId": "demo-remediation-report-pdf",
+      "locator": {
+        "page": 6,
+        "section": "Remediation schedule"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-sharing-record-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-data-sharing-transportation",
+      "documentId": "demo-data-sharing-agreement-pdf",
+      "locator": {
+        "page": 1,
+        "section": "Agreement"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-sharing-basis-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-data-sharing-transportation",
+      "fieldId": "legal_basis",
+      "documentId": "demo-data-sharing-agreement-pdf",
+      "locator": {
+        "page": 3,
+        "section": "Authority and purpose"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    },
+    {
+      "id": "demo-sharing-expiry-citation",
+      "registryId": "smart-cities-surveillance-registry",
+      "recordId": "demo-data-sharing-transportation",
+      "fieldId": "expires_on",
+      "documentId": "demo-data-sharing-agreement-pdf",
+      "locator": {
+        "page": 14,
+        "section": "Term"
+      },
+      "visibility": "public",
+      "createdAt": "2026-09-02T13:00:00.000Z"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "demo-rel-deployment-camera",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "uses-technology",
+      "fromRecordId": "demo-deployment-downtown",
+      "toRecordId": "demo-tech-fixed-camera",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-deployment-operator",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "operated-by",
+      "fromRecordId": "demo-deployment-downtown",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-camera-vendor",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "supplied-by",
+      "fromRecordId": "demo-tech-fixed-camera",
+      "toRecordId": "demo-vendor-civic-vision",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-deployment-authorization",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "authorized-by",
+      "fromRecordId": "demo-deployment-downtown",
+      "toRecordId": "demo-authorization-council",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-authorization-agency",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "authorization-issued-by",
+      "fromRecordId": "demo-authorization-council",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-deployment-policy",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "governed-by",
+      "fromRecordId": "demo-deployment-downtown",
+      "toRecordId": "demo-policy-surveillance-use",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-policy-agency",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "policy-issued-by",
+      "fromRecordId": "demo-policy-surveillance-use",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-deployment-procurement",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "procured-through",
+      "fromRecordId": "demo-deployment-downtown",
+      "toRecordId": "demo-procurement-camera",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-procurement-agency",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "procurement-by",
+      "fromRecordId": "demo-procurement-camera",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-procurement-vendor",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "procurement-with",
+      "fromRecordId": "demo-procurement-camera",
+      "toRecordId": "demo-vendor-civic-vision",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-procurement-tech",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "procures-technology",
+      "fromRecordId": "demo-procurement-camera",
+      "toRecordId": "demo-tech-fixed-camera",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-audit-deployment",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "audits-deployment",
+      "fromRecordId": "demo-audit-privacy",
+      "toRecordId": "demo-deployment-downtown",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-audit-agency",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "audit-by-agency",
+      "fromRecordId": "demo-audit-privacy",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-violation-deployment",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "concerns-deployment",
+      "fromRecordId": "demo-violation-retention",
+      "toRecordId": "demo-deployment-downtown",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-violation-audit",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "identified-by-audit",
+      "fromRecordId": "demo-violation-retention",
+      "toRecordId": "demo-audit-privacy",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-sharing-deployment",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "data-sharing-for-deployment",
+      "fromRecordId": "demo-data-sharing-transportation",
+      "toRecordId": "demo-deployment-downtown",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-sharing-source",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "data-sharing-source",
+      "fromRecordId": "demo-data-sharing-transportation",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-sharing-recipient",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "data-sharing-recipient",
+      "fromRecordId": "demo-data-sharing-transportation",
+      "toRecordId": "demo-agency-transportation",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-sharing-policy",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "data-sharing-governed-by",
+      "fromRecordId": "demo-data-sharing-transportation",
+      "toRecordId": "demo-policy-data-sharing",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-transit-tech",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "uses-technology",
+      "fromRecordId": "demo-deployment-transit-pilot",
+      "toRecordId": "demo-tech-plate-reader",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-transit-operator",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "operated-by",
+      "fromRecordId": "demo-deployment-transit-pilot",
+      "toRecordId": "demo-agency-public-safety",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-transit-vendor",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "supplied-by",
+      "fromRecordId": "demo-tech-plate-reader",
+      "toRecordId": "demo-vendor-civic-analytics",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-transit-authorization",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "authorized-by",
+      "fromRecordId": "demo-deployment-transit-pilot",
+      "toRecordId": "demo-authorization-council",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    },
+    {
+      "id": "demo-rel-transit-policy",
+      "registryId": "smart-cities-surveillance-registry",
+      "relationshipTypeId": "governed-by",
+      "fromRecordId": "demo-deployment-transit-pilot",
+      "toRecordId": "demo-policy-surveillance-use",
+      "createdAt": "2026-09-02T14:00:00.000Z",
+      "metadata": {
+        "demo": true
+      }
+    }
+  ]
+}
