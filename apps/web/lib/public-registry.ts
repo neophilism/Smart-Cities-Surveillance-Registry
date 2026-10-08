@@ -34,7 +34,11 @@ import {
 } from "@civic-registry/deadlines";
 
 import { getRepositories } from "./database.ts";
-import { applySmartCitiesPublicSafetyFallback } from "./smart-cities-public-safety.ts";
+import {
+  applySmartCitiesPublicSafetyFallback,
+  scanSmartCitiesPublicPayload,
+  SMART_CITIES_REGISTRY_ID,
+} from "./smart-cities-public-safety.ts";
 
 export interface PublicRegistry {
   config: CompiledRegistryConfig;
@@ -724,9 +728,24 @@ export async function getPublicEvidence(
     );
   });
 
+  const safePresented =
+    registry.definition.id ===
+    SMART_CITIES_REGISTRY_ID
+      ? presented.filter(
+          (citation) =>
+            scanSmartCitiesPublicPayload(
+              citation,
+              "citation",
+            ).length === 0,
+        )
+      : presented;
+
   return {
-    citations: presented,
-    groups: groupPresentedCitations(presented),
+    citations: safePresented,
+    groups:
+      groupPresentedCitations(
+        safePresented,
+      ),
   };
 }
 
@@ -810,6 +829,15 @@ export async function getPublicHistory(
         record,
         registry,
       ),
+    )
+    .filter(
+      (event) =>
+        registry.definition.id !==
+          SMART_CITIES_REGISTRY_ID ||
+        scanSmartCitiesPublicPayload(
+          event,
+          "history.event",
+        ).length === 0,
     );
   const publicEvents = lifecycle
     ? presentedEvents.filter((event) => {
