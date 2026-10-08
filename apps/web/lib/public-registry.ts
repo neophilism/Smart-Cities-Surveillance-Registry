@@ -34,6 +34,7 @@ import {
 } from "@civic-registry/deadlines";
 
 import { getRepositories } from "./database.ts";
+import { applySmartCitiesPublicSafetyFallback } from "./smart-cities-public-safety.ts";
 
 export interface PublicRegistry {
   config: CompiledRegistryConfig;
@@ -97,12 +98,16 @@ async function projectPublicRecordSet(
     const bundle = bundles.get(record.id) ?? {
       fields: [],
     };
-    const projection = projectRecordForPublic(
-      record,
-      registry,
-      bundle.record ?? null,
-      bundle.fields,
-    );
+    const projection =
+      applySmartCitiesPublicSafetyFallback(
+        registry,
+        projectRecordForPublic(
+          record,
+          registry,
+          bundle.record ?? null,
+          bundle.fields,
+        ),
+      );
 
     return {
       source: record,
@@ -267,12 +272,16 @@ export async function getPublicRecordView(
     registryId,
     recordId,
   );
-  const projection = projectRecordForPublic(
-    record,
-    registry,
-    bundle.record ?? null,
-    bundle.fields,
-  );
+  const projection =
+    applySmartCitiesPublicSafetyFallback(
+      registry,
+      projectRecordForPublic(
+        record,
+        registry,
+        bundle.record ?? null,
+        bundle.fields,
+      ),
+    );
 
   return projection.record
     ? {
@@ -767,11 +776,14 @@ export async function getPublicHistory(
       ? []
       : lifecycleVersions.flatMap((version) => {
           const projection =
-            projectRecordForPublic(
-              version.snapshot,
+            applySmartCitiesPublicSafetyFallback(
               registry,
-              recordBundle.record ?? null,
-              recordBundle.fields,
+              projectRecordForPublic(
+                version.snapshot,
+                registry,
+                recordBundle.record ?? null,
+                recordBundle.fields,
+              ),
             );
 
           return projection.record
@@ -814,11 +826,14 @@ export async function getPublicHistory(
     : presentedEvents;
 
   const currentProjection =
-    projectRecordForPublic(
-      record,
+    applySmartCitiesPublicSafetyFallback(
       registry,
-      recordBundle.record ?? null,
-      recordBundle.fields,
+      projectRecordForPublic(
+        record,
+        registry,
+        recordBundle.record ?? null,
+        recordBundle.fields,
+      ),
     );
 
   return {
