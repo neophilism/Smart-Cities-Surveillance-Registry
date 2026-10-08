@@ -39,7 +39,7 @@ test("demo dataset covers every canonical Smart Cities record type", () => {
     ),
   );
   const expected = new Set(
-    config.definition.registry.recordTypes.map(
+    config.definition.recordTypes.map(
       (recordType) => recordType.id,
     ),
   );
@@ -56,7 +56,7 @@ test("demo dataset exercises every Smart Cities relationship type", () => {
     ),
   );
   const expected = new Set(
-    config.definition.registry.relationshipTypes.map(
+    config.definition.relationshipTypes.map(
       (relationshipType) =>
         relationshipType.id,
     ),
@@ -70,7 +70,7 @@ test("every demo record validates and passes the public-safety boundary", () => 
     assert.deepEqual(
       validateRegistryRecord(
         record,
-        config.definition.registry,
+        config.definition,
       ),
       [],
       record.id,
