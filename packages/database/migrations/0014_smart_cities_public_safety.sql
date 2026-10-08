@@ -1,6 +1,6 @@
 -- Smart Cities downstream application boundary.
 -- Prevent operationally sensitive values from entering a public lifecycle state
--- unless the specific field is already redacted/withheld.
+-- unless the affected field or whole record is already redacted/withheld.
 
 CREATE OR REPLACE FUNCTION smart_cities_public_safety_issue(
   field_id text,
@@ -51,11 +51,18 @@ BEGIN
     RETURN 'precise_coordinates';
   END IF;
 
+  IF normalized_field = 'public_location_scope'
+     AND value_text ~* '(^|[^0-9])[-+]?[0-9]{1,2}\.[0-9]{4,}[[:space:]]*,[[:space:]]*[-+]?[0-9]{1,3}\.[0-9]{4,}([^0-9]|$)'
+  THEN
+    RETURN 'precise_coordinates';
+  END IF;
+
   IF value_text ~* '(^|[^0-9])10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}([^0-9]|$)'
      OR value_text ~* '(^|[^0-9])192\.168\.[0-9]{1,3}\.[0-9]{1,3}([^0-9]|$)'
      OR value_text ~* '(^|[^0-9])172\.(1[6-9]|2[0-9]|3[0-1])\.[0-9]{1,3}\.[0-9]{1,3}([^0-9]|$)'
      OR value_text ~* '(^|[^0-9])127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}([^0-9]|$)'
      OR value_text ~* '(^|[^0-9])169\.254\.[0-9]{1,3}\.[0-9]{1,3}([^0-9]|$)'
+     OR value_text ~* '(^|[^0-9a-f])(fe8|fe9|fea|feb|fc|fd)[0-9a-f]*:'
   THEN
     RETURN 'private_network_address';
   END IF;
@@ -88,31 +95,29 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION smart_cities_enforce_public_safety()
-RETURNS trigger
+CREATE OR REPLACE FUNCTION smart_cities_first_unsafe_public_field(
+  p_registry_id text,
+  p_record_id text,
+  p_fields jsonb
+)
+RETURNS text
 LANGUAGE plpgsql
+STABLE
 AS $$
 DECLARE
   item record;
   issue text;
   protected boolean;
 BEGIN
-  IF NEW.registry_id <> 'smart-cities-surveillance-registry'
-     OR NEW.visibility <> 'public'
-     OR NEW.status NOT IN ('published', 'withdrawn', 'superseded', 'archived')
-  THEN
-    RETURN NEW;
-  END IF;
-
   FOR item IN
     SELECT key AS field_id, value AS field_value
-    FROM jsonb_each(NEW.fields)
+    FROM jsonb_each(p_fields)
   LOOP
     SELECT EXISTS (
       SELECT 1
       FROM civic_registry_field_disclosures disclosure
-      WHERE disclosure.registry_id = NEW.registry_id
-        AND disclosure.record_id = NEW.id
+      WHERE disclosure.registry_id = p_registry_id
+        AND disclosure.record_id = p_record_id
         AND disclosure.field_id = item.field_id
         AND disclosure.disposition IN ('redacted', 'withheld')
     )
@@ -128,15 +133,142 @@ BEGIN
     );
 
     IF issue IS NOT NULL THEN
-      RAISE EXCEPTION
-        'Smart Cities public-safety boundary rejected field % (%). Redact or withhold the field before publication.',
-        item.field_id,
-        issue
-        USING ERRCODE = '23514';
+      RETURN item.field_id || ':' || issue;
     END IF;
   END LOOP;
 
+  RETURN NULL;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION smart_cities_enforce_public_safety()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  issue text;
+  whole_record_withheld boolean;
+BEGIN
+  IF NEW.registry_id <> 'smart-cities-surveillance-registry'
+     OR NEW.visibility <> 'public'
+     OR NEW.status NOT IN ('published', 'withdrawn', 'superseded', 'archived')
+  THEN
+    RETURN NEW;
+  END IF;
+
+  SELECT EXISTS (
+    SELECT 1
+    FROM civic_registry_record_disclosures disclosure
+    WHERE disclosure.registry_id = NEW.registry_id
+      AND disclosure.record_id = NEW.id
+      AND disclosure.disposition = 'withheld'
+  )
+  INTO whole_record_withheld;
+
+  IF whole_record_withheld THEN
+    RETURN NEW;
+  END IF;
+
+  issue := smart_cities_first_unsafe_public_field(
+    NEW.registry_id,
+    NEW.id,
+    NEW.fields
+  );
+
+  IF issue IS NOT NULL THEN
+    RAISE EXCEPTION
+      'Smart Cities public-safety boundary rejected % . Redact/withhold the field or withhold the whole record before publication.',
+      issue
+      USING ERRCODE = '23514';
+  END IF;
+
   RETURN NEW;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION smart_cities_guard_field_disclosure_release()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  target record;
+  issue text;
+BEGIN
+  IF OLD.registry_id <> 'smart-cities-surveillance-registry' THEN
+    RETURN OLD;
+  END IF;
+
+  SELECT status, visibility, fields
+  INTO target
+  FROM civic_registry_records
+  WHERE registry_id = OLD.registry_id
+    AND id = OLD.record_id;
+
+  IF NOT FOUND
+     OR target.visibility <> 'public'
+     OR target.status NOT IN ('published', 'withdrawn', 'superseded', 'archived')
+  THEN
+    RETURN OLD;
+  END IF;
+
+  issue := smart_cities_public_safety_issue(
+    OLD.field_id,
+    target.fields -> OLD.field_id
+  );
+
+  IF issue IS NOT NULL THEN
+    RAISE EXCEPTION
+      'Smart Cities public-safety boundary cannot remove disclosure protection from field % (%).',
+      OLD.field_id,
+      issue
+      USING ERRCODE = '23514';
+  END IF;
+
+  RETURN OLD;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION smart_cities_guard_record_disclosure_release()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  target record;
+  issue text;
+BEGIN
+  IF OLD.registry_id <> 'smart-cities-surveillance-registry'
+     OR OLD.disposition <> 'withheld'
+  THEN
+    RETURN OLD;
+  END IF;
+
+  SELECT status, visibility, fields
+  INTO target
+  FROM civic_registry_records
+  WHERE registry_id = OLD.registry_id
+    AND id = OLD.record_id;
+
+  IF NOT FOUND
+     OR target.visibility <> 'public'
+     OR target.status NOT IN ('published', 'withdrawn', 'superseded', 'archived')
+  THEN
+    RETURN OLD;
+  END IF;
+
+  issue := smart_cities_first_unsafe_public_field(
+    OLD.registry_id,
+    OLD.record_id,
+    target.fields
+  );
+
+  IF issue IS NOT NULL THEN
+    RAISE EXCEPTION
+      'Smart Cities public-safety boundary cannot expose withheld record while unsafe field % remains.',
+      issue
+      USING ERRCODE = '23514';
+  END IF;
+
+  RETURN OLD;
 END;
 $$;
 
@@ -148,3 +280,21 @@ BEFORE INSERT OR UPDATE OF fields, status, visibility
 ON civic_registry_records
 FOR EACH ROW
 EXECUTE FUNCTION smart_cities_enforce_public_safety();
+
+DROP TRIGGER IF EXISTS smart_cities_field_disclosure_release_guard
+  ON civic_registry_field_disclosures;
+
+CREATE TRIGGER smart_cities_field_disclosure_release_guard
+BEFORE DELETE
+ON civic_registry_field_disclosures
+FOR EACH ROW
+EXECUTE FUNCTION smart_cities_guard_field_disclosure_release();
+
+DROP TRIGGER IF EXISTS smart_cities_record_disclosure_release_guard
+  ON civic_registry_record_disclosures;
+
+CREATE TRIGGER smart_cities_record_disclosure_release_guard
+BEFORE DELETE
+ON civic_registry_record_disclosures
+FOR EACH ROW
+EXECUTE FUNCTION smart_cities_guard_record_disclosure_release();
