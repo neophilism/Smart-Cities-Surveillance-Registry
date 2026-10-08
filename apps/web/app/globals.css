@@ -2690,3 +2690,19 @@ h3 {
     justify-content: flex-start;
   }
 }
+
+
+.search-filter-divider {
+  grid-column: 1 / -1;
+  margin-top: 0.2rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.search-filter-divider span {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
