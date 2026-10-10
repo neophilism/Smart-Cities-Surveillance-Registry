@@ -95,3 +95,5 @@ export class SmartCitiesOfficialRelationshipMatcher {
 
 export * from "./mapping.ts";
 export * from "./integration.ts";
+
+export * from "./provider-projection.ts";

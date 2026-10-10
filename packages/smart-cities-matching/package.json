@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@civic-registry/database": "workspace:*",
+    "@civic-registry/source-adapters": "workspace:*",
     "pg": "^8.16.3"
   },
   "devDependencies": {
