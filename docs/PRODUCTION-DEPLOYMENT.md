@@ -16,13 +16,19 @@ and installs only the verified schema configuration on first boot.
 1. Create or link a Render web service to this repository's `main` branch.
    `render.yaml` configures an Ohio Docker service and deploys only after
    the main-branch checks pass.
-2. Set `DATABASE_URL` to the existing Neon project's **pooled** TLS connection
-   string. Keep it exclusively in Render's secret environment configuration.
-   Never commit it, log it, or copy it into PR descriptions.
+2. Set `DATABASE_URL` to the existing Neon project's **pooled** TLS
+   connection string, for normal application requests. Set
+   `DATABASE_URL_UNPOOLED` to the **direct** TLS connection string for
+   the **same database and role**. Both values stay solely in Render's secret
+   environment configuration. Do not publish, commit, or log them.
+   This repository's migration runner obtains a PostgreSQL **session advisory
+   lock**; a PgBouncer transaction-pooling connection does not preserve
+   backend-session state across its statements. The Docker entrypoint
+   deliberately refuses to run without a direct migration connection.
 3. Set `CIVIC_REGISTRY_ADMIN_TOKEN` to a strong random secret. The built-in
    console uses a shared administrator token; for production operator access,
    put `/admin` behind trusted identity-aware access control/SSO as well.
-4. Start the service. Its Docker startup command runs `pnpm db:migrate` followed
+4. Start the service. Its Docker startup command uses the direct DB URL for `pnpm db:migrate` followed
    by `pnpm db:bootstrap-config`, then binds Next.js to `0.0.0.0:$PORT`.
 5. Confirm `GET /api/health` responds (process liveness), and
    `GET /api/ready` returns HTTP 200 `{"status":"ready"}`. A 503 readiness
