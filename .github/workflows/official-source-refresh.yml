@@ -1,0 +1,39 @@
+name: Approved official source refresh
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: smart-cities-source-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: ${{ vars.SMART_CITIES_REFRESH_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      DATABASE_URL: ${{ secrets.SMART_CITIES_DATABASE_URL }}
+      SMART_CITIES_SOURCES_CONFIG: config/official-sources.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.7.0
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.21.0
+      - name: Ensure database credential is configured
+        shell: bash
+        run: |
+          test -n "${DATABASE_URL:-}" || { echo "Configure SMART_CITIES_DATABASE_URL secret."; exit 1; }
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile --allow-build=unrs-resolver
+      - name: Run due official-source jobs
+        run: pnpm db:refresh-official
