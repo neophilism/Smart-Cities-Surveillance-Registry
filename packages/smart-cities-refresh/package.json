@@ -1,0 +1,25 @@
+{
+  "name": "@smart-cities-surveillance-registry/refresh",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Approved official-source refresh orchestration for the Smart Cities registry",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@civic-registry/database": "workspace:*",
+    "@civic-registry/ingestion": "workspace:*",
+    "@civic-registry/source-adapters": "workspace:*",
+    "@smart-cities-surveillance-registry/source-adapters": "workspace:*",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.15.5",
+    "typescript": "^5.9.0"
+  }
+}
