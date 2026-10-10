@@ -10,4 +10,4 @@ RUN pnpm build
 ENV NODE_ENV=production
 
 EXPOSE 10000
-CMD ["sh", "-c", "pnpm db:migrate && pnpm db:bootstrap-config && exec pnpm --filter @smart-cities-surveillance-registry/web exec next start --hostname 0.0.0.0 --port ${PORT:-10000}"]
+CMD ["sh", "-c", "if [ -z \"${DATABASE_URL_UNPOOLED:-}\" ]; then echo >&2 \"DATABASE_URL_UNPOOLED is required for session-safe migrations\"; exit 1; fi; DATABASE_URL=\"$DATABASE_URL_UNPOOLED\" pnpm db:migrate && DATABASE_URL=\"$DATABASE_URL_UNPOOLED\" pnpm db:bootstrap-config && exec pnpm --filter @smart-cities-surveillance-registry/web exec next start --hostname 0.0.0.0 --port ${PORT:-10000}"]
