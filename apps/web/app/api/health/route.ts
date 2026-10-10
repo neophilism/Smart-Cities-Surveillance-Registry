@@ -4,7 +4,7 @@ export async function GET() {
   return Response.json(
     {
       status: "ok",
-      service: "civic-registry-transparency-engine",
+      service: "smart-cities-surveillance-registry",
       timestamp: new Date().toISOString(),
     },
     {
