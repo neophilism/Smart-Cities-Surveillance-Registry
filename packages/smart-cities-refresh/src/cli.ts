@@ -10,6 +10,7 @@ import {
   SMART_CITIES_REGISTRY_ID,
   runConfiguredSourceRefresh,
 } from "./index.ts";
+import { publishEngineRoomRefreshTelemetry } from "./engine-room.ts";
 
 async function main(): Promise<void> {
   const file = process.env.SMART_CITIES_SOURCES_CONFIG || "config/official-sources.json";
@@ -34,6 +35,10 @@ async function main(): Promise<void> {
         runIds: result.runs.map((item) => item.id),
       }),
     );
+    // Telemetry is optional, signed and scoped; do not invent a success signal
+    // if the scheduler had no completed source observations.
+    const delivery = await publishEngineRoomRefreshTelemetry(result);
+    console.log(JSON.stringify({ command: "engine-room-telemetry", status: delivery }));
     if (result.failed > 0) process.exitCode = 1;
   } finally {
     await pool.end();
