@@ -3,7 +3,6 @@ import { readFile } from "node:fs/promises";
 import {
   createDatabasePool,
   PostgresRegistryConfigRepository,
-  runMigrations,
 } from "@civic-registry/database";
 
 import {
@@ -17,7 +16,6 @@ async function main(): Promise<void> {
   const raw = JSON.parse(await readFile(file, "utf8")) as unknown;
   const pool = createDatabasePool({ applicationName: "smart-cities-source-refresh" });
   try {
-    await runMigrations(pool);
     const existing = await new PostgresRegistryConfigRepository(pool).get(
       SMART_CITIES_REGISTRY_ID,
     );
