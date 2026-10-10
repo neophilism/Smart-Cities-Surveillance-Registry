@@ -1,0 +1,49 @@
+name: Production container smoke
+
+on:
+  pull_request:
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - render.yaml
+      - package.json
+      - pnpm-workspace.yaml
+      - "apps/**"
+      - "packages/**"
+      - "config/**"
+      - ".github/workflows/container-smoke.yml"
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - render.yaml
+      - package.json
+      - pnpm-workspace.yaml
+      - "apps/**"
+      - "packages/**"
+      - "config/**"
+      - ".github/workflows/container-smoke.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-container-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-build:
+    name: Build deployable Render Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the exact production Dockerfile
+        run: docker build --tag smart-cities-surveillance-registry:ci .
+      - name: Assert direct database migration contract in image
+        run: |
+          docker image inspect smart-cities-surveillance-registry:ci --format '{{json .Config.Cmd}}' | grep -F 'DATABASE_URL_UNPOOLED'
+      - name: Check Docker image declares Next.js production port
+        run: |
+          docker image inspect smart-cities-surveillance-registry:ci --format '{{json .Config.ExposedPorts}}' | grep -F '10000/tcp'
