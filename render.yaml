@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: smart-cities-surveillance-registry
+    runtime: docker
+    region: ohio
+    plan: free
+    repo: https://github.com/neophilism/Smart-Cities-Surveillance-Registry
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: checksPass
+    healthCheckPath: /api/ready
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CIVIC_REGISTRY_ADMIN_TOKEN
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
