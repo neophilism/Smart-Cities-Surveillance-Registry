@@ -99,9 +99,10 @@ export function validateOfficialSourceCatalog(value: unknown): OfficialSourceCat
       throw new Error("Duplicate official source ID: " + source.id);
     }
     ids.add(source.id);
+    const status = source.ingestionProfile.status;
     if (
       source.ingestionProfile.mode !== "upsert" ||
-      source.ingestionProfile.status?.literal !== "draft" ||
+      !status || !("literal" in status) || status.literal !== "draft" ||
       source.ingestionProfile.allowLifecycleBootstrap === true ||
       !source.ingestionProfile.id ||
       !source.ingestionProfile.recordId
