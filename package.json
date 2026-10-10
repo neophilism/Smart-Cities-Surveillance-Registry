@@ -27,6 +27,7 @@
     "db:integrity-verify": "node packages/database/src/cli.ts integrity-verify",
     "db:integrity-checkpoint": "node packages/database/src/cli.ts integrity-checkpoint",
     "db:seed-demo": "node packages/database/src/cli.ts seed config/registry.yaml examples/smart-cities-demo/seed.json",
-    "db:bootstrap-config": "node packages/database/src/bootstrap-config.ts"
+    "db:bootstrap-config": "node packages/database/src/bootstrap-config.ts",
+    "db:refresh-official": "node packages/smart-cities-refresh/src/cli.ts"
   }
 }
