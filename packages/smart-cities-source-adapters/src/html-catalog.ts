@@ -174,11 +174,25 @@ export function createHtmlDocumentCatalogAdapter(
               .filter(Boolean)
               .at(-1) ??
             "Public document";
-          const title =
-            link.text.trim() ||
-            decodeURIComponent(
-              fallbackTitle,
+          const linkText = link.text.trim();
+          // Official document indexes frequently use "PDF" or "Download"
+          // as every anchor label. Preserve descriptive link text, but
+          // derive an informative title from the published filename when
+          // the anchor is only a generic file-type action.
+          const genericLinkText =
+            /^(pdf|download( pdf)?|view( document)?|document|file|read)$/i.test(
+              linkText,
             );
+          const filenameTitle = decodeURIComponent(
+            fallbackTitle,
+          )
+            .replace(/\.(pdf|csv|json|xlsx?|docx?)$/i, "")
+            .replace(/[_-]+/g, " ")
+            .trim();
+          const title =
+            linkText && !genericLinkText
+              ? linkText
+              : filenameTitle || "Public document";
           const externalId =
             url.pathname +
             url.search;

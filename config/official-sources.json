@@ -1,5 +1,100 @@
 {
   "schemaVersion": 1,
   "registryId": "smart-cities-surveillance-registry",
-  "sources": []
+  "sources": [
+    {
+      "id": "nypd-post-act-impact-use-policies",
+      "enabled": false,
+      "adapter": {
+        "kind": "html-catalog",
+        "settings": {
+          "id": "nypd-post-act-impact-use-policies",
+          "label": "NYPD POST Act surveillance impact-and-use policy PDFs",
+          "allowedHosts": [
+            "www.nyc.gov"
+          ],
+          "startUrls": [
+            "https://www.nyc.gov/site/nypd/about/about-nypd/policy/post-act.page"
+          ],
+          "documentExtensions": [
+            ".pdf"
+          ]
+        }
+      },
+      "ingestionProfile": {
+        "id": "nypd-post-act-official-policies",
+        "recordTypeId": "policy",
+        "mode": "upsert",
+        "recordId": {
+          "path": "id",
+          "required": true,
+          "trim": true
+        },
+        "sourceKey": {
+          "path": "external_id",
+          "required": true,
+          "trim": true
+        },
+        "fields": {
+          "title": {
+            "path": "title",
+            "required": true,
+            "trim": true
+          },
+          "policy_type": {
+            "literal": "agency_policy"
+          },
+          "authority_level": {
+            "literal": "agency"
+          },
+          "policy_status": {
+            "literal": "unknown"
+          },
+          "summary": {
+            "literal": "Official NYPD surveillance technology impact and use policy, linked from the NYC POST Act public disclosure page. Editorial review required before publication."
+          },
+          "canonical_url": {
+            "path": "canonical_url",
+            "required": true,
+            "trim": true
+          }
+        },
+        "status": {
+          "literal": "draft"
+        },
+        "visibility": {
+          "literal": "public"
+        },
+        "staticTags": [
+          "imported",
+          "nypd",
+          "post-act",
+          "review-required"
+        ],
+        "externalIdentifiers": [
+          {
+            "scheme": "official-record",
+            "value": {
+              "path": "external_id",
+              "required": true,
+              "trim": true
+            }
+          }
+        ],
+        "replaceFields": false
+      },
+      "refresh": {
+        "intervalSeconds": 86400,
+        "staleAfterSeconds": 172800,
+        "failureBackoffBaseSeconds": 900,
+        "failureBackoffMaxSeconds": 21600,
+        "emptyResultBehavior": "failure",
+        "rowCountDropWarningPercent": 50,
+        "adapterOptions": {
+          "maxItems": 200,
+          "maxPages": 1
+        }
+      }
+    }
+  ]
 }
