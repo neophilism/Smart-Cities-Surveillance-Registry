@@ -1,3 +1,5 @@
+> **Canonical PR work plan:** [`registry/roadmap.json`](../registry/roadmap.json). The detailed historic instructions below remain authoritative for scope, while all current planned work/PR links must be updated in the canonical registry.
+
 # Smart Cities Surveillance Registry — recovered complete development plan
 
 **Provenance:** Original October 7 original approved standalone thirty-PR plan after separation from the generic Civic Registry. **30 original milestone titles recovered**, mapped in original order. Scopes and acceptance criteria below are a careful synthesis of the original conversations and existing repository architecture; they are **not** a verbatim export of the old chat. This is the historical approved scope plus explicit subsequent amendments, not a declaration that unmerged tasks are complete.
