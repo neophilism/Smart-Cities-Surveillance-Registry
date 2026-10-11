@@ -1,0 +1,162 @@
+{
+  "repository": "neophilism/Smart-Cities-Surveillance-Registry",
+  "title": "Smart-Cities-Surveillance-Registry",
+  "version": 1,
+  "planVerified": true,
+  "plannedPrCount": 30,
+  "sourceFiles": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "milestones": [
+    {
+      "id": "SC-01",
+      "title": "Bootstrap, upstream provenance and CI",
+      "origin": "original"
+    },
+    {
+      "id": "SC-02",
+      "title": "Smart Cities entity schema",
+      "origin": "original"
+    },
+    {
+      "id": "SC-03",
+      "title": "Accountability relationship graph",
+      "origin": "original"
+    },
+    {
+      "id": "SC-04",
+      "title": "Publication/disclosure policy",
+      "origin": "original"
+    },
+    {
+      "id": "SC-05",
+      "title": "Accountability deadlines",
+      "origin": "original"
+    },
+    {
+      "id": "SC-06",
+      "title": "Primary-source evidence model",
+      "origin": "original"
+    },
+    {
+      "id": "SC-07",
+      "title": "Public-safety boundary",
+      "origin": "original"
+    },
+    {
+      "id": "SC-08",
+      "title": "Synthetic demonstration dataset",
+      "origin": "original"
+    },
+    {
+      "id": "SC-09",
+      "title": "Public homepage and navigation",
+      "origin": "original"
+    },
+    {
+      "id": "SC-10",
+      "title": "Deployment and technology pages",
+      "origin": "original"
+    },
+    {
+      "id": "SC-11",
+      "title": "Agency, vendor and procurement pages",
+      "origin": "original"
+    },
+    {
+      "id": "SC-12",
+      "title": "Policy, approval, audit and violation pages",
+      "origin": "original"
+    },
+    {
+      "id": "SC-13",
+      "title": "Advanced search and filtering",
+      "origin": "original"
+    },
+    {
+      "id": "SC-14",
+      "title": "Jurisdiction explorer and safe mapping",
+      "origin": "original"
+    },
+    {
+      "id": "SC-15",
+      "title": "Structured source ingestion",
+      "origin": "original"
+    },
+    {
+      "id": "SC-16",
+      "title": "Official-source adapters",
+      "origin": "original"
+    },
+    {
+      "id": "SC-17",
+      "title": "PDF attachment extraction",
+      "origin": "original"
+    },
+    {
+      "id": "SC-18",
+      "title": "Entity matching",
+      "origin": "original"
+    },
+    {
+      "id": "SC-19",
+      "title": "Admin source and publication console",
+      "origin": "original"
+    },
+    {
+      "id": "SC-20",
+      "title": "Cross-engine compliance API integration",
+      "origin": "original"
+    },
+    {
+      "id": "SC-21",
+      "title": "Retention/deletion projection",
+      "origin": "original"
+    },
+    {
+      "id": "SC-22",
+      "title": "OpenAPI and exports",
+      "origin": "original"
+    },
+    {
+      "id": "SC-23",
+      "title": "Feeds and subscriptions",
+      "origin": "original"
+    },
+    {
+      "id": "SC-24",
+      "title": "Freshness and provenance monitoring",
+      "origin": "original"
+    },
+    {
+      "id": "SC-25",
+      "title": "Transparency analytics",
+      "origin": "original"
+    },
+    {
+      "id": "SC-26",
+      "title": "Security hardening",
+      "origin": "original"
+    },
+    {
+      "id": "SC-27",
+      "title": "Accessibility and performance",
+      "origin": "original"
+    },
+    {
+      "id": "SC-28",
+      "title": "Production operations",
+      "origin": "original"
+    },
+    {
+      "id": "SC-29",
+      "title": "End-to-end release readiness",
+      "origin": "original"
+    },
+    {
+      "id": "SC-30",
+      "title": "Documentation and v1 release",
+      "origin": "original"
+    }
+  ]
+}
