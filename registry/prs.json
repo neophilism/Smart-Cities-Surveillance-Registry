@@ -10,109 +10,163 @@
       "id": "SC-01",
       "title": "Bootstrap, upstream provenance and CI",
       "origin": "original",
-      "prs": []
+      "prs": [
+        1
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #1; directly corresponds to named roadmap unit SC-01"
     },
     {
       "id": "SC-02",
       "title": "Smart Cities entity schema",
       "origin": "original",
-      "prs": []
+      "prs": [
+        2
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #2; directly corresponds to named roadmap unit SC-02"
     },
     {
       "id": "SC-03",
       "title": "Accountability relationship graph",
       "origin": "original",
-      "prs": []
+      "prs": [
+        3
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #3; directly corresponds to named roadmap unit SC-03"
     },
     {
       "id": "SC-04",
       "title": "Publication/disclosure policy",
       "origin": "original",
-      "prs": []
+      "prs": [
+        4
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #4; directly corresponds to named roadmap unit SC-04"
     },
     {
       "id": "SC-05",
       "title": "Accountability deadlines",
       "origin": "original",
-      "prs": []
+      "prs": [
+        5
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #5; directly corresponds to named roadmap unit SC-05"
     },
     {
       "id": "SC-06",
       "title": "Primary-source evidence model",
       "origin": "original",
-      "prs": []
+      "prs": [
+        6
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #6; directly corresponds to named roadmap unit SC-06"
     },
     {
       "id": "SC-07",
       "title": "Public-safety boundary",
       "origin": "original",
-      "prs": []
+      "prs": [
+        7
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #7; directly corresponds to named roadmap unit SC-07"
     },
     {
       "id": "SC-08",
       "title": "Synthetic demonstration dataset",
       "origin": "original",
-      "prs": []
+      "prs": [
+        8
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #8; directly corresponds to named roadmap unit SC-08"
     },
     {
       "id": "SC-09",
       "title": "Public homepage and navigation",
       "origin": "original",
-      "prs": []
+      "prs": [
+        9
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #9; directly corresponds to named roadmap unit SC-09"
     },
     {
       "id": "SC-10",
       "title": "Deployment and technology pages",
       "origin": "original",
-      "prs": []
+      "prs": [
+        10
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #10; directly corresponds to named roadmap unit SC-10"
     },
     {
       "id": "SC-11",
       "title": "Agency, vendor and procurement pages",
       "origin": "original",
-      "prs": []
+      "prs": [
+        11
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #11; directly corresponds to named roadmap unit SC-11"
     },
     {
       "id": "SC-12",
       "title": "Policy, approval, audit and violation pages",
       "origin": "original",
-      "prs": []
+      "prs": [
+        12
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #12; directly corresponds to named roadmap unit SC-12"
     },
     {
       "id": "SC-13",
       "title": "Advanced search and filtering",
       "origin": "original",
-      "prs": []
+      "prs": [
+        13
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #13; directly corresponds to named roadmap unit SC-13"
     },
     {
       "id": "SC-14",
       "title": "Jurisdiction explorer and safe mapping",
       "origin": "original",
-      "prs": []
+      "prs": [
+        14
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #14; directly corresponds to named roadmap unit SC-14"
     },
     {
       "id": "SC-15",
       "title": "Structured source ingestion",
       "origin": "original",
-      "prs": []
+      "prs": [
+        15
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #15; directly corresponds to named roadmap unit SC-15"
     },
     {
       "id": "SC-16",
       "title": "Official-source adapters",
       "origin": "original",
-      "prs": []
+      "prs": [
+        16
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #16; directly corresponds to named roadmap unit SC-16"
     },
     {
       "id": "SC-17",
       "title": "PDF attachment extraction",
       "origin": "original",
-      "prs": []
+      "prs": [
+        17
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #17; directly corresponds to named roadmap unit SC-17"
     },
     {
       "id": "SC-18",
       "title": "Entity matching",
       "origin": "original",
-      "prs": []
+      "prs": [
+        18
+      ],
+      "mappingEvidence": "Verified merged GitHub PR #18; directly corresponds to named roadmap unit SC-18"
     },
     {
       "id": "SC-19",
