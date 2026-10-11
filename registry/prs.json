@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/Smart-Cities-Surveillance-Registry",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 30,
+  "observedAt": "2026-10-11T17:40:14.745Z",
+  "units": [
+    {
+      "id": "SC-01",
+      "title": "Bootstrap, upstream provenance and CI",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-02",
+      "title": "Smart Cities entity schema",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-03",
+      "title": "Accountability relationship graph",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-04",
+      "title": "Publication/disclosure policy",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-05",
+      "title": "Accountability deadlines",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-06",
+      "title": "Primary-source evidence model",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-07",
+      "title": "Public-safety boundary",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-08",
+      "title": "Synthetic demonstration dataset",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-09",
+      "title": "Public homepage and navigation",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-10",
+      "title": "Deployment and technology pages",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-11",
+      "title": "Agency, vendor and procurement pages",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-12",
+      "title": "Policy, approval, audit and violation pages",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-13",
+      "title": "Advanced search and filtering",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-14",
+      "title": "Jurisdiction explorer and safe mapping",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-15",
+      "title": "Structured source ingestion",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-16",
+      "title": "Official-source adapters",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-17",
+      "title": "PDF attachment extraction",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-18",
+      "title": "Entity matching",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-19",
+      "title": "Admin source and publication console",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-20",
+      "title": "Cross-engine compliance API integration",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-21",
+      "title": "Retention/deletion projection",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-22",
+      "title": "OpenAPI and exports",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-23",
+      "title": "Feeds and subscriptions",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-24",
+      "title": "Freshness and provenance monitoring",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-25",
+      "title": "Transparency analytics",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-26",
+      "title": "Security hardening",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-27",
+      "title": "Accessibility and performance",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-28",
+      "title": "Production operations",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-29",
+      "title": "End-to-end release readiness",
+      "origin": "original",
+      "prs": []
+    },
+    {
+      "id": "SC-30",
+      "title": "Documentation and v1 release",
+      "origin": "original",
+      "prs": []
+    }
+  ],
+  "pullRequests": [
+    {
+      "id": 4807496420,
+      "number": 26,
+      "title": "PR 26: Verify production Render Docker image in GitHub Actions",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/26",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:58:03.000Z",
+      "updatedAt": "2026-10-10T16:16:42.000Z",
+      "closedAt": "2026-10-10T16:16:42.000Z",
+      "mergedAt": "2026-10-10T16:16:42.000Z",
+      "headSha": "3acb5c23c09ce3aadf852f00e28b09b3086310dc",
+      "baseRef": "main",
+      "mergeCommitSha": "1efde7bdb1eef8eec7adb987b156f6b4829b5212"
+    },
+    {
+      "id": 4807487168,
+      "number": 25,
+      "title": "PR 25: Stage verified NYPD POST Act policy source for review",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/25",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:56:46.000Z",
+      "updatedAt": "2026-10-10T16:14:22.000Z",
+      "closedAt": "2026-10-10T16:14:22.000Z",
+      "mergedAt": "2026-10-10T16:14:22.000Z",
+      "headSha": "e3175071e4144084348ed7c983f8f490688ae4ef",
+      "baseRef": "pr-24-unpooled-migration-safety",
+      "mergeCommitSha": "d6aa31252b77043d117225e1547cbc5351012702"
+    },
+    {
+      "id": 4807474533,
+      "number": 24,
+      "title": "PR 24: Use Neon direct connection for production schema migrations",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/24",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:54:50.000Z",
+      "updatedAt": "2026-10-10T16:13:30.000Z",
+      "closedAt": "2026-10-10T16:13:30.000Z",
+      "mergedAt": "2026-10-10T16:13:30.000Z",
+      "headSha": "49887dea94b39896fff0bded026cea6edf4016e8",
+      "baseRef": "main",
+      "mergeCommitSha": "8107188d3528bc70c05276f0c8e53cf03c9c66e3"
+    },
+    {
+      "id": 4807466649,
+      "number": 23,
+      "title": "PR 23: Report verified source refresh outcomes to Engine Room",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/23",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:53:31.000Z",
+      "updatedAt": "2026-10-10T00:58:15.000Z",
+      "closedAt": "2026-10-10T00:58:15.000Z",
+      "mergedAt": "2026-10-10T00:58:15.000Z",
+      "headSha": "c9d8d7b4f9ab088419dd5459b3532ee68e93352d",
+      "baseRef": "main",
+      "mergeCommitSha": "384ee1621fb58a95353f6555bed39627b5265432"
+    },
+    {
+      "id": 4807444063,
+      "number": 22,
+      "title": "PR 22: Add fail-closed scheduled official-source refresh worker",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/22",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:49:37.000Z",
+      "updatedAt": "2026-10-10T00:55:03.000Z",
+      "closedAt": "2026-10-10T00:55:03.000Z",
+      "mergedAt": "2026-10-10T00:55:03.000Z",
+      "headSha": "58be833613d78001beb53a73b906a8c6f6e88bde",
+      "baseRef": "main",
+      "mergeCommitSha": "39eeb2ca66d74a26e63e618d545fa016ebeac763"
+    },
+    {
+      "id": 4807427197,
+      "number": 21,
+      "title": "PR 21: Make production deployment database-ready and monitorable",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/21",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-10T00:46:39.000Z",
+      "updatedAt": "2026-10-10T00:50:04.000Z",
+      "closedAt": "2026-10-10T00:50:03.000Z",
+      "mergedAt": "2026-10-10T00:50:03.000Z",
+      "headSha": "2ae971f4a006ec22219c03486324396bec1f0024",
+      "baseRef": "main",
+      "mergeCommitSha": "3f99c335c46d5f0f3ad49cb396f17f68f96253df"
+    },
+    {
+      "id": 4781711415,
+      "number": 20,
+      "title": "PR 20: Add opt-in provider relationship projection",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/20",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:19:09.000Z",
+      "updatedAt": "2026-10-10T00:46:49.000Z",
+      "closedAt": "2026-10-10T00:46:49.000Z",
+      "mergedAt": "2026-10-10T00:46:49.000Z",
+      "headSha": "217a338fa2b54b2b2518f920305410975b33e1d9",
+      "baseRef": "main",
+      "mergeCommitSha": "9e6c2b33bab7d45f0337ef4f6d8a2e003cc3a14d"
+    },
+    {
+      "id": 4781656927,
+      "number": 19,
+      "title": "PR 19: Integrate explicit official-source relationship references into ingestion",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/19",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T04:12:18.000Z",
+      "updatedAt": "2026-10-08T04:17:52.000Z",
+      "closedAt": "2026-10-08T04:17:52.000Z",
+      "mergedAt": "2026-10-08T04:17:52.000Z",
+      "headSha": "a5363e1c50ee2aae59babb3eb7895ce2485a4412",
+      "baseRef": "main",
+      "mergeCommitSha": "a5fee8874cdf8edf6bb7872064601ecb5183d87f"
+    },
+    {
+      "id": 4781543867,
+      "number": 18,
+      "title": "PR 18: Add review-first official entity relationship matching",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/18",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:57:05.000Z",
+      "updatedAt": "2026-10-08T04:06:33.000Z",
+      "closedAt": "2026-10-08T04:06:33.000Z",
+      "mergedAt": "2026-10-08T04:06:33.000Z",
+      "headSha": "655c43cee0e3d6e75e5036902def27a2aa203dba",
+      "baseRef": "main",
+      "mergeCommitSha": "d402355e60c409cdec0ee4e3fad6e887ad28059a"
+    },
+    {
+      "id": 4781453420,
+      "number": 17,
+      "title": "PR 17: Add document and PDF ingestion extraction",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/17",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:43:09.000Z",
+      "updatedAt": "2026-10-08T03:49:25.000Z",
+      "closedAt": "2026-10-08T03:49:25.000Z",
+      "mergedAt": "2026-10-08T03:49:25.000Z",
+      "headSha": "dd1cd188ef71a106b87cddda4ae8ab8afe5a8679",
+      "baseRef": "main",
+      "mergeCommitSha": "04df10a4025091278ea2a92050a576a7d48e2eb0"
+    },
+    {
+      "id": 4781423901,
+      "number": 16,
+      "title": "PR 16: Add official-source adapter framework",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/16",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:38:34.000Z",
+      "updatedAt": "2026-10-08T03:42:01.000Z",
+      "closedAt": "2026-10-08T03:42:00.000Z",
+      "mergedAt": "2026-10-08T03:42:00.000Z",
+      "headSha": "3f71bfc874728dbeb84686b3118975074253a1b6",
+      "baseRef": "main",
+      "mergeCommitSha": "6dcd419c2511845311f6f2b48a1000cb646490b2"
+    },
+    {
+      "id": 4781380528,
+      "number": 15,
+      "title": "PR 15: Add structured Smart Cities ingestion pipelines",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/15",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:31:56.000Z",
+      "updatedAt": "2026-10-08T03:37:51.000Z",
+      "closedAt": "2026-10-08T03:37:51.000Z",
+      "mergedAt": "2026-10-08T03:37:51.000Z",
+      "headSha": "5ce67b15ce4e882532dfd398f7810910a6b3b777",
+      "baseRef": "main",
+      "mergeCommitSha": "bd5e8532ba95cc4b271a11f9e1d73636e95bb5b3"
+    },
+    {
+      "id": 4781375317,
+      "number": 14,
+      "title": "PR 14: Add jurisdiction explorer and public-safe mapping",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/14",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:31:08.000Z",
+      "updatedAt": "2026-10-08T03:37:28.000Z",
+      "closedAt": "2026-10-08T03:37:28.000Z",
+      "mergedAt": "2026-10-08T03:37:28.000Z",
+      "headSha": "3b700421e375240581162ddd76a5aaf3f05ba600",
+      "baseRef": "main",
+      "mergeCommitSha": "647357275a01c323a314418b88b6424a1eb1e651"
+    },
+    {
+      "id": 4781312479,
+      "number": 13,
+      "title": "PR 13: Add advanced Smart Cities search and filtering",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/13",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:21:31.000Z",
+      "updatedAt": "2026-10-08T03:31:57.000Z",
+      "closedAt": "2026-10-08T03:31:56.000Z",
+      "mergedAt": "2026-10-08T03:31:56.000Z",
+      "headSha": "f78ad332bda099f6febd877c4b35c60856a0488d",
+      "baseRef": "main",
+      "mergeCommitSha": "3c34b3205c9fa02aa90827b7ec1d9191c58c1f94"
+    },
+    {
+      "id": 4781278710,
+      "number": 12,
+      "title": "PR 12: Add policy authorization audit and violation pages",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/12",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:16:17.000Z",
+      "updatedAt": "2026-10-08T03:24:29.000Z",
+      "closedAt": "2026-10-08T03:24:29.000Z",
+      "mergedAt": "2026-10-08T03:24:29.000Z",
+      "headSha": "db0dde0399ae1e1152bd539f54dffc499d72f3ac",
+      "baseRef": "main",
+      "mergeCommitSha": "b94b6ec93d3f5ffa81dd5c88f1935d2baa63d3e1"
+    },
+    {
+      "id": 4781265455,
+      "number": 11,
+      "title": "PR 11: Add agency vendor and procurement pages",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/11",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:14:20.000Z",
+      "updatedAt": "2026-10-08T03:24:16.000Z",
+      "closedAt": "2026-10-08T03:24:16.000Z",
+      "mergedAt": "2026-10-08T03:24:16.000Z",
+      "headSha": "325d840ae123823a200cb9b0d676f9c411345d7e",
+      "baseRef": "main",
+      "mergeCommitSha": "ee088a25f504f67acfd00363590e5953428ff62a"
+    },
+    {
+      "id": 4781209896,
+      "number": 10,
+      "title": "PR 10: Add specialized deployment and technology pages",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/10",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:06:07.000Z",
+      "updatedAt": "2026-10-08T03:10:30.000Z",
+      "closedAt": "2026-10-08T03:10:29.000Z",
+      "mergedAt": "2026-10-08T03:10:29.000Z",
+      "headSha": "d2c7553838e3ae80fec5f9c542d7ccf03c3f9f4f",
+      "baseRef": "main",
+      "mergeCommitSha": "95909a6affd664fd94a06f3bb719cc13a964b267"
+    },
+    {
+      "id": 4781187199,
+      "number": 9,
+      "title": "PR 9: Build public homepage and registry navigation",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/9",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T03:02:39.000Z",
+      "updatedAt": "2026-10-08T03:10:14.000Z",
+      "closedAt": "2026-10-08T03:10:13.000Z",
+      "mergedAt": "2026-10-08T03:10:13.000Z",
+      "headSha": "fd6e54c3e21fd1156026a3ff999ba4d3762ec2a9",
+      "baseRef": "main",
+      "mergeCommitSha": "3a9292526a09bd13b3ab820d660376207acfc1c1"
+    },
+    {
+      "id": 4781153040,
+      "number": 8,
+      "title": "PR 8: Add initial demonstration dataset",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/8",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T02:57:18.000Z",
+      "updatedAt": "2026-10-08T03:09:59.000Z",
+      "closedAt": "2026-10-08T03:09:59.000Z",
+      "mergedAt": "2026-10-08T03:09:59.000Z",
+      "headSha": "86dc1aeb9a89dc9b62917aab490cfcf7b0fef57d",
+      "baseRef": "main",
+      "mergeCommitSha": "d8cfae26ef48ac51ebe4a70a6d106f7b0f618a9f"
+    },
+    {
+      "id": 4780487977,
+      "number": 7,
+      "title": "PR 7: Add public-safe data and operational-security boundary",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/7",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T01:21:29.000Z",
+      "updatedAt": "2026-10-08T02:46:53.000Z",
+      "closedAt": "2026-10-08T02:46:53.000Z",
+      "mergedAt": "2026-10-08T02:46:53.000Z",
+      "headSha": "d129d074249fb1296f3aceaf91d3262d1b35a2dc",
+      "baseRef": "main",
+      "mergeCommitSha": "e7685f80b72ff6daa1273b3b178db9dd4e147970"
+    },
+    {
+      "id": 4780256126,
+      "number": 6,
+      "title": "PR 6: Add primary-source evidence model",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/6",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:46:40.000Z",
+      "updatedAt": "2026-10-08T00:56:03.000Z",
+      "closedAt": "2026-10-08T00:56:03.000Z",
+      "mergedAt": "2026-10-08T00:56:03.000Z",
+      "headSha": "dffd3c581e963b2d46f0378fe426b8607225b45c",
+      "baseRef": "main",
+      "mergeCommitSha": "a21b5c63d4531ff34762bf31319a0e3eeb0f92ac"
+    },
+    {
+      "id": 4780159099,
+      "number": 5,
+      "title": "PR 5: Add statutory and accountability deadlines",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/5",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:32:14.000Z",
+      "updatedAt": "2026-10-08T00:40:51.000Z",
+      "closedAt": "2026-10-08T00:40:51.000Z",
+      "mergedAt": "2026-10-08T00:40:50.000Z",
+      "headSha": "3655fd7e95e9e9f4b4abb3b75e49fca07cec9ed2",
+      "baseRef": "main",
+      "mergeCommitSha": "defd2963e31a5df24dd798b887c62f4bca22d3f4"
+    },
+    {
+      "id": 4780064070,
+      "number": 4,
+      "title": "PR 4: Add publication lifecycle and disclosure model",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/4",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-08T00:18:43.000Z",
+      "updatedAt": "2026-10-08T00:28:03.000Z",
+      "closedAt": "2026-10-08T00:28:03.000Z",
+      "mergedAt": "2026-10-08T00:28:02.000Z",
+      "headSha": "ad7f156aa98033c227ddce896b06c81b90ce6139",
+      "baseRef": "main",
+      "mergeCommitSha": "7f14753428e7feaa38dd54ea93de2557ccd8551e"
+    },
+    {
+      "id": 4779620572,
+      "number": 3,
+      "title": "PR 3: Add relationship and accountability graph",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/3",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T23:15:06.000Z",
+      "updatedAt": "2026-10-08T00:11:06.000Z",
+      "closedAt": "2026-10-08T00:11:06.000Z",
+      "mergedAt": "2026-10-08T00:11:06.000Z",
+      "headSha": "6f0476e5edf838ba295d956ee4e01edcc95d3bdf",
+      "baseRef": "main",
+      "mergeCommitSha": "0f88f9e74894da9c6ad84b502daf60fb0f6332a0"
+    },
+    {
+      "id": 4779503470,
+      "number": 2,
+      "title": "PR 2: Add surveillance registry domain schema",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/2",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T22:59:40.000Z",
+      "updatedAt": "2026-10-07T23:06:40.000Z",
+      "closedAt": "2026-10-07T23:06:40.000Z",
+      "mergedAt": "2026-10-07T23:06:40.000Z",
+      "headSha": "7d0875099c221f148a2a38c2a2f88fa675aca009",
+      "baseRef": "main",
+      "mergeCommitSha": "b0b0916154625c43b4732c69246c2fa1fa883f1e"
+    },
+    {
+      "id": 4778770153,
+      "number": 1,
+      "title": "PR 1: Bootstrap from clean Civic Registry engine",
+      "url": "https://github.com/neophilism/Smart-Cities-Surveillance-Registry/pull/1",
+      "state": "closed",
+      "draft": false,
+      "createdAt": "2026-10-07T21:35:18.000Z",
+      "updatedAt": "2026-10-07T22:53:50.000Z",
+      "closedAt": "2026-10-07T22:53:50.000Z",
+      "mergedAt": "2026-10-07T22:53:50.000Z",
+      "headSha": "e34a7163d173bcf4707afcfcb252270d170cf678",
+      "baseRef": "main",
+      "mergeCommitSha": "8158087a6c08861bcd883407af64c7d24b6f9001"
+    }
+  ]
+}
