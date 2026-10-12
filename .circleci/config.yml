@@ -59,8 +59,19 @@ jobs:
           name: Confirm declared production port
           command: docker image inspect smart-cities-surveillance-registry:ci --format '{{json .Config.ExposedPorts}}' | grep -F '10000/tcp'
 
+  security-status-record:
+    docker:
+      - image: cimg/python:3.12
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: Validate E2EESA status record (integrity only, not certification)
+          command: python3 scripts/validate_e2eesa_status.py
+
 workflows:
   full-ci:
     jobs:
       - full-verification
       - production-container
+      - security-status-record
