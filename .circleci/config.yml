@@ -1,0 +1,66 @@
+version: 2.1
+
+# Native full CI plus production Docker contract; excludes scheduled
+# official-source ingestion (a runtime data job, not PR verification).
+jobs:
+  full-verification:
+    docker:
+      - image: cimg/node:24.21.0
+      - image: cimg/postgres:18.6
+        environment:
+          POSTGRES_DB: civic_registry
+          POSTGRES_USER: civic_registry
+          POSTGRES_PASSWORD: civic_registry
+    resource_class: large
+    environment:
+      CI: "true"
+      DATABASE_URL: postgresql://civic_registry:civic_registry@127.0.0.1:5432/civic_registry
+    steps:
+      - checkout
+      - run:
+          name: Install pinned pnpm
+          command: sudo npm install --global pnpm@12.7.0
+      - run:
+          name: Full dependency graph and native resolver builds
+          command: pnpm install --no-frozen-lockfile --allow-build=unrs-resolver
+      - run:
+          name: Lint entire workspace
+          command: pnpm lint
+      - run:
+          name: Typecheck entire workspace
+          command: pnpm typecheck
+      - run:
+          name: Full unit test suite
+          command: pnpm test
+      - run:
+          name: Apply actual PostgreSQL migrations
+          command: pnpm db:migrate
+      - run:
+          name: Database integration suite
+          command: pnpm test:db
+      - run:
+          name: Build all deployable packages
+          command: pnpm build
+
+  production-container:
+    docker:
+      - image: cimg/base:stable
+    resource_class: medium
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build exact production container
+          command: docker build --tag smart-cities-surveillance-registry:ci .
+      - run:
+          name: Confirm database migration contract in resulting image
+          command: docker image inspect smart-cities-surveillance-registry:ci --format '{{json .Config.Cmd}}' | grep -F 'DATABASE_URL_UNPOOLED'
+      - run:
+          name: Confirm declared production port
+          command: docker image inspect smart-cities-surveillance-registry:ci --format '{{json .Config.ExposedPorts}}' | grep -F '10000/tcp'
+
+workflows:
+  full-ci:
+    jobs:
+      - full-verification
+      - production-container
