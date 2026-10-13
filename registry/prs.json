@@ -1,9 +1,13 @@
 {
-  "schemaVersion": 1,
   "repository": "neophilism/Smart-Cities-Surveillance-Registry",
-  "roadmapVersion": 1,
+  "title": "Smart-Cities-Surveillance-Registry",
   "planVerified": true,
   "plannedPrCount": 30,
+  "sourceFiles": [
+    "docs/DEVELOPMENT_PLAN.md"
+  ],
+  "schemaVersion": 1,
+  "roadmapVersion": 1,
   "observedAt": "2026-10-11T17:40:14.745Z",
   "units": [
     {
@@ -13,7 +17,10 @@
       "prs": [
         1
       ],
-      "mappingEvidence": "Verified merged GitHub PR #1; directly corresponds to named roadmap unit SC-01"
+      "mappingEvidence": "Verified merged GitHub PR #1; directly corresponds to named roadmap unit SC-01",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-02",
@@ -22,7 +29,10 @@
       "prs": [
         2
       ],
-      "mappingEvidence": "Verified merged GitHub PR #2; directly corresponds to named roadmap unit SC-02"
+      "mappingEvidence": "Verified merged GitHub PR #2; directly corresponds to named roadmap unit SC-02",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-03",
@@ -31,7 +41,10 @@
       "prs": [
         3
       ],
-      "mappingEvidence": "Verified merged GitHub PR #3; directly corresponds to named roadmap unit SC-03"
+      "mappingEvidence": "Verified merged GitHub PR #3; directly corresponds to named roadmap unit SC-03",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-04",
@@ -40,7 +53,10 @@
       "prs": [
         4
       ],
-      "mappingEvidence": "Verified merged GitHub PR #4; directly corresponds to named roadmap unit SC-04"
+      "mappingEvidence": "Verified merged GitHub PR #4; directly corresponds to named roadmap unit SC-04",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-05",
@@ -49,7 +65,10 @@
       "prs": [
         5
       ],
-      "mappingEvidence": "Verified merged GitHub PR #5; directly corresponds to named roadmap unit SC-05"
+      "mappingEvidence": "Verified merged GitHub PR #5; directly corresponds to named roadmap unit SC-05",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-06",
@@ -58,7 +77,10 @@
       "prs": [
         6
       ],
-      "mappingEvidence": "Verified merged GitHub PR #6; directly corresponds to named roadmap unit SC-06"
+      "mappingEvidence": "Verified merged GitHub PR #6; directly corresponds to named roadmap unit SC-06",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-07",
@@ -67,7 +89,10 @@
       "prs": [
         7
       ],
-      "mappingEvidence": "Verified merged GitHub PR #7; directly corresponds to named roadmap unit SC-07"
+      "mappingEvidence": "Verified merged GitHub PR #7; directly corresponds to named roadmap unit SC-07",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-08",
@@ -76,7 +101,10 @@
       "prs": [
         8
       ],
-      "mappingEvidence": "Verified merged GitHub PR #8; directly corresponds to named roadmap unit SC-08"
+      "mappingEvidence": "Verified merged GitHub PR #8; directly corresponds to named roadmap unit SC-08",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-09",
@@ -85,7 +113,10 @@
       "prs": [
         9
       ],
-      "mappingEvidence": "Verified merged GitHub PR #9; directly corresponds to named roadmap unit SC-09"
+      "mappingEvidence": "Verified merged GitHub PR #9; directly corresponds to named roadmap unit SC-09",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-10",
@@ -94,7 +125,10 @@
       "prs": [
         10
       ],
-      "mappingEvidence": "Verified merged GitHub PR #10; directly corresponds to named roadmap unit SC-10"
+      "mappingEvidence": "Verified merged GitHub PR #10; directly corresponds to named roadmap unit SC-10",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-11",
@@ -103,7 +137,10 @@
       "prs": [
         11
       ],
-      "mappingEvidence": "Verified merged GitHub PR #11; directly corresponds to named roadmap unit SC-11"
+      "mappingEvidence": "Verified merged GitHub PR #11; directly corresponds to named roadmap unit SC-11",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-12",
@@ -112,7 +149,10 @@
       "prs": [
         12
       ],
-      "mappingEvidence": "Verified merged GitHub PR #12; directly corresponds to named roadmap unit SC-12"
+      "mappingEvidence": "Verified merged GitHub PR #12; directly corresponds to named roadmap unit SC-12",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-13",
@@ -121,7 +161,10 @@
       "prs": [
         13
       ],
-      "mappingEvidence": "Verified merged GitHub PR #13; directly corresponds to named roadmap unit SC-13"
+      "mappingEvidence": "Verified merged GitHub PR #13; directly corresponds to named roadmap unit SC-13",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-14",
@@ -130,7 +173,10 @@
       "prs": [
         14
       ],
-      "mappingEvidence": "Verified merged GitHub PR #14; directly corresponds to named roadmap unit SC-14"
+      "mappingEvidence": "Verified merged GitHub PR #14; directly corresponds to named roadmap unit SC-14",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-15",
@@ -139,7 +185,10 @@
       "prs": [
         15
       ],
-      "mappingEvidence": "Verified merged GitHub PR #15; directly corresponds to named roadmap unit SC-15"
+      "mappingEvidence": "Verified merged GitHub PR #15; directly corresponds to named roadmap unit SC-15",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-16",
@@ -148,7 +197,10 @@
       "prs": [
         16
       ],
-      "mappingEvidence": "Verified merged GitHub PR #16; directly corresponds to named roadmap unit SC-16"
+      "mappingEvidence": "Verified merged GitHub PR #16; directly corresponds to named roadmap unit SC-16",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-17",
@@ -157,7 +209,10 @@
       "prs": [
         17
       ],
-      "mappingEvidence": "Verified merged GitHub PR #17; directly corresponds to named roadmap unit SC-17"
+      "mappingEvidence": "Verified merged GitHub PR #17; directly corresponds to named roadmap unit SC-17",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-18",
@@ -166,79 +221,118 @@
       "prs": [
         18
       ],
-      "mappingEvidence": "Verified merged GitHub PR #18; directly corresponds to named roadmap unit SC-18"
+      "mappingEvidence": "Verified merged GitHub PR #18; directly corresponds to named roadmap unit SC-18",
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-19",
       "title": "Admin source and publication console",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-20",
       "title": "Cross-engine compliance API integration",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-21",
       "title": "Retention/deletion projection",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-22",
       "title": "OpenAPI and exports",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-23",
       "title": "Feeds and subscriptions",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-24",
       "title": "Freshness and provenance monitoring",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-25",
       "title": "Transparency analytics",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-26",
       "title": "Security hardening",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-27",
       "title": "Accessibility and performance",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-28",
       "title": "Production operations",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-29",
       "title": "End-to-end release readiness",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     },
     {
       "id": "SC-30",
       "title": "Documentation and v1 release",
       "origin": "original",
-      "prs": []
+      "prs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": []
     }
   ],
   "pullRequests": [
