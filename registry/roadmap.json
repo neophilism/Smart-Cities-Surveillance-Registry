@@ -11,152 +11,218 @@
     {
       "id": "SC-01",
       "title": "Bootstrap, upstream provenance and CI",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        1
+      ]
     },
     {
       "id": "SC-02",
       "title": "Smart Cities entity schema",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        2
+      ]
     },
     {
       "id": "SC-03",
       "title": "Accountability relationship graph",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        3
+      ]
     },
     {
       "id": "SC-04",
       "title": "Publication/disclosure policy",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        4
+      ]
     },
     {
       "id": "SC-05",
       "title": "Accountability deadlines",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        5
+      ]
     },
     {
       "id": "SC-06",
       "title": "Primary-source evidence model",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        6
+      ]
     },
     {
       "id": "SC-07",
       "title": "Public-safety boundary",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        7
+      ]
     },
     {
       "id": "SC-08",
       "title": "Synthetic demonstration dataset",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        8
+      ]
     },
     {
       "id": "SC-09",
       "title": "Public homepage and navigation",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        9
+      ]
     },
     {
       "id": "SC-10",
       "title": "Deployment and technology pages",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        10
+      ]
     },
     {
       "id": "SC-11",
       "title": "Agency, vendor and procurement pages",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        11
+      ]
     },
     {
       "id": "SC-12",
       "title": "Policy, approval, audit and violation pages",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        12
+      ]
     },
     {
       "id": "SC-13",
       "title": "Advanced search and filtering",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        13
+      ]
     },
     {
       "id": "SC-14",
       "title": "Jurisdiction explorer and safe mapping",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        14
+      ]
     },
     {
       "id": "SC-15",
       "title": "Structured source ingestion",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        15
+      ]
     },
     {
       "id": "SC-16",
       "title": "Official-source adapters",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        16
+      ]
     },
     {
       "id": "SC-17",
       "title": "PDF attachment extraction",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        17
+      ]
     },
     {
       "id": "SC-18",
       "title": "Entity matching",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": [
+        18
+      ]
     },
     {
       "id": "SC-19",
       "title": "Admin source and publication console",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-20",
       "title": "Cross-engine compliance API integration",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-21",
       "title": "Retention/deletion projection",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-22",
       "title": "OpenAPI and exports",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-23",
       "title": "Feeds and subscriptions",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-24",
       "title": "Freshness and provenance monitoring",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-25",
       "title": "Transparency analytics",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-26",
       "title": "Security hardening",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-27",
       "title": "Accessibility and performance",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-28",
       "title": "Production operations",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-29",
       "title": "End-to-end release readiness",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     },
     {
       "id": "SC-30",
       "title": "Documentation and v1 release",
-      "origin": "original"
+      "origin": "original",
+      "pullRequests": []
     }
   ]
 }
