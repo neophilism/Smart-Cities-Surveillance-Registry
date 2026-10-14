@@ -1,5 +1,7 @@
 # Production deployment — Smart Cities Surveillance Registry
 
+> **Hosting status as of October 13, 2026: intentionally not deployed.** The owner deleted only the `smart-cities-surveillance-registry` Render web service and its preview site to conserve Render capacity. The GitHub repository and approved development plan remain active; development, PRs, CircleCI and existing independent workflows continue. This runbook is preserved for the later rebuild. Do **not** create replacement Render hosting without the owner's approval.
+
 ## Status and architecture
 
 The application is a Next.js service backed by PostgreSQL. The repository contains
@@ -7,11 +9,16 @@ a Render Blueprint and Dockerfile. These do not themselves deploy an instance.
 The expected existing database project is **Smart Cities Surveillance Registry**
 in Neon (AWS us-east-2); choose **Ohio** as the Render region to reduce latency.
 
-The production database starts empty. Do **not** load the fictional Harborview
+A freshly created production database starts empty. The status and contents of
+any previously connected Neon database must be checked separately: deleting
+the Render web service does not establish whether the external database or its
+data was deleted. Do **not** load the fictional Harborview
 seed into a live public registry. The startup sequence runs schema migrations
 and installs only the verified schema configuration on first boot.
 
-## Deploy
+## Redeploy only when hosting is reprioritized
+
+Before carrying out the steps below, obtain the owner's authorization to use a Render service slot. The old preview address and Render service ID are not evidence of a running service. Verify fresh hosting credentials, secrets, database access, persistence and the actual deployed URL rather than assuming service-local settings survived deletion. These hosting steps do not constrain ordinary GitHub development or CI.
 
 1. Create or link a Render web service to this repository's `main` branch.
    `render.yaml` configures an Ohio Docker service and deploys only after

@@ -1,5 +1,7 @@
 # Engine Room monitoring integration
 
+> **October 13, 2026 — Render preview intentionally deleted.** There is currently no Smart Cities Render web deployment to monitor. Engine Room must not mistake the deliberately missing preview for an unexpected production outage or claim verified Smart Cities web uptime. This is a **hosting-only** change; GitHub PRs, CI and independently configured source-refresh tasks can continue. Do not alter telemetry or job gates simply because the web preview is absent. The integration below remains ready for future authorized redeployment.
+
 The Smart Cities Registry is monitored through two independent signals:
 
 1. **HTTP deployment readiness** `GET /api/ready` verifies that the

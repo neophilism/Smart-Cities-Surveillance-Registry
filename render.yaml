@@ -1,3 +1,7 @@
+# Retained for future owner-authorized deployment only.
+# The former Smart Cities Render web service and preview were intentionally
+# deleted on 2026-10-13 to conserve Render slots. Do not reapply this Blueprint
+# without authorization. Development and CircleCI continue normally.
 services:
   - type: web
     name: smart-cities-surveillance-registry
