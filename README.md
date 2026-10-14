@@ -2,6 +2,8 @@
 
 **Complete development and handoff plan:** [docs/DEVELOPMENT_PLAN.md](docs/DEVELOPMENT_PLAN.md).
 
+> **Deployment update — 2026-10-13:** The Smart Cities **Render web service and preview site** were intentionally deleted to conserve available service slots. This GitHub repository and its source code are intact. **Development, PRs, tests, CircleCI and other existing workflows may continue.** Deployment is deferred only; keep the [Render rebuild instructions](docs/PRODUCTION-DEPLOYMENT.md) for later. Do not assume the old preview URL is live or recreate a Render service without owner authorization.
+
 A public transparency and accountability application for documenting smart-city surveillance deployments, technologies, agencies, vendors, governing policies, authorizations, procurements, audits, incidents, data-sharing arrangements, and related public records.
 
 This repository is a **downstream application** of the [Civic Registry & Transparency Engine](https://github.com/neophilism/Civic-Registry-Transparency-Engine). The reusable engine remains domain-neutral in its own repository; Smart-Cities-specific schemas, adapters, presentation, and integrations live here.
