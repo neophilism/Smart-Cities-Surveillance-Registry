@@ -37,3 +37,29 @@ test("read projection is scoped to one registry and record", async () => {
   assert.deepEqual(calls[0].values, ["city", "r1"]);
   assert.match(calls[0].sql, /WHERE registry_id = \$1 AND record_id = \$2/);
 });
+
+test("failed insert rolls back and a later retry can commit", async () => {
+  let fail = true;
+  const calls = [];
+  const client = { async query(sql) {
+    calls.push(sql);
+    if (sql.includes("SELECT 1 FROM civic_registry_records")) return { rows: [{}] };
+    if (sql.includes("INSERT INTO smart_cities_external_claims") && fail) throw Error("temporary database error");
+    return { rows: [], rowCount: 1 };
+  }, release() {} };
+  const repository = new PostgresExternalComplianceRepository({ connect: async () => client });
+  await assert.rejects(repository.importClaims(scope, [claim]), /temporary database error/);
+  assert.ok(calls.includes("ROLLBACK"));
+  assert.ok(!calls.includes("COMMIT"));
+  fail = false;
+  const recovered = await repository.importClaims(scope, [claim]);
+  assert.equal(recovered.inserted, 1);
+  assert.ok(calls.includes("COMMIT"));
+});
+test("provider failure audit stores only coarse code and scoped IDs", async () => {
+  const { calls, pool } = fakePool();
+  const id = await new PostgresExternalComplianceRepository(pool).recordFailure(scope, "PROVIDER_ERROR");
+  assert.ok(id);
+  assert.match(calls[0].sql, /smart_cities_external_claim_imports/);
+  assert.deepEqual(calls[0].values.slice(1), ["city", "r1", "official", "PROVIDER_ERROR"]);
+});
