@@ -35,7 +35,7 @@ function scalarText(
   return JSON.stringify(value);
 }
 
-function spreadsheetSafe(
+export function spreadsheetSafe(
   value: string,
 ): string {
   if (
