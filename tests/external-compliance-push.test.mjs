@@ -9,7 +9,7 @@ function setup() {
     store: { async importClaims(scope, claims) { calls.push({ scope, claims }); return { importId: "run-1", received: claims.length, inserted: claims.length }; } } } };
 }
 function request(body, suppliedToken = token, contentType = "application/json") {
-  return new Request("https://registry.example.gov/api/integrations/compliance", { method: "POST",
+  return new Request("https://registry.example.gov/api/v1/integrations/compliance", { method: "POST",
     headers: { authorization: "Bearer " + suppliedToken, "content-type": contentType }, body: JSON.stringify(body) });
 }
 test("machine integration accepts scoped facts with audit result, never compliance status", async () => {

@@ -18,7 +18,7 @@ web request. No endpoint or credential is returned in the import audit.
 Provision the token through a secret store, never in source or CLI arguments.
 
 A server-to-server push endpoint is also available at
-`POST /api/integrations/compliance`. Configure
+`POST /api/v1/integrations/compliance`. Configure
 `SMART_CITIES_COMPLIANCE_IMPORT_TOKEN` as a separate random secret of at
 least 32 characters, plus server-bound registry and provider IDs. Send
 `Authorization: Bearer <token>` and JSON
