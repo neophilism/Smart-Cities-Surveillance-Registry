@@ -34,6 +34,8 @@ and idempotent by provider, source, kind and observation time. Successful and
 failed attempts have private audit rows; failures use coarse codes without
 response bodies or credential values. Retry after a provider failure with the
 same scope; duplicate facts do not create duplicate rows. The private read
-method requires registry and record IDs and caps results at 500. Any future
+method requires registry and record IDs and caps results at 500. Authenticated
+operators can review these assertions at `/admin/external-compliance`; the
+page does not publish them. Any future
 public projection must apply the existing disclosure and public-safety policy
 before showing individual assertions.

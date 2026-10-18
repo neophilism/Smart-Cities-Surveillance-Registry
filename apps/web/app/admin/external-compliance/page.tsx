@@ -1,6 +1,7 @@
 import { PostgresExternalComplianceRepository } from "@civic-registry/database";
 import { requireAdminSession } from "../../../lib/admin-auth.ts";
 import { getDatabasePool } from "../../../lib/database.ts";
+import { AdminShell } from "../../../components/admin-shell.tsx";
 
 export const dynamic = "force-dynamic";
 export default async function ExternalCompliancePage({
@@ -8,7 +9,7 @@ export default async function ExternalCompliancePage({
 }: {
   searchParams: Promise<{ registryId?: string; recordId?: string }>;
 }) {
-  await requireAdminSession();
+  const session = await requireAdminSession();
   const params = await searchParams;
   const registryId = (params.registryId ?? "").trim();
   const recordId = (params.recordId ?? "").trim();
@@ -16,9 +17,7 @@ export default async function ExternalCompliancePage({
     ? await new PostgresExternalComplianceRepository(getDatabasePool()).listForRecord(registryId, recordId)
     : [];
   return (
-    <main className="container">
-      <h1>External accountability evidence</h1>
-      <p>Provider statements are evidence for review. They do not approve publication or establish compliance.</p>
+    <AdminShell session={session} title="External accountability evidence" subtitle="Provider statements are evidence for review. They do not approve publication or establish compliance.">
       <form method="get" action="/admin/external-compliance">
         <label htmlFor="registryId">Registry ID</label>
         <input id="registryId" name="registryId" required maxLength={200} defaultValue={registryId} />
@@ -41,6 +40,6 @@ export default async function ExternalCompliancePage({
           )}
         </section>
       ) : null}
-    </main>
+    </AdminShell>
   );
 }
