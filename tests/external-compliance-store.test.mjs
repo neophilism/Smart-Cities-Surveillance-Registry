@@ -71,3 +71,9 @@ test("direct storage rejects malformed provenance before opening a transaction",
   await assert.rejects(repository.importClaims(scope, [{ ...claim, kind: "certified" }]), /claim kind/);
   assert.equal(calls.length, 0);
 });
+
+test("direct storage rejects conflicting duplicate source assertions", async () => {
+  const { calls, pool } = fakePool();
+  await assert.rejects(new PostgresExternalComplianceRepository(pool).importClaims(scope, [claim, { ...claim, assertion: "Contradiction" }]), /Conflicting duplicate claim/);
+  assert.equal(calls.length, 0);
+});

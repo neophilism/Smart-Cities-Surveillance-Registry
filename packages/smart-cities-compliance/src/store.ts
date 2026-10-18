@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { createDatabasePool } from "../../database/src/pool.ts";
-import { validateExternalClaim } from "./index.ts";
+import { importExternalClaims } from "./index.ts";
 type Pool = ReturnType<typeof createDatabasePool>;
 
 export interface ExternalClaimRow {
@@ -19,7 +19,9 @@ export class PostgresExternalComplianceRepository {
 
   async importClaims(scope: ExternalClaimScope, claims: readonly ExternalClaimRow[]): Promise<ExternalImportResult> {
     if (!scope.registryId || !scope.recordId || !scope.providerId || claims.length > 500) throw new Error("Invalid import scope or batch");
-    const normalized = claims.map(claim => validateExternalClaim(claim, scope));
+    const batch = importExternalClaims(claims, scope);
+    if (batch.rejected.length) throw new Error(batch.rejected[0].error);
+    const normalized = batch.accepted;
     const client = await this.pool.connect();
     const importId = randomUUID();
     try {
