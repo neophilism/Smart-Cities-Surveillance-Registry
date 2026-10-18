@@ -11,7 +11,8 @@ export interface ExternalImportResult { importId: string; received: number; inse
 
 /** Private evidence store. No public API or publication lifecycle reads these rows automatically. */
 export class PostgresExternalComplianceRepository {
-  constructor(private readonly pool: Pool) {}
+  private readonly pool: Pool;
+  constructor(pool: Pool) { this.pool = pool; }
 
   async importClaims(scope: ExternalClaimScope, claims: readonly ExternalClaimRow[]): Promise<ExternalImportResult> {
     if (!scope.registryId || !scope.recordId || !scope.providerId || claims.length > 500) throw new Error("Invalid import scope or batch");
