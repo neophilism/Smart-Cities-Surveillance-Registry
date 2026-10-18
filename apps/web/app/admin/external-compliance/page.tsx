@@ -1,4 +1,4 @@
-import { PostgresExternalComplianceRepository } from "@civic-registry/database";
+import { PostgresExternalComplianceRepository } from "../../../../../packages/smart-cities-compliance/src/store.ts";
 import { requireAdminSession } from "../../../lib/admin-auth.ts";
 import { getDatabasePool } from "../../../lib/database.ts";
 import { AdminShell } from "../../../components/admin-shell.tsx";
