@@ -63,3 +63,11 @@ test("provider failure audit stores only coarse code and scoped IDs", async () =
   assert.match(calls[0].sql, /smart_cities_external_claim_imports/);
   assert.deepEqual(calls[0].values.slice(1), ["city", "r1", "official", "PROVIDER_ERROR"]);
 });
+
+test("direct storage rejects malformed provenance before opening a transaction", async () => {
+  const { calls, pool } = fakePool();
+  const repository = new PostgresExternalComplianceRepository(pool);
+  await assert.rejects(repository.importClaims(scope, [{ ...claim, sourceUrl: "http://local.example" }]), /source URL/);
+  await assert.rejects(repository.importClaims(scope, [{ ...claim, kind: "certified" }]), /claim kind/);
+  assert.equal(calls.length, 0);
+});

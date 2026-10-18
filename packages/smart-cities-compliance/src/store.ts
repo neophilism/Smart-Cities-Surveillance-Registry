@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { createDatabasePool } from "../../database/src/pool.ts";
+import { validateExternalClaim } from "./index.ts";
 type Pool = ReturnType<typeof createDatabasePool>;
 
 export interface ExternalClaimRow {
@@ -17,9 +18,7 @@ export class PostgresExternalComplianceRepository {
 
   async importClaims(scope: ExternalClaimScope, claims: readonly ExternalClaimRow[]): Promise<ExternalImportResult> {
     if (!scope.registryId || !scope.recordId || !scope.providerId || claims.length > 500) throw new Error("Invalid import scope or batch");
-    for (const claim of claims) {
-      if (claim.registryId !== scope.registryId || claim.recordId !== scope.recordId || claim.providerId !== scope.providerId) throw new Error("Scope mismatch");
-    }
+    const normalized = claims.map(claim => validateExternalClaim(claim, scope));
     const client = await this.pool.connect();
     const importId = randomUUID();
     try {
@@ -36,7 +35,7 @@ export class PostgresExternalComplianceRepository {
         [importId, scope.registryId, scope.recordId, scope.providerId, claims.length],
       );
       let inserted = 0;
-      for (const claim of claims) {
+      for (const claim of normalized) {
         const result = await client.query(
           `INSERT INTO smart_cities_external_claims
             (registry_id, record_id, provider_id, source_id, kind, observed_at, source_url, assertion, import_id)
