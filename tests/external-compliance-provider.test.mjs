@@ -23,3 +23,13 @@ test("provider API rejects oversized response without content length", async () 
   await assert.rejects(fetchExternalClaims({ endpoint: "https://api.example.gov/v1/claims", token: "token", scope,
     fetchImpl: async () => new Response(" ".repeat(1_000_001), { headers: { "content-type": "application/json" } }) }), /too large/);
 });
+
+test("provider retry recovers without accepting conflicting duplicates", async () => {
+  let attempts = 0;
+  const fetchImpl = async () => { attempts++; return attempts === 1 ? reply({}, 503) : reply({ schemaVersion: 1, claims: [claim] }); };
+  const request = { endpoint: "https://api.example.gov/v1/claims", token: "token", scope, fetchImpl };
+  await assert.rejects(fetchExternalClaims(request), /HTTP 503/);
+  assert.equal((await fetchExternalClaims(request)).length, 1);
+  await assert.rejects(fetchExternalClaims({ ...request, fetchImpl: async () =>
+    reply({ schemaVersion: 1, claims: [claim, { ...claim, assertion: "Conflicting result" }] }) }), /invalid scoped claims/);
+});

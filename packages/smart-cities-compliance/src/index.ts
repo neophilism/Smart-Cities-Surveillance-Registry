@@ -20,12 +20,14 @@ export function validateExternalClaim(input: unknown, scope: Pick<ExternalClaim,
 export function importExternalClaims(inputs: readonly unknown[], scope: Pick<ExternalClaim, "registryId" | "recordId" | "providerId">): { accepted: ExternalClaim[]; rejected: { index: number; error: string }[] } {
   const accepted: ExternalClaim[] = [];
   const rejected: { index: number; error: string }[] = [];
-  const seen = new Set<string>();
+  const seen = new Map<string, ExternalClaim>();
   inputs.forEach((input, index) => {
     try {
       const claim = validateExternalClaim(input, scope);
       const key = JSON.stringify([claim.providerId, claim.sourceId, claim.kind, claim.observedAt]);
-      if (!seen.has(key)) { seen.add(key); accepted.push(claim); }
+      const previous = seen.get(key);
+      if (previous && (previous.assertion !== claim.assertion || previous.sourceUrl !== claim.sourceUrl)) throw new Error("Conflicting duplicate claim");
+      if (!previous) { seen.set(key, claim); accepted.push(claim); }
     } catch (error) { rejected.push({ index, error: error instanceof Error ? error.message : "Invalid claim" }); }
   });
   return { accepted, rejected };
@@ -51,8 +53,27 @@ export async function fetchExternalClaims(request: ExternalProviderRequest): Pro
   if (!(response.headers.get("content-type") ?? "").toLowerCase().startsWith("application/json")) throw new Error("Provider response must be JSON");
   const declaredLength = Number(response.headers.get("content-length") ?? "0");
   if (!Number.isFinite(declaredLength) || declaredLength > 1_000_000) throw new Error("Provider response too large");
-  const raw = await response.text();
-  if (new TextEncoder().encode(raw).length > 1_000_000) throw new Error("Provider response too large");
+  const reader = response.body?.getReader();
+  if (!reader) throw new Error("Empty provider response");
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > 1_000_000) throw new Error("Provider response too large");
+      chunks.push(value);
+    }
+  } catch (error) {
+    await reader.cancel().catch(() => undefined);
+    throw error;
+  }
+  const bytes = new Uint8Array(size);
+  let position = 0;
+  for (const chunk of chunks) { bytes.set(chunk, position); position += chunk.byteLength; }
+  let raw: string;
+  try { raw = new TextDecoder("utf-8", { fatal: true }).decode(bytes); } catch { throw new Error("Invalid provider encoding"); }
   let payload: unknown;
   try { payload = JSON.parse(raw); } catch { throw new Error("Invalid provider JSON"); }
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("Invalid provider payload");
