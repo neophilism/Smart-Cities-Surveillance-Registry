@@ -80,6 +80,9 @@ test("versioned registry endpoints expose only public policy metadata", async ()
       await listResponse.json();
 
     assert.equal(listResponse.status, 200);
+    assert.equal(listResponse.headers.get("X-Content-Type-Options"), "nosniff");
+    assert.equal(listResponse.headers.get("Referrer-Policy"), "no-referrer");
+    assert.equal(listResponse.headers.get("X-Frame-Options"), "DENY");
     assert.equal(
       listResponse.headers.get(
         "X-API-Version",
