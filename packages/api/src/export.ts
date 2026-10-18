@@ -39,7 +39,7 @@ function spreadsheetSafe(
   value: string,
 ): string {
   if (
-    /^[=+\-@]/.test(value)
+    /^[\x00-\x20]*[=+\-@]/.test(value)
   ) {
     return `'${value}`;
   }
