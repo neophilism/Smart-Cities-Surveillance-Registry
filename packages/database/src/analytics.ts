@@ -20,6 +20,7 @@ export interface RegistryAnalytics {
     records: number;
     published: number;
     citedRecords: number;
+    uncitedRecords: number;
     evidenceCoveragePercent: number;
   };
   recordTypes: AnalyticsBucket[];
@@ -303,6 +304,7 @@ export class PostgresAnalyticsRepository {
         records,
         published: asCount(totalsRow?.published),
         citedRecords,
+        uncitedRecords: Math.max(0, records - citedRecords),
         evidenceCoveragePercent:
           records === 0
             ? 0
