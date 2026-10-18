@@ -20,8 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <a className="skip-link" href="#main-content">Skip to main content</a>
         <SiteHeader />
-        {children}
+        <div id="main-content" tabIndex={-1}>{children}</div>
         <footer className="site-footer">
           <div>
             <strong>Smart Cities Surveillance Registry</strong>
