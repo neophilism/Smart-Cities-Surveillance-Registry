@@ -12,10 +12,21 @@ The operator configures `SMART_CITIES_COMPLIANCE_ENDPOINT` (HTTPS),
 IDs with `SMART_CITIES_COMPLIANCE_REGISTRY_ID`,
 `SMART_CITIES_COMPLIANCE_RECORD_ID`, and
 `SMART_CITIES_COMPLIANCE_PROVIDER_ID`. Run
-`node packages/smart-cities-compliance/src/cli.ts` only after migration 0016 and after the
+`pnpm db:import-external-compliance` only after migration 0016 and after the
 scoped record exists. The endpoint is operator configured, not supplied by a
 web request. No endpoint or credential is returned in the import audit.
 Provision the token through a secret store, never in source or CLI arguments.
+
+A server-to-server push endpoint is also available at
+`POST /api/integrations/compliance`. Configure
+`SMART_CITIES_COMPLIANCE_IMPORT_TOKEN` as a separate random secret of at
+least 32 characters, plus server-bound registry and provider IDs. Send
+`Authorization: Bearer <token>` and JSON
+`{"schemaVersion":1,"recordId":"...","claims":[...]}`. The route rejects
+unauthenticated requests and claims outside the configured registry, provider
+or target record. It returns an import ID and counts, never a compliance
+verdict. No administrator browser session or self-declared role is accepted
+as machine authorization.
 
 The client rejects HTTP errors, redirects, wrong media type, unsupported schema,
 oversized batches/responses and cross-scope claims. Imports are transactional
