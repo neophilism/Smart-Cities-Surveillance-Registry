@@ -7,12 +7,12 @@ export const dynamic = "force-dynamic";
 export default async function ExternalCompliancePage({
   searchParams,
 }: {
-  searchParams: Promise<{ registryId?: string; recordId?: string }>;
+  searchParams: Promise<{ registryId?: string | string[]; recordId?: string | string[] }>;
 }) {
   const session = await requireAdminSession();
   const params = await searchParams;
-  const registryId = (params.registryId ?? "").trim();
-  const recordId = (params.recordId ?? "").trim();
+  const registryId = typeof params.registryId === "string" ? params.registryId.trim() : "";
+  const recordId = typeof params.recordId === "string" ? params.recordId.trim() : "";
   const claims = registryId && recordId && registryId.length <= 200 && recordId.length <= 200
     ? await new PostgresExternalComplianceRepository(getDatabasePool()).listForRecord(registryId, recordId)
     : [];
