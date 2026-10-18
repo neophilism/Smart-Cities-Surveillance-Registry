@@ -2984,3 +2984,31 @@ h3 {
     border-bottom: 0;
   }
 }
+
+/* SC-27: keyboard navigation and motion accessibility */
+.skip-link {
+  position: absolute;
+  top: -5rem;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.8rem 1rem;
+  background: #fff;
+  color: #111;
+  border: 2px solid currentColor;
+}
+.skip-link:focus-visible { top: 0.5rem; }
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
