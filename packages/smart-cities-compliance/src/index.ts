@@ -18,3 +18,26 @@ export function validateExternalClaim(input: unknown, scope: Pick<ExternalClaim,
   if (item.kind !== "authorization" && item.kind !== "accountability" && item.kind !== "audit") throw new Error("Invalid claim kind");
   return { ...scope, sourceId: item.sourceId as string, sourceUrl: item.sourceUrl as string, observedAt: item.observedAt as string, kind: item.kind, assertion: item.assertion as string };
 }
+
+/** Normalize one fetched batch without authorizing any records for publication. */
+export function importExternalClaims(
+  inputs: readonly unknown[],
+  scope: Pick<ExternalClaim, "registryId" | "recordId" | "providerId">,
+): { accepted: ExternalClaim[]; rejected: { index: number; error: string }[] } {
+  const accepted: ExternalClaim[] = [];
+  const rejected: { index: number; error: string }[] = [];
+  const seen = new Set<string>();
+  inputs.forEach((input, index) => {
+    try {
+      const claim = validateExternalClaim(input, scope);
+      const key = JSON.stringify([claim.providerId, claim.sourceId, claim.kind, claim.observedAt]);
+      if (!seen.has(key)) {
+        seen.add(key);
+        accepted.push(claim);
+      }
+    } catch (error) {
+      rejected.push({ index, error: error instanceof Error ? error.message : "Invalid claim" });
+    }
+  });
+  return { accepted, rejected };
+}
