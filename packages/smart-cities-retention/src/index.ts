@@ -33,7 +33,6 @@ export function retentionProjection(
     policy: claim.policy, obligation: claim.obligation,
     sourceUrl: claim.sourceUrl, observedAt: claim.observedAt,
     reportedFulfillment: claim.measuredFulfillment,
-    actualDeletionVerified: claim.measuredFulfillment === "reported_complete" &&
-      claim.verification === "independently_verified",
+    actualDeletionVerified: false, // Reported provider claims never prove physical deletion.
   };
 }

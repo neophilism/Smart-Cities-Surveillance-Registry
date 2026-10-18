@@ -10,8 +10,8 @@ test("reported deletion never becomes independently verified deletion", () => {
  assert.equal(view.actualDeletionVerified,false);
  assert.equal(view.sourceUrl,claim.sourceUrl);
 });
-test("only explicit independent verification supports verified flag", () => {
- assert.equal(retentionProjection({...claim,verification:"independently_verified"},scope).actualDeletionVerified,true);
+test("even an external independent-verification label is insufficient proof", () => {
+ assert.equal(retentionProjection({...claim,verification:"independently_verified"},scope).actualDeletionVerified,false);
 });
 test("cross-registry, unsafe provenance and malformed states fail closed", () => {
  assert.throws(()=>retentionProjection({...claim,registryId:"other"},scope),/scope mismatch/);
