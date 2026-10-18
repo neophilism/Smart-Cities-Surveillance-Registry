@@ -3,9 +3,10 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { parseRegistryConfig } from "../packages/config/src/index.ts";
 import {
-  createDatabasePool, PostgresExternalComplianceRepository,
+  createDatabasePool,
   PostgresRecordRepository, PostgresRegistryConfigRepository, runMigrations,
 } from "../packages/database/src/index.ts";
+import { PostgresExternalComplianceRepository } from "../packages/smart-cities-compliance/src/store.ts";
 
 if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is required for external compliance integration tests");
 const config = parseRegistryConfig(

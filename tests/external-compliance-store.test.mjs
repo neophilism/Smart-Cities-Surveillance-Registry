@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { PostgresExternalComplianceRepository } from "../packages/database/src/external-compliance.ts";
+import { PostgresExternalComplianceRepository } from "../packages/smart-cities-compliance/src/store.ts";
 const scope = { registryId: "city", recordId: "r1", providerId: "official" };
 const claim = { ...scope, sourceId: "s1", sourceUrl: "https://city.example.gov/audit/1", observedAt: "2026-10-18T12:00:00Z", kind: "audit", assertion: "Review opened" };
 function fakePool(recordExists = true) {

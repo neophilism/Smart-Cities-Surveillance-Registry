@@ -1,4 +1,4 @@
-import { PostgresExternalComplianceRepository } from "@civic-registry/database";
+import { PostgresExternalComplianceRepository } from "../../../../../../packages/smart-cities-compliance/src/store.ts";
 import { handleExternalClaimPush } from "../../../../../../packages/smart-cities-compliance/src/push.ts";
 import { getDatabasePool } from "../../../../lib/database.ts";
 

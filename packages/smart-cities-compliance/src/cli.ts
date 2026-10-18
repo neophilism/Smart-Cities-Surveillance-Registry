@@ -1,5 +1,5 @@
 import { createDatabasePool } from "../../database/src/pool.ts";
-import { PostgresExternalComplianceRepository } from "../../database/src/external-compliance.ts";
+import { PostgresExternalComplianceRepository } from "./store.ts";
 import { fetchExternalClaims } from "./index.ts";
 
 const scope = {
