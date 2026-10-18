@@ -13,19 +13,21 @@ export default async function ExternalCompliancePage({
   const params = await searchParams;
   const registryId = typeof params.registryId === "string" ? params.registryId.trim() : "";
   const recordId = typeof params.recordId === "string" ? params.recordId.trim() : "";
-  const claims = registryId && recordId && registryId.length <= 200 && recordId.length <= 200
+  const invalidIds = registryId.length > 200 || recordId.length > 200;
+  const claims = registryId && recordId && !invalidIds
     ? await new PostgresExternalComplianceRepository(getDatabasePool()).listForRecord(registryId, recordId)
     : [];
   return (
     <AdminShell session={session} title="External accountability evidence" subtitle="Provider statements are evidence for review. They do not approve publication or establish compliance.">
-      <form method="get" action="/admin/external-compliance">
-        <label htmlFor="registryId">Registry ID</label>
-        <input id="registryId" name="registryId" required maxLength={200} defaultValue={registryId} />
-        <label htmlFor="recordId">Record ID</label>
-        <input id="recordId" name="recordId" required maxLength={200} defaultValue={recordId} />
+      <form className="admin-form" method="get" action="/admin/external-compliance">
+        <div className="admin-form__grid">
+          <label htmlFor="registryId"><span>Registry ID</span><input id="registryId" name="registryId" required maxLength={200} defaultValue={registryId} /></label>
+          <label htmlFor="recordId"><span>Record ID</span><input id="recordId" name="recordId" required maxLength={200} defaultValue={recordId} /></label>
+        </div>
         <button type="submit">Show evidence</button>
       </form>
-      {registryId && recordId ? (
+      {invalidIds ? <p role="alert">Registry and record IDs must be 200 characters or fewer.</p> : null}
+      {registryId && recordId && !invalidIds ? (
         <section aria-label="External claims">
           <h2>{claims.length} sourced statements</h2>
           {claims.length === 0 ? <p>No imported statements for this record.</p> : (
