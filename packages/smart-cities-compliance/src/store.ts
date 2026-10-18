@@ -8,6 +8,7 @@ export interface ExternalClaimRow {
   sourceId: string; sourceUrl: string; observedAt: string;
   kind: "authorization" | "accountability" | "audit"; assertion: string;
 }
+export interface StoredExternalClaim extends ExternalClaimRow { importId: string; importedAt: string; }
 export interface ExternalClaimScope { registryId: string; recordId: string; providerId: string; }
 export interface ExternalImportResult { importId: string; received: number; inserted: number; }
 
@@ -69,9 +70,9 @@ export class PostgresExternalComplianceRepository {
     return id;
   }
 
-  async listForRecord(registryId: string, recordId: string): Promise<ExternalClaimRow[]> {
+  async listForRecord(registryId: string, recordId: string): Promise<StoredExternalClaim[]> {
     const result = await this.pool.query(
-      `SELECT registry_id, record_id, provider_id, source_id, source_url, observed_at, kind, assertion
+      `SELECT registry_id, record_id, provider_id, source_id, source_url, observed_at, kind, assertion, import_id, created_at
        FROM smart_cities_external_claims
        WHERE registry_id = $1 AND record_id = $2
        ORDER BY observed_at DESC, provider_id, source_id LIMIT 500`,
@@ -81,11 +82,13 @@ export class PostgresExternalComplianceRepository {
       const row = item as {
         registry_id: string; record_id: string; provider_id: string; source_id: string;
         source_url: string; observed_at: Date; kind: ExternalClaimRow["kind"]; assertion: string;
+        import_id: string; created_at: Date;
       };
       return {
       registryId: row.registry_id, recordId: row.record_id, providerId: row.provider_id,
       sourceId: row.source_id, sourceUrl: row.source_url,
       observedAt: row.observed_at.toISOString(), kind: row.kind, assertion: row.assertion,
+      importId: row.import_id, importedAt: row.created_at.toISOString(),
     }; });
   }
 }

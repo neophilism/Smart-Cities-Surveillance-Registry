@@ -34,7 +34,11 @@ test("external assertions persist idempotently with scoped audit and tenant isol
     const first = await store.importClaims(scope, [claim]);
     const second = await store.importClaims(scope, [claim]);
     assert.equal(first.inserted, 1); assert.equal(second.inserted, 0);
-    assert.deepEqual((await store.listForRecord(scope.registryId, scope.recordId))[0], { ...claim, observedAt: "2026-10-18T12:00:00.000Z" });
+    const stored = (await store.listForRecord(scope.registryId, scope.recordId))[0];
+    assert.equal(stored.registryId, claim.registryId);
+    assert.equal(stored.observedAt, "2026-10-18T12:00:00.000Z");
+    assert.equal(stored.importId, first.importId);
+    assert.ok(Number.isFinite(Date.parse(stored.importedAt)));
     assert.deepEqual(await store.listForRecord("other-registry", scope.recordId), []);
     await assert.rejects(store.importClaims({ ...scope, recordId: "other-record" }, [{ ...claim, recordId: "other-record" }]), /Scoped record not found/);
     const token = "0123456789abcdef0123456789abcdef";

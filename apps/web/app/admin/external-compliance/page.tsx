@@ -35,7 +35,7 @@ export default async function ExternalCompliancePage({
               {claims.map((claim) => (
                 <li key={claim.providerId + ":" + claim.sourceId + ":" + claim.kind + ":" + claim.observedAt}>
                   <strong>{claim.kind}</strong>: {claim.assertion}
-                  <p>Provider: {claim.providerId}. Source: <a href={claim.sourceUrl} rel="noopener noreferrer">{claim.sourceId}</a>. Observed: <time dateTime={claim.observedAt}>{claim.observedAt}</time>.</p>
+                  <p>Provider: {claim.providerId}. Source: <a href={claim.sourceUrl} rel="noopener noreferrer">{claim.sourceId}</a>. Observed: <time dateTime={claim.observedAt}>{claim.observedAt}</time>. Imported: <time dateTime={claim.importedAt}>{claim.importedAt}</time>. Audit ID: <code>{claim.importId}</code>.</p>
                 </li>
               ))}
             </ul>
