@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
-import type { Pool, QueryResultRow } from "pg";
+import type { createDatabasePool } from "../../database/src/pool.ts";
+type Pool = ReturnType<typeof createDatabasePool>;
 
 export interface ExternalClaimRow {
   registryId: string; recordId: string; providerId: string;
@@ -70,20 +71,22 @@ export class PostgresExternalComplianceRepository {
   }
 
   async listForRecord(registryId: string, recordId: string): Promise<ExternalClaimRow[]> {
-    const result = await this.pool.query<QueryResultRow & {
-      registry_id: string; record_id: string; provider_id: string; source_id: string;
-      source_url: string; observed_at: Date; kind: ExternalClaimRow["kind"]; assertion: string;
-    }>(
+    const result = await this.pool.query(
       `SELECT registry_id, record_id, provider_id, source_id, source_url, observed_at, kind, assertion
        FROM smart_cities_external_claims
        WHERE registry_id = $1 AND record_id = $2
        ORDER BY observed_at DESC, provider_id, source_id LIMIT 500`,
       [registryId, recordId],
     );
-    return result.rows.map(row => ({
+    return result.rows.map(item => {
+      const row = item as {
+        registry_id: string; record_id: string; provider_id: string; source_id: string;
+        source_url: string; observed_at: Date; kind: ExternalClaimRow["kind"]; assertion: string;
+      };
+      return {
       registryId: row.registry_id, recordId: row.record_id, providerId: row.provider_id,
       sourceId: row.source_id, sourceUrl: row.source_url,
       observedAt: row.observed_at.toISOString(), kind: row.kind, assertion: row.assertion,
-    }));
+    }; });
   }
 }
