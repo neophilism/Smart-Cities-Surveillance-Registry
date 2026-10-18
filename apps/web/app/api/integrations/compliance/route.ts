@@ -1,6 +1,6 @@
 import { PostgresExternalComplianceRepository } from "@civic-registry/database";
 import { handleExternalClaimPush } from "../../../../../../packages/smart-cities-compliance/src/push.ts";
-import { getDatabasePool } from "../../../lib/database.ts";
+import { getDatabasePool } from "../../../../lib/database.ts";
 
 export const runtime = "nodejs";
 export async function POST(request: Request): Promise<Response> {
