@@ -31,3 +31,10 @@ test("invalid observations fail before database access and reads always filter b
  assert.equal(calls,1);
  await assert.rejects(db.list("","deployment"),/INVALID_RETENTION_SCOPE/);
 });
+test("denied tenant and actor have no database access",async()=>{
+ let queries=0;
+ const db=new PostgresRetentionObservations({query:async()=>{queries++;return {rows:[],rowCount:1}}},()=>false);
+ await assert.rejects(db.insert(row),/RETENTION_FORBIDDEN/);
+ await assert.rejects(db.list("city","deployment"),/RETENTION_FORBIDDEN/);
+ assert.equal(queries,0);
+});

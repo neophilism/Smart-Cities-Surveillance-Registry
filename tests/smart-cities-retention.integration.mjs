@@ -14,7 +14,7 @@ test("PostgreSQL retention observation is unique, scoped, and never treated as d
   const config=parseRegistryConfig(await readFile("config/registry.yaml","utf8"),{sourceName:"config/registry.yaml"});
   const seed=JSON.parse(await readFile("examples/smart-cities-demo/seed.json","utf8"));
   await seedRegistry(pool,config,seed);
-  const db=new PostgresRetentionObservations(pool);
+  const db=new PostgresRetentionObservations(pool,(_action,scope)=>scope.registryId===config.registry.id);
   const row={registryId:config.registry.id,recordId:"demo-deployment-downtown",
    sourceUrl:"https://city.example.gov/retention/policy",observedAt:"2026-10-19T12:00:00Z",
    policy:"Thirty days",obligation:"Delete after thirty days",

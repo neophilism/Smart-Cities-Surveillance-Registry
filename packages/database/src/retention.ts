@@ -6,13 +6,16 @@ export interface RetentionRow {
 }
 /** Internal store only. Callers authorize every insert and public disclosure separately. */
 export class PostgresRetentionObservations {
- constructor(private readonly pool:Pool){}
+ constructor(private readonly pool:Pool,private readonly authorize:(action:"read"|"write",scope:{registryId:string;recordId:string})=>boolean){
+  if(typeof authorize!=="function")throw new Error("RETENTION_AUTH_REQUIRED");
+ }
  async insert(row:RetentionRow):Promise<boolean>{
   if (!row || ![row.registryId,row.recordId,row.sourceUrl,row.observedAt,row.policy,row.obligation]
       .every(v=>typeof v==="string"&&v.length>0&&v.length<=4096) ||
       !["not_reported","reported_complete","reported_incomplete"].includes(row.measuredFulfillment) ||
       !["unverified","independently_verified"].includes(row.verification))
       throw new Error("INVALID_RETENTION_OBSERVATION");
+  if(!this.authorize("write",{registryId:row.registryId,recordId:row.recordId}))throw new Error("RETENTION_FORBIDDEN");
   const url=new URL(row.sourceUrl);
   if(url.protocol!=="https:"||url.username||url.password||url.hash||!Number.isFinite(Date.parse(row.observedAt)))
       throw new Error("INVALID_RETENTION_PROVENANCE");
@@ -23,6 +26,7 @@ export class PostgresRetentionObservations {
  }
  async list(registryId:string,recordId:string):Promise<RetentionRow[]>{
   if(!registryId||!recordId||registryId.length>255||recordId.length>255)throw new Error("INVALID_RETENTION_SCOPE");
+  if(!this.authorize("read",{registryId,recordId}))throw new Error("RETENTION_FORBIDDEN");
   const result=await this.pool.query<{
    registry_id:string;record_id:string;source_url:string;observed_at:Date;
    policy:string;obligation:string;
