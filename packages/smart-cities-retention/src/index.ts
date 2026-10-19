@@ -13,15 +13,23 @@ export function retentionProjection(
   claim: RetentionClaim,
   scope: { registryId: string; recordId: string },
 ): RetentionProjection {
-  if (claim.registryId !== scope.registryId || claim.recordId !== scope.recordId) {
+  if (!claim || typeof claim !== "object" || Array.isArray(claim) ||
+      Object.keys(claim).sort().join(",") !== "measuredFulfillment,obligation,observedAt,policy,recordId,registryId,sourceUrl,verification") {
+    throw new Error("Invalid retention claim schema");
+  }
+  if (!scope || claim.registryId !== scope.registryId || claim.recordId !== scope.recordId) {
     throw new Error("Retention claim scope mismatch");
   }
-  if (!claim || typeof claim !== "object" || Array.isArray(claim) ||\n      Object.keys(claim).sort().join(",") !== "measuredFulfillment,obligation,observedAt,policy,recordId,registryId,sourceUrl,verification") {\n    throw new Error("Invalid retention claim schema");\n  }\n  if (![claim.sourceUrl, claim.policy, claim.obligation, claim.observedAt].every(v =>\n      typeof v === "string" && v.trim().length > 0 && v.length <= 4096 && !/[\\x00-\\x1f\\x7f]/.test(v))) {
+  if (![claim.sourceUrl, claim.policy, claim.obligation, claim.observedAt].every(v =>
+      typeof v === "string" && v.trim().length > 0 && v.length <= 4096 && !/[\x00-\x1f\x7f]/.test(v))) {
     throw new Error("Retention source, policy, obligation, and observation are required");
   }
   let source: URL;
   try { source = new URL(claim.sourceUrl); } catch { throw new Error("Invalid retention source URL"); }
-  if (source.protocol !== "https:" || source.username || source.password || source.hash ||\n      source.hostname === "localhost" || source.hostname.endsWith(".localhost") ||\n      source.hostname.endsWith(".local") || source.hostname.endsWith(".internal") ||\n      /^[0-9.]+$/.test(source.hostname) || source.hostname.includes(":")) throw new Error("Invalid retention source URL");
+  if (source.protocol !== "https:" || source.username || source.password || source.hash ||
+      source.hostname === "localhost" || source.hostname.endsWith(".localhost") ||
+      source.hostname.endsWith(".local") || source.hostname.endsWith(".internal") ||
+      /^[0-9.]+$/.test(source.hostname) || source.hostname.includes(":")) throw new Error("Invalid retention source URL");
   if (!Number.isFinite(Date.parse(claim.observedAt))) throw new Error("Invalid observation time");
   if (!["not_reported", "reported_complete", "reported_incomplete"].includes(claim.measuredFulfillment)) {
     throw new Error("Invalid fulfillment state");
