@@ -14,7 +14,7 @@ test("scoped inserts are parameterized, deduplicated, and never mutate source cl
   const key=JSON.stringify(params);
   if (seen.has(key))return {rowCount:0};
   seen.add(key);return {rowCount:1};
- }});
+ }},()=>true);
  assert.equal(await db.insert(row),true);
  assert.equal(await db.insert(row),false);
  assert.match(sqls[0],/ON CONFLICT DO NOTHING/);
@@ -23,7 +23,7 @@ test("invalid observations fail before database access and reads always filter b
  let calls=0;
  const db=new PostgresRetentionObservations({query:async(_sql,params)=>{
    calls++; assert.deepEqual(params,["city","deployment"]);return {rows:[]};
- }});
+ }},()=>true);
  await assert.rejects(db.insert({...row,measuredFulfillment:"deleted"}),/INVALID_RETENTION_OBSERVATION/);
  await assert.rejects(db.insert({...row,sourceUrl:"http://localhost/private"}),/INVALID_RETENTION_PROVENANCE/);
  assert.equal(calls,0);
