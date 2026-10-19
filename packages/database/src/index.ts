@@ -18,3 +18,5 @@ export * from "./notifications.ts";
 export * from "./integrity.ts";
 export * from "./source-refresh.ts";
 export * from "./relationship-candidates.ts";
+
+export * from "./retention.ts";

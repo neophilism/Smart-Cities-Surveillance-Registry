@@ -13,6 +13,7 @@ import { RecordFieldValue } from "../../../../../components/record-field";
 import { RelationshipGroups } from "../../../../../components/relationship-groups";
 import { SmartCitiesRecordOverview } from "../../../../../components/smart-cities-record-overview";
 import { SmartCitiesOrganizationCommerceOverview } from "../../../../../components/smart-cities-organization-commerce-overview";
+import { SmartCitiesRetentionOverview } from "../../../../../components/smart-cities-retention-overview";
 import { SmartCitiesGovernanceOversightOverview } from "../../../../../components/smart-cities-governance-oversight-overview";
 import { formatDateTime } from "../../../../../lib/format";
 import {
@@ -54,7 +55,7 @@ export async function generateMetadata({
   );
 
   return {
-    title: `${presented.title} — ${registry.config.definition.name}`,
+    title: `${presented.title}  ${registry.config.definition.name}`,
     description: presented.summary,
   };
 }
@@ -242,6 +243,8 @@ export default async function RecordPage({
           deadlines.length
         }
       />
+
+      <SmartCitiesRetentionOverview recordTypeId={record.recordTypeId} fields={presented.fields} />
 
       <div className="record-layout">
         <section
