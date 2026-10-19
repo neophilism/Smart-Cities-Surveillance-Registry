@@ -1,4 +1,5 @@
 import type { PresentedField } from "@civic-registry/registry";
+import { publicRetentionStatus } from "../lib/retention-public";
 
 export function SmartCitiesRetentionOverview({
   recordTypeId, fields,
@@ -8,8 +9,7 @@ export function SmartCitiesRetentionOverview({
 }) {
   if (recordTypeId !== "deployment") return null;
   // Only consume disclosure-projected fields; never query raw record data here.
-  const duration = fields.find(field => field.id === "retention_days" && !field.empty);
-  const basis = fields.find(field => field.id === "retention_basis" && !field.empty);
+  const status = publicRetentionStatus(fields);
   return (
     <section className="record-panel" aria-labelledby="retention-projection-heading">
       <div className="section-heading">
@@ -21,11 +21,11 @@ export function SmartCitiesRetentionOverview({
       <dl className="detail-list">
         <div>
           <dt>Published maximum retention period</dt>
-          <dd>{duration ? duration.displayValue + " days" : "Not publicly documented"}</dd>
+          <dd>{status.publishedMaximumRetentionDays ? status.publishedMaximumRetentionDays + " days" : "Not publicly documented"}</dd>
         </div>
         <div>
           <dt>Published retention basis</dt>
-          <dd>{basis ? basis.displayValue : "Not publicly documented"}</dd>
+          <dd>{status.publishedRetentionBasis ?? "Not publicly documented"}</dd>
         </div>
         <div>
           <dt>Verified physical deletion</dt>

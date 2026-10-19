@@ -1,4 +1,5 @@
 import { presentRecordDetail } from "@civic-registry/registry";
+import { publicRetentionStatus } from "../../../../../../../../lib/retention-public";
 import { getPublicRecordView, getPublicRegistry } from "../../../../../../../../lib/public-registry";
 import { publicApiError, publicApiJson, publicApiOptions } from "../../../../../../../../lib/public-api";
 
@@ -20,16 +21,9 @@ export async function GET(
     return publicApiError(404, "retention_not_applicable", "Retention projection is not applicable.");
   }
   const presented = presentRecordDetail(view.record, registry.config, view.disclosure);
-  const field = (id: string) => presented.fields.find(
-    candidate => candidate.id === id && !candidate.empty
-  )?.displayValue ?? null;
   return publicApiJson({
     registryId,
     recordId,
-    publishedMaximumRetentionDays: field("retention_days"),
-    publishedRetentionBasis: field("retention_basis"),
-    actualDeletionVerified: false,
-    evidenceStatus: "not_verified",
-    explanation: "Published retention conditions and provider statements do not prove physical deletion.",
+    ...publicRetentionStatus(presented.fields),
   });
 }
