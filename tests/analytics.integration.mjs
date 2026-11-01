@@ -8,8 +8,11 @@ import {
 import {
   createDatabasePool,
   PostgresAnalyticsRepository,
+  PostgresCitationRepository,
+  PostgresDocumentRepository,
   PostgresRecordRepository,
   PostgresRegistryConfigRepository,
+  PostgresSourceRepository,
   runMigrations,
 } from "../packages/database/src/index.ts";
 
@@ -53,6 +56,14 @@ test("public analytics aggregate the disclosure-safe field projection", async ()
       new PostgresAnalyticsRepository(pool);
 
     await configs.upsert(config);
+    const sources = new PostgresSourceRepository(pool, configs);
+    const documents = new PostgresDocumentRepository(pool, configs, sources);
+    const citations = new PostgresCitationRepository(pool, configs, records, sources, documents);
+    await sources.create({
+      id: "analytics-source", registryId: config.registry.id,
+      title: "Analytics evidence", sourceType: "document",
+      visibility: "public", createdAt: "2026-10-01T12:00:00.000Z",
+    });
 
     for (const [id, documentType] of [
       ["analytics-visible", "report"],
@@ -100,6 +111,18 @@ test("public analytics aggregate the disclosure-safe field projection", async ()
       ],
     );
 
+    for (const [id, recordId, fieldId, visibility] of [
+      ["visible-evidence", "analytics-visible", "document_type", "public"],
+      ["duplicate-evidence", "analytics-visible", "title", "public"],
+      ["redacted-evidence", "analytics-redacted", "document_type", "public"],
+      ["private-evidence", "analytics-redacted", "title", "private"],
+    ]) {
+      await citations.create({
+        id, registryId: config.registry.id, recordId, fieldId, visibility,
+        sourceId: "analytics-source", createdAt: "2026-10-01T12:00:00.000Z",
+      });
+    }
+
     const internal =
       await analytics.getRegistryAnalytics(
         config.registry.id,
@@ -133,6 +156,37 @@ test("public analytics aggregate the disclosure-safe field projection", async ()
       [{ key: "report", count: 1 }],
     );
     assert.equal(publicResult.totals.records, 2);
+    assert.equal(internal.totals.citedRecords, 2);
+    assert.equal(internal.totals.uncitedRecords, 0);
+    assert.equal(publicResult.totals.citedRecords, 1);
+    assert.equal(publicResult.totals.uncitedRecords, 1);
+    assert.equal(publicResult.totals.evidenceCoveragePercent, 50);
+
+    // Removing visible evidence must not reveal private or redacted evidence.
+    await citations.delete(config.registry.id, "visible-evidence");
+    await citations.delete(config.registry.id, "duplicate-evidence");
+    const withoutVisibleEvidence = await analytics.getRegistryAnalytics(
+      config.registry.id, { scope: "public", publicStatusIds: ["published"] },
+    );
+    assert.equal(withoutVisibleEvidence.totals.citedRecords, 0);
+    assert.equal(withoutVisibleEvidence.totals.uncitedRecords, 2);
+    // Record-level provenance remains eligible independent of field redaction.
+    await citations.create({
+      id: "record-evidence", registryId: config.registry.id,
+      recordId: "analytics-redacted", sourceId: "analytics-source",
+      visibility: "public", createdAt: "2026-10-01T12:00:00.000Z",
+    });
+    assert.equal((await analytics.getRegistryAnalytics(config.registry.id,
+      { scope: "public", publicStatusIds: ["published"] })).totals.citedRecords, 1);
+    const excluded = await analytics.getRegistryAnalytics(config.registry.id,
+      { scope: "public", publicStatusIds: [] });
+    assert.equal(excluded.totals.records, 0);
+    assert.equal(excluded.totals.citedRecords, 0);
+    assert.equal(excluded.totals.uncitedRecords, 0);
+    const otherRegistry = await analytics.getRegistryAnalytics("another-registry",
+      { scope: "public", publicStatusIds: ["published"] });
+    assert.equal(otherRegistry.totals.records, 0);
+    assert.deepEqual(otherRegistry.dimension, undefined);
   } finally {
     await pool.end();
   }

@@ -109,14 +109,41 @@ export default async function RegistryAnalyticsPage({
         </div>
         <div>
           <strong>
-            {analytics.totals.evidenceCoveragePercent}%
+            {analytics.totals.records === 0
+              ? "Not available"
+              : analytics.totals.evidenceCoveragePercent + "%"}
           </strong>
-          <span>Evidence coverage</span>
+          <span>Records with a disclosed citation</span>
+        </div>
+        <div>
+          <strong>{analytics.totals.citedRecords}</strong>
+          <span>Records with disclosed citations</span>
+        </div>
+        <div>
+          <strong>{analytics.totals.uncitedRecords}</strong>
+          <span>Records without disclosed citations</span>
         </div>
         <div>
           <strong>{analytics.deadlines.overdue}</strong>
           <span>Overdue public deadlines</span>
         </div>
+      </section>
+
+      <p>
+        Coverage counts distinct public records with at least one public
+        citation to the record or a disclosed field. It does not assess
+        accuracy, completeness, or whether undisclosed evidence exists.
+        Comparisons depend on each registry&apos;s disclosure rules.
+      </p>
+      <section className="section-block" aria-labelledby="deadline-summary">
+        <h2 id="deadline-summary">Public disclosure deadlines</h2>
+        <dl>
+          <dt>Open</dt><dd>{analytics.deadlines.open}</dd>
+          <dt>Due in the next 30 days</dt><dd>{analytics.deadlines.dueSoon}</dd>
+          <dt>Overdue</dt><dd>{analytics.deadlines.overdue}</dd>
+        </dl>
+        <p>Only open deadlines configured for public disclosure are counted.
+          This measures recorded due dates, not legal compliance.</p>
       </section>
 
       <section className="section-block analytics-grid">

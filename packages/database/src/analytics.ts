@@ -20,6 +20,7 @@ export interface RegistryAnalytics {
     records: number;
     published: number;
     citedRecords: number;
+    uncitedRecords: number;
     evidenceCoveragePercent: number;
   };
   recordTypes: AnalyticsBucket[];
@@ -219,6 +220,13 @@ export class PostgresAnalyticsRepository {
           WHERE ${where}
             ${scope === "public" ? `
               AND citation.visibility = 'public'
+              AND (
+                citation.field_id IS NULL
+                OR (
+                  record.public_fields ? citation.field_id
+                  AND record.public_fields -> citation.field_id <> 'null'::jsonb
+                )
+              )
               AND NOT EXISTS (
                 SELECT 1
                 FROM civic_registry_record_disclosures AS disclosure
@@ -303,6 +311,7 @@ export class PostgresAnalyticsRepository {
         records,
         published: asCount(totalsRow?.published),
         citedRecords,
+        uncitedRecords: Math.max(0, records - citedRecords),
         evidenceCoveragePercent:
           records === 0
             ? 0
