@@ -53,6 +53,9 @@ function SearchSelect({
       <span>{label}</span>
       <select name={name} defaultValue={selected ?? ""}>
         <option value="">Any</option>
+        {selected && !options.some((option) => option.value === selected) ? (
+          <option value={selected}>{selected} (selected)</option>
+        ) : null}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -74,6 +77,7 @@ export function SearchControls({
   action,
   includeRecordType = false,
   extraFilters,
+  validationMessageId,
 }: {
   registry: CompiledRegistryConfig;
   recordType?: CompiledRecordTypeConfig;
@@ -82,6 +86,7 @@ export function SearchControls({
   action: string;
   includeRecordType?: boolean;
   extraFilters?: ReactNode;
+  validationMessageId?: string;
 }) {
   const query = firstSearchValue(params.q) ?? "";
   const selectedStatus =
@@ -121,6 +126,9 @@ export function SearchControls({
       className="search-panel"
       method="get"
       action={action}
+      role="search"
+      aria-label="Public registry records"
+      aria-describedby={validationMessageId}
     >
       {!includeRecordType && recordType ? (
         <input
@@ -231,6 +239,7 @@ export function SearchControls({
                           <input
                             name={`from_${field.id}`}
                             type={inputType}
+                            step={field.type === "decimal" ? "any" : field.type === "integer" ? 1 : undefined}
                             defaultValue={
                               firstSearchValue(
                                 params[`from_${field.id}`],
@@ -243,6 +252,7 @@ export function SearchControls({
                           <input
                             name={`to_${field.id}`}
                             type={inputType}
+                            step={field.type === "decimal" ? "any" : field.type === "integer" ? 1 : undefined}
                             defaultValue={
                               firstSearchValue(
                                 params[`to_${field.id}`],
@@ -296,6 +306,9 @@ export function SearchControls({
               defaultValue={selectedSort}
             >
               <option value="">Default</option>
+              {selectedSort && ![...(query ? ["relevance"] : []), "updated", "published", ...sortableFields.map((field) => `field:${field.id}`)].includes(selectedSort) ? (
+                <option value={selectedSort}>{selectedSort} (selected)</option>
+              ) : null}
               {query ? (
                 <option value="relevance">Relevance</option>
               ) : null}
@@ -327,7 +340,7 @@ export function SearchControls({
 
         <div className="search-actions">
           <button type="submit">Apply filters</button>
-          <Link href={action}>Clear</Link>
+          <Link href={action} aria-label="Clear all search filters">Clear</Link>
         </div>
       </details>
     </form>

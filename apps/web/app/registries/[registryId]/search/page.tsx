@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { normalizeSearchRequest, SearchValidationError, type SearchResponse } from "@civic-registry/search";
 import { notFound, redirect } from "next/navigation";
 import { presentRecordSummary } from "@civic-registry/registry";
 
@@ -12,6 +13,7 @@ import {
   searchPublicRecords,
 } from "../../../../lib/public-registry";
 import { getDatabasePool } from "../../../../lib/database";
+import { searchResultRange } from "../../../../lib/pagination";
 import {
   loadSmartCitiesAdvancedFilterOptions,
   parseSmartCitiesAdvancedFilters,
@@ -81,33 +83,30 @@ export default async function RegistrySearchPage({
     registry.config.definition.id ===
     SMART_CITIES_REGISTRY_ID;
   const pool = getDatabasePool();
-  const [
-    candidateRecordIds,
-    advancedFilterOptions,
-  ] = smartCities
-    ? await Promise.all([
-        resolveSmartCitiesCandidateRecordIds(
-          pool,
-          registry.config,
-          advancedFilters,
-        ),
-        loadSmartCitiesAdvancedFilterOptions(
-          pool,
-          registry.config,
-        ),
-      ])
-    : [undefined, undefined];
-
-  if (candidateRecordIds !== undefined) {
-    request.recordIds =
-      candidateRecordIds;
+  let result: SearchResponse | undefined;
+  let validationIssues: string[] = [];
+  let advancedFilterOptions: Awaited<ReturnType<typeof loadSmartCitiesAdvancedFilterOptions>> | undefined;
+  try {
+    // Reject invalid ranges/sorts before launching advanced-filter database work.
+    normalizeSearchRequest(registry.config, request);
+    const [candidateRecordIds, options] = smartCities
+      ? await Promise.all([
+          resolveSmartCitiesCandidateRecordIds(pool, registry.config, advancedFilters),
+          loadSmartCitiesAdvancedFilterOptions(pool, registry.config),
+        ])
+      : [undefined, undefined];
+    advancedFilterOptions = options;
+    if (candidateRecordIds !== undefined) request.recordIds = candidateRecordIds;
+    result = await searchPublicRecords(registry.config, request);
+  } catch (error) {
+    if (!(error instanceof SearchValidationError)) throw error;
+    validationIssues = error.issues.map((issue) => issue.message);
+    // Keep advanced controls available for correction without running the invalid search.
+    advancedFilterOptions = smartCities
+      ? await loadSmartCitiesAdvancedFilterOptions(pool, registry.config)
+      : undefined;
   }
-
-  const result = await searchPublicRecords(
-    registry.config,
-    request,
-  );
-  const presented = result.hits.map(({ record }) =>
+  const presented = (result?.hits ?? []).map(({ record }) =>
     presentRecordSummary(record, registry.config),
   );
   const basePath = `/registries/${encodeURIComponent(
@@ -150,10 +149,19 @@ export default async function RegistrySearchPage({
           </div>
         </div>
 
+        {validationIssues.length > 0 ? (
+          <div className="admin-message admin-message--error" role="alert" id="search-validation">
+            <h3>Review your search filters</h3>
+            <ul>{validationIssues.map((issue, index) => <li key={index}>{issue}</li>)}</ul>
+            <p>Your filters are preserved below. Correct them and select Search or Apply filters.</p>
+            <a href="#registry-search-query">Return to the search controls</a>
+          </div>
+        ) : null}
         <SearchControls
           registry={registry.config}
           recordType={recordType}
-          facets={result.facets}
+          facets={result?.facets ?? { recordTypes: [], statuses: [], tags: [], fields: {} }}
+          validationMessageId={validationIssues.length > 0 ? "search-validation" : undefined}
           params={query}
           action={basePath}
           includeRecordType
@@ -171,17 +179,20 @@ export default async function RegistrySearchPage({
         />
       </section>
 
-      <section
+      {result ? (<section
         className="section-block"
         aria-labelledby="search-results-heading"
       >
         <div className="section-heading">
           <div>
             <p className="eyebrow">Results</p>
-            <h2 id="search-results-heading">
+            <h2 id="search-results-heading" tabIndex={-1}>
               {result.total}{" "}
               {result.total === 1 ? "record" : "records"}
             </h2>
+            <p role="status" aria-live="polite" aria-atomic="true">
+              {searchResultRange(result.total, result.page, result.pageSize)}
+            </p>
           </div>
         </div>
 
@@ -196,6 +207,7 @@ export default async function RegistrySearchPage({
               ))}
             </div>
             <Pagination
+              resultsId="search-results-heading"
               basePath={basePath}
               params={query}
               page={result.page}
@@ -204,7 +216,7 @@ export default async function RegistrySearchPage({
             />
           </>
         ) : (
-          <div className="empty-state empty-state--inline">
+          <div className="empty-state empty-state--inline" role="status">
             <h3>No matching public records</h3>
             <p>
               Try a broader query or remove one of the selected
@@ -212,7 +224,7 @@ export default async function RegistrySearchPage({
             </p>
           </div>
         )}
-      </section>
+      </section>) : null}
     </main>
   );
 }
