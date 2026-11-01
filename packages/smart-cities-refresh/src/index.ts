@@ -237,3 +237,6 @@ export async function runConfiguredSourceRefresh(
     },
   });
 }
+
+export { projectSourceFreshness } from "./freshness.ts";
+export type { SourceFreshnessInput, SourceFreshness, FreshnessStatus } from "./freshness.ts";

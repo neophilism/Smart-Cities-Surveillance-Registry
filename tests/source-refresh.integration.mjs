@@ -168,6 +168,10 @@ test("scheduled source refreshes are leased, monitored, ingested, and backed off
     assert.equal(first.completed, 1);
     assert.equal(first.failed, 0);
     assert.equal(first.runs[0]?.rowCount, 10);
+    const firstEvidence = await service.listLatestSuccessfulRuns(config.registry.id);
+    assert.equal(firstEvidence.get(definition.id)?.id, first.runs[0].id);
+    assert.deepEqual(firstEvidence.get(definition.id)?.sourcePages, ["https://example.gov/refresh"]);
+    assert.equal((await service.listLatestSuccessfulRuns("other-registry")).size, 0);
 
     const queued = await service.queueNow(
       config.registry.id,
@@ -227,6 +231,50 @@ test("scheduled source refreshes are leased, monitored, ingested, and backed off
       },
     });
     assert.equal(failure.failed, 1);
+    // A failed attempt must not replace the last successful provenance record.
+    const afterFailure = await service.listLatestSuccessfulRuns(config.registry.id);
+    assert.equal(afterFailure.get(definition.id)?.id, second.runs[0].id);
+    assert.equal(afterFailure.get(definition.id)?.status, "completed_with_warnings");
+    assert.equal(afterFailure.get(definition.id)?.outputSha256, sha256String(secondOutput));
+    const stats = (await service.listMonitoringStats(config.registry.id, initialNow, "2099-01-01T00:00:00Z")).get(definition.id);
+    assert.equal(stats.completed, 2);
+    assert.equal(stats.failed, 1);
+    assert.equal(stats.warnings, 1);
+    assert.equal(stats.inputRows, 12);
+    assert.ok(stats.updatedRows >= 0 && stats.updatedRows <= stats.inputRows);
+    assert.equal(stats.failureRatePercent, 100 / 3);
+    assert.equal(stats.sourceUpdateRatePercent, stats.updatedRows * 100 / 12);
+    assert.equal((await service.listMonitoringStats("other-registry", initialNow, "2099-01-01T00:00:00Z")).size, 0);
+    assert.equal((await service.listMonitoringStats(config.registry.id, "1990-01-01T00:00:00Z", "1990-01-02T00:00:00Z")).size, 0);
+    await assert.rejects(service.listMonitoringStats(config.registry.id, "2099-01-01T00:00:00Z", initialNow), /monitoring window/);
+    const beforeCorrections = await service.getCorrectionMonitoring(config.registry.id, initialNow, "2099-01-01T00:00:00Z");
+    const correctionClient = await pool.connect();
+    try {
+      await correctionClient.query("BEGIN");
+      await correctionClient.query("SELECT set_config('civic_registry.actor_id', 'synthetic-reviewer', true), set_config('civic_registry.reason', 'Correction: synthetic source date corrected', true)");
+      await correctionClient.query("UPDATE civic_registry_records SET fields = jsonb_set(fields, '{summary}', to_jsonb($3::text)) WHERE registry_id = $1 AND id = $2",
+        [config.registry.id, "refresh-record-1", "Synthetic corrected summary"]);
+      await correctionClient.query("COMMIT");
+    } finally { correctionClient.release(); }
+    const correctionStats = await service.getCorrectionMonitoring(config.registry.id, initialNow, "2099-01-01T00:00:00Z");
+    assert.equal(correctionStats.declaredCorrections, beforeCorrections.declaredCorrections + 1);
+    assert.equal(correctionStats.fieldChanges, beforeCorrections.fieldChanges + 1);
+    assert.equal(correctionStats.declaredCorrectionRatePercent, correctionStats.declaredCorrections * 100 / correctionStats.fieldChanges);
+    for (const [index, reason] of ["Ordinary refresh update", "Correction: "].entries()) {
+      const client = await pool.connect();
+      try {
+        await client.query("BEGIN");
+        await client.query("SELECT set_config('civic_registry.actor_id', 'synthetic-reviewer', true), set_config('civic_registry.reason', $1, true)", [reason]);
+        await client.query("UPDATE civic_registry_records SET fields = jsonb_set(fields, '{summary}', to_jsonb($3::text)) WHERE registry_id = $1 AND id = $2",
+          [config.registry.id, "refresh-record-1", `Synthetic ordinary update ${index}`]);
+        await client.query("COMMIT");
+      } finally { client.release(); }
+    }
+    const afterOrdinaryUpdates = await service.getCorrectionMonitoring(config.registry.id, initialNow, "2099-01-01T00:00:00Z");
+    assert.equal(afterOrdinaryUpdates.declaredCorrections, correctionStats.declaredCorrections);
+    assert.equal(afterOrdinaryUpdates.fieldChanges, correctionStats.fieldChanges + 2);
+    assert.deepEqual(await service.getCorrectionMonitoring("other-registry", initialNow, "2099-01-01T00:00:00Z"),
+      { fieldChanges: 0, declaredCorrections: 0, declaredCorrectionRatePercent: null });
 
     const summary = await new PostgresAdminRepository(
       pool,
@@ -247,3 +295,4 @@ test("scheduled source refreshes are leased, monitored, ingested, and backed off
     await pool.end();
   }
 });
+

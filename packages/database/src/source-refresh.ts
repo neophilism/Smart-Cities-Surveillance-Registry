@@ -128,6 +128,22 @@ export interface SourceRefreshHealth {
   nextRunAt: string;
 }
 
+export interface SourceRefreshMonitoringStats {
+  completed: number;
+  failed: number;
+  warnings: number;
+  inputRows: number;
+  updatedRows: number;
+  failureRatePercent: number | null;
+  sourceUpdateRatePercent: number | null;
+}
+
+export interface SourceCorrectionMonitoring {
+  fieldChanges: number;
+  declaredCorrections: number;
+  declaredCorrectionRatePercent: number | null;
+}
+
 export interface SourceRefreshClaim {
   job: SourceRefreshJob;
   run: SourceRefreshRun;
@@ -782,6 +798,77 @@ export class PostgresSourceRefreshService {
       );
 
     return result.rows.map(mapRun);
+  }
+
+  /** Latest witnessed successful source run for each job, scoped to one registry.
+   * Do not infer source freshness from a recent failed or unfinished attempt.
+   */
+  async listLatestSuccessfulRuns(registryId: string): Promise<Map<string, SourceRefreshRun>> {
+    const result = await this.pool.query<RunRow>(
+      `SELECT DISTINCT ON (job_id) *
+       FROM civic_registry_source_refresh_runs
+       WHERE registry_id = $1
+         AND status IN ('completed', 'completed_with_warnings')
+         AND completed_at IS NOT NULL
+       ORDER BY job_id, completed_at DESC, id DESC`,
+      [registryId],
+    );
+    return new Map(result.rows.map(row => [row.job_id, mapRun(row)]));
+  }
+
+  /** Operational counts over an explicit window; updated imports are not
+   * certified factual corrections or a measurement of source-site uptime.
+   */
+  async listMonitoringStats(registryId: string, sinceAt: string, untilAt: string): Promise<Map<string, SourceRefreshMonitoringStats>> {
+    const since = validDateTime(sinceAt, "sinceAt");
+    const until = validDateTime(untilAt, "untilAt");
+    if (Date.parse(since) > Date.parse(until)) throw new Error("Invalid monitoring window");
+    const result = await this.pool.query<{
+      job_id: string; completed: number; failed: number; warnings: number;
+      input_rows: number; updated_rows: number;
+    }>(
+      `SELECT r.job_id,
+         count(*) FILTER (WHERE r.status IN ('completed', 'completed_with_warnings'))::int AS completed,
+         count(*) FILTER (WHERE r.status = 'failed')::int AS failed,
+         count(*) FILTER (WHERE r.status = 'completed_with_warnings')::int AS warnings,
+         COALESCE(sum(i.total_items), 0)::int AS input_rows,
+         COALESCE(sum(i.updated_items), 0)::int AS updated_rows
+       FROM civic_registry_source_refresh_runs r
+       LEFT JOIN civic_registry_ingestion_runs i
+         ON i.registry_id = r.registry_id AND i.id = r.ingestion_run_id AND i.dry_run = FALSE
+       WHERE r.registry_id = $1
+         AND r.completed_at >= $2::timestamptz AND r.completed_at <= $3::timestamptz
+         AND r.status <> 'running'
+       GROUP BY r.job_id`,
+      [registryId, since, until],
+    );
+    return new Map(result.rows.map(row => [row.job_id, {
+      completed: row.completed, failed: row.failed, warnings: row.warnings,
+      inputRows: row.input_rows, updatedRows: row.updated_rows,
+      failureRatePercent: row.completed + row.failed > 0 ? row.failed * 100 / (row.completed + row.failed) : null,
+      sourceUpdateRatePercent: row.input_rows > 0 ? row.updated_rows * 100 / row.input_rows : null,
+    }]));
+  }
+
+  /** Explicit operator declarations, not an inference that an edit is true. */
+  async getCorrectionMonitoring(registryId: string, sinceAt: string, untilAt: string): Promise<SourceCorrectionMonitoring> {
+    const since = validDateTime(sinceAt, "sinceAt");
+    const until = validDateTime(untilAt, "untilAt");
+    if (Date.parse(since) > Date.parse(until)) throw new Error("Invalid monitoring window");
+    const result = await this.pool.query<{ field_changes: number; declared_corrections: number }>(
+      `SELECT count(*)::int AS field_changes,
+         count(*) FILTER (WHERE actor_id IS NOT NULL AND reason ~* '^Correction: [^[:space:]]')::int AS declared_corrections
+       FROM civic_registry_audit_events
+       WHERE registry_id = $1 AND subject_type = 'record'
+         AND event_type = 'record.fields_changed'
+         AND occurred_at >= $2::timestamptz AND occurred_at <= $3::timestamptz`,
+      [registryId, since, until],
+    );
+    const row = result.rows[0];
+    const fieldChanges = row?.field_changes ?? 0;
+    const declaredCorrections = row?.declared_corrections ?? 0;
+    return { fieldChanges, declaredCorrections,
+      declaredCorrectionRatePercent: fieldChanges > 0 ? declaredCorrections * 100 / fieldChanges : null };
   }
 
   getHealth(
@@ -1707,3 +1794,4 @@ export class PostgresSourceRefreshService {
     };
   }
 }
+

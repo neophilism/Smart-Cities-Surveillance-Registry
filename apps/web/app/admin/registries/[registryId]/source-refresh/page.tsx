@@ -15,6 +15,7 @@ import {
   getRepositories,
 } from "../../../../../lib/database";
 import { formatDateTime } from "../../../../../lib/format";
+import { projectSourceMonitoring } from "../../../../../../../packages/smart-cities-refresh/src/monitoring.ts";
 
 export const dynamic = "force-dynamic";
 
@@ -68,12 +69,17 @@ export default async function SourceRefreshAdminPage({
 
   const service =
     getRepositories().sourceRefresh;
-  const [health, runs] =
+  const observedAt = new Date().toISOString();
+  const sinceAt = new Date(Date.parse(observedAt) - 24 * 60 * 60 * 1000).toISOString();
+  const [health, runs, successfulRuns, monitoringStats, corrections] =
     await Promise.all([
-      service.listHealth(registryId),
+      service.listHealth(registryId, observedAt),
       service.listRuns(registryId, {
         limit: 50,
       }),
+      service.listLatestSuccessfulRuns(registryId),
+      service.listMonitoringStats(registryId, sinceAt, observedAt),
+      service.getCorrectionMonitoring(registryId, sinceAt, observedAt),
     ]);
   const returnTo =
     "/admin/registries/" +
@@ -137,6 +143,15 @@ export default async function SourceRefreshAdminPage({
         </div>
       </section>
 
+      <section className="section-block" aria-label="Correction monitoring">
+        <h2>Declared corrections in the last 24 hours</h2>
+        <p>
+          {corrections.declaredCorrections} operator-declared corrections across {corrections.fieldChanges} audited field changes
+          {" · Rate: "}{corrections.declaredCorrectionRatePercent === null ? "Unknown" : `${corrections.declaredCorrectionRatePercent.toFixed(1)}%`}.
+          {" "}This counts declarations, not verified factual accuracy. To identify a correction, start the record-update reason with <code>Correction: </code> followed by an explanation.
+        </p>
+      </section>
+
       <section className="section-block">
         <div className="section-heading">
           <div>
@@ -159,6 +174,8 @@ export default async function SourceRefreshAdminPage({
           <div className="admin-stack">
             {health.map((item) => {
               const job = item.job;
+              const observation = projectSourceMonitoring(item, successfulRuns.get(job.id), observedAt);
+              const stats = monitoringStats.get(job.id);
 
               return (
                 <article
@@ -177,6 +194,27 @@ export default async function SourceRefreshAdminPage({
                     </span>
                     <small>
                       {item.reason}
+                    </small>
+                    <small>
+                      Source freshness: {observation.status} · Observed {formatDateTime(observation.observedAt)}
+                    </small>
+                    <small>
+                      Last successful source run: {observation.lastSuccessAt ? formatDateTime(observation.lastSuccessAt) : "Unknown"}
+                      {observation.ageSeconds !== null ? ` · Age ${observation.ageSeconds} seconds` : ""}
+                    </small>
+                    {observation.sourceUrl ? (
+                      <small><a href={observation.sourceUrl} target="_blank" rel="noreferrer">Successful run source reference</a></small>
+                    ) : <small>No verified successful source reference</small>}
+                    <small>Missing source references: {observation.missingSourceReferences} · Ingestion failures: {observation.ingestionFailedItems ?? "Unknown"}</small>
+                    {observation.successfulRunId ? <small className="mono">Successful run {observation.successfulRunId}</small> : null}
+                    {observation.outputSha256 ? <small className="mono">Successful output SHA-256 {observation.outputSha256}</small> : null}
+                    <small>
+                      Last 24 hours: {stats?.completed ?? 0} completed, {stats?.failed ?? 0} failed, {stats?.warnings ?? 0} with warnings
+                      {" · Failure rate: "}{stats?.failureRatePercent !== null && stats?.failureRatePercent !== undefined ? `${stats.failureRatePercent.toFixed(1)}%` : "Unknown"}
+                    </small>
+                    <small>
+                      Input-row update rate: {stats?.sourceUpdateRatePercent !== null && stats?.sourceUpdateRatePercent !== undefined ? `${stats.sourceUpdateRatePercent.toFixed(1)}% (${stats.updatedRows}/${stats.inputRows})` : "Unknown"}
+                      {" · Source updates are not verified factual corrections."}
                     </small>
                     <small>
                       Next{" "}
@@ -306,7 +344,7 @@ export default async function SourceRefreshAdminPage({
           Production deployments should invoke{" "}
           <code>
             pnpm
-            source:refresh-open-legal-interpretations
+            db:refresh-official
           </code>{" "}
           from a recurring worker or cron service.
           Database leases prevent overlapping
@@ -413,3 +451,4 @@ export default async function SourceRefreshAdminPage({
     </AdminShell>
   );
 }
+
