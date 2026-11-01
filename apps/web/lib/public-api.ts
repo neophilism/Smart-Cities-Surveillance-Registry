@@ -644,7 +644,8 @@ function exportFormat(
 function exportLimit(
   value: string | null,
 ): number | null {
-  if (!value) return 10_000;
+  if (value === null) return 10_000;
+  if (!/^[0-9]+$/.test(value)) return null;
 
   const parsed = Number.parseInt(
     value,
@@ -730,6 +731,9 @@ export async function handleApiExport(
   }
 
   const records: RegistryRecord[] = [];
+  // Page offsets depend on pageSize. Keep it fixed even when the last page
+  // exceeds the remaining export budget, then trim only the projected results.
+  const pageSize = Math.min(100, maxRecords);
   let page = 1;
   let total = 0;
 
@@ -740,10 +744,7 @@ export async function handleApiExport(
         {
           ...baseRequest,
           page,
-          pageSize: Math.min(
-            100,
-            maxRecords - records.length,
-          ),
+          pageSize,
         },
       );
 
@@ -752,7 +753,7 @@ export async function handleApiExport(
     }
 
     records.push(
-      ...pageResult.hits.map(
+      ...pageResult.hits.slice(0, maxRecords - records.length).map(
         (hit) => hit.record,
       ),
     );
@@ -805,3 +806,4 @@ export async function handleApiExport(
     }),
   });
 }
+

@@ -46,7 +46,7 @@ const seed = JSON.parse(
   ),
 );
 
-async function setup() {
+async function setup(additionalRecords = []) {
   const pool = createDatabasePool({
     connectionString: databaseUrl,
     applicationName:
@@ -60,7 +60,7 @@ async function setup() {
   await seedRegistry(
     pool,
     config,
-    seed,
+    { ...seed, records: [...seed.records, ...additionalRecords] },
   );
 
   return pool;
@@ -393,3 +393,41 @@ test("versioned errors use one machine-readable envelope", async () => {
     await pool.end();
   }
 });
+
+test("partial final export pages preserve record identity without duplicates or private rows", async () => {
+  const template = seed.records.find(record => record.recordTypeId === "organization");
+  const publicRecords = Array.from({ length: 210 }, (_, index) => ({
+    ...template,
+    id: `paging-${String(index).padStart(3, "0")}`,
+    fields: { ...template.fields, name: `Paging ${String(index).padStart(3, "0")}` },
+  }));
+  const privateRecord = { ...template, id: "paging-private", visibility: "private",
+    fields: { ...template.fields, name: "Paging PRIVATE VALUE" } };
+  const pool = await setup([...publicRecords, privateRecord]);
+  try {
+    const allIds = [template.id, ...publicRecords.map(record => record.id)];
+    for (const limit of [99, 100, 101, 150, 200, 211, 250]) {
+      const response = await handleApiExport(new Request(
+        `http://registry.test/api/v1/registries/public-document-catalog/export?type=organization&sort=field:name&order=asc&maxRecords=${limit}`,
+      ), "public-document-catalog");
+      assert.equal(response.status, 200);
+      const body = await response.json();
+      assert.deepEqual(body.records.map(record => record.id), allIds.slice(0, limit));
+      assert.equal(new Set(body.records.map(record => record.id)).size, body.exported);
+      assert.equal(body.total, allIds.length);
+      assert.equal(body.exported, Math.min(limit, allIds.length));
+      assert.equal(body.truncated, limit < allIds.length);
+      assert.equal(response.headers.get("X-Export-Count"), String(body.exported));
+      assert.equal(response.headers.get("X-Export-Truncated"), String(body.truncated));
+      assert.ok(!JSON.stringify(body).includes("Paging PRIVATE VALUE"));
+    }
+    for (const value of ["", "1.5", "1garbage", "1e2", "-1", "10001"]) {
+      const response = await handleApiExport(new Request(
+        `http://registry.test/api/v1/registries/public-document-catalog/export?maxRecords=${encodeURIComponent(value)}`,
+      ), "public-document-catalog");
+      assert.equal(response.status, 400);
+      assert.equal((await response.json()).error.code, "invalid_export_limit");
+    }
+  } finally { await pool.end(); }
+});
+
