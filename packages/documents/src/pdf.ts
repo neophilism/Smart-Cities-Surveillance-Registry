@@ -19,6 +19,7 @@ import type {
   ExtractedDocumentPage,
   PdfExtraction,
 } from "./types.ts";
+import { assertPdfBudget } from "./pdf-budget.ts";
 
 const require =
   createRequire(import.meta.url);
@@ -90,6 +91,7 @@ function normalizePageText(
 export async function extractPdfText(
   data: Uint8Array,
 ): Promise<PdfExtraction> {
+  assertPdfBudget(data.byteLength);
   if (data.byteLength < 5) {
     throw new Error(
       "PDF attachment is empty or too small.",
@@ -126,6 +128,8 @@ export async function extractPdfText(
   try {
     const document =
       await loadingTask.promise;
+    assertPdfBudget(data.byteLength, document.numPages);
+    let textCharacters = 0;
 
     for (
       let pageNumber = 1;
@@ -145,6 +149,8 @@ export async function extractPdfText(
           normalizePageText(
             content.items,
           );
+        textCharacters += text.length;
+        assertPdfBudget(data.byteLength, document.numPages, textCharacters);
 
         if (!text) {
           warnings.push(

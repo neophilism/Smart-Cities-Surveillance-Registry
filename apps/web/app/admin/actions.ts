@@ -25,7 +25,6 @@ import {
   clearAdminSession,
   establishAdminSession,
   requireAdminSession,
-  verifyAdminAccessToken,
 } from "../../lib/admin-auth";
 import { parseAdminRecordFields } from "../../lib/admin-record";
 import { assertSmartCitiesPublicRecordSafe } from "../../lib/smart-cities-public-safety";
@@ -145,30 +144,18 @@ export async function signInAdmin(
   formData: FormData,
 ): Promise<void> {
   const token = text(formData, "token");
-  const actorId = text(formData, "actorId");
-  const roles = csv(text(formData, "roles"));
-
-  if (!verifyAdminAccessToken(token)) {
+  try {
+    await establishAdminSession(token);
+  } catch {
     redirect(
       destination(
         "/admin/sign-in",
         "error",
-        "Administrator access token is invalid.",
+        "Administrator credentials are invalid or the console is disabled.",
       ),
     );
   }
 
-  if (!actorId) {
-    redirect(
-      destination(
-        "/admin/sign-in",
-        "error",
-        "Actor ID is required.",
-      ),
-    );
-  }
-
-  await establishAdminSession(actorId, roles);
   redirect("/admin");
 }
 

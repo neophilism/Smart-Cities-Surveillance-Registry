@@ -1,7 +1,11 @@
 import {
   mkdir,
+  link,
+  readFile,
+  unlink,
   writeFile,
 } from "node:fs/promises";
+import { createHash, randomUUID } from "node:crypto";
 import {
   dirname,
   join,
@@ -74,6 +78,9 @@ export class FileSystemDocumentStorage
     const sha256 = safeHash(
       input.sha256,
     );
+    if (createHash("sha256").update(input.data).digest("hex") !== sha256) {
+      throw new Error("Document bytes do not match the supplied SHA-256.");
+    }
     const extension =
       safeExtension(
         input.extension,
@@ -99,14 +106,17 @@ export class FileSystemDocumentStorage
       },
     );
 
+    const temporaryPath = absolutePath + "." + randomUUID() + ".tmp";
     try {
       await writeFile(
-        absolutePath,
+        temporaryPath,
         input.data,
         {
           flag: "wx",
         },
       );
+      // Publish complete bytes atomically; concurrent retries never read a partial write.
+      await link(temporaryPath, absolutePath);
     } catch (error) {
       if (
         !(
@@ -118,6 +128,14 @@ export class FileSystemDocumentStorage
       ) {
         throw error;
       }
+      const existing = await readFile(absolutePath);
+      if (createHash("sha256").update(existing).digest("hex") !== sha256) {
+        throw new Error("Stored document failed SHA-256 integrity verification.");
+      }
+    } finally {
+      await unlink(temporaryPath).catch((error: NodeJS.ErrnoException) => {
+        if (error.code !== "ENOENT") throw error;
+      });
     }
 
     return {

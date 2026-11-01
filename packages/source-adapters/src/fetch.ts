@@ -2,6 +2,7 @@ import {
   lookup as dnsLookup,
 } from "node:dns/promises";
 import { isIP } from "node:net";
+import { fetchPinnedSource } from "./pinned-fetch.ts";
 
 import type {
   PublicSourceBinaryFetchResult,
@@ -73,23 +74,12 @@ function isPrivateAddress(address: string): boolean {
   if (version === 6) {
     const value = address.toLowerCase();
 
-    if (
-      value === "::" ||
-      value === "::1" ||
-      value.startsWith("fc") ||
-      value.startsWith("fd") ||
-      /^fe[89ab]/.test(value)
-    ) {
-      return true;
-    }
-
-    const mapped = value.match(
-      /^::ffff:(\d+\.\d+\.\d+\.\d+)$/,
-    );
-
-    return mapped?.[1]
-      ? isPrivateIpv4(mapped[1])
-      : false;
+    // Permit ordinary global unicast only; block embedded IPv4/transition forms.
+    if (!/^[23][0-9a-f]{3}:/.test(value)) return true;
+    const [first, second = ""] = value.split(":");
+    const subnet = Number.parseInt(second || "0", 16);
+    return (first === "2001" && (subnet < 0x200 || subnet === 0xdb8)) ||
+      first === "2002" || (first === "3fff" && subnet < 0x1000);
   }
 
   return true;
@@ -228,8 +218,12 @@ export function createPublicSourceClient(
     options.maxRedirects ?? DEFAULT_MAX_REDIRECTS;
   const userAgent =
     options.userAgent ?? DEFAULT_USER_AGENT;
-  const fetchImpl =
-    options.fetchImpl ?? fetch;
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 120_000 ||
+      !Number.isSafeInteger(maxResponseBytes) || maxResponseBytes < 1 || maxResponseBytes > 100 * 1024 * 1024 ||
+      !Number.isSafeInteger(maxRedirects) || maxRedirects < 0 || maxRedirects > 10) {
+    throw new Error("Public source client resource limits are invalid.");
+  }
+  const fetchImpl = options.fetchImpl;
   const lookupImpl =
     options.dnsLookup ??
     (async (hostname: string) =>
@@ -255,8 +249,13 @@ export function createPublicSourceClient(
     const requestedUrl = current.toString();
 
     while (true) {
-      const addresses =
-        await lookupImpl(current.hostname);
+      let dnsTimer: ReturnType<typeof setTimeout> | undefined;
+      const addresses = await Promise.race([
+        lookupImpl(current.hostname),
+        new Promise<never>((_resolve, reject) => {
+          dnsTimer = setTimeout(() => reject(new Error("Source DNS lookup timed out.")), timeoutMs);
+        }),
+      ]).finally(() => clearTimeout(dnsTimer));
 
       if (
         addresses.length === 0 ||
@@ -269,21 +268,17 @@ export function createPublicSourceClient(
         );
       }
 
-      const response = await fetchImpl(
+      const requestHeaders = { accept, "user-agent": userAgent };
+      const signal = AbortSignal.timeout(timeoutMs);
+      const response = fetchImpl ? await fetchImpl(
         current,
         {
           method: "GET",
           redirect: "manual",
-          headers: {
-            accept,
-            "user-agent": userAgent,
-          },
-          signal:
-            AbortSignal.timeout(
-              timeoutMs,
-            ),
+          headers: requestHeaders,
+          signal,
         },
-      );
+      ) : await fetchPinnedSource(current, addresses[0].address, requestHeaders, signal, maxResponseBytes);
 
       if (
         response.status >= 300 &&

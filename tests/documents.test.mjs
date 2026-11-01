@@ -176,3 +176,7 @@ test("binary source fetch preserves safe-fetch protections and returns bytes", a
     /not allowed/i,
   );
 });
+
+test("PDF extraction rejects oversized bytes before parsing", async () => {
+  await assert.rejects(extractPdfText(new Uint8Array(25 * 1024 * 1024 + 1)), /25 MiB/);
+});
