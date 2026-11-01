@@ -34,6 +34,7 @@ export function AdminShell({
         </div>
         <nav aria-label="Administrator navigation">
           <Link href="/admin">Registries</Link>
+          <Link href="/admin/external-compliance">External evidence</Link>
           {registryId ? (
             <>
               <Link
